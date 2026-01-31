@@ -4,7 +4,7 @@ import { ZIntegrationGoogleSheetsConfig, ZIntegrationGoogleSheetsInput } from ".
 import { ZIntegrationNotionConfig, ZIntegrationNotionInput } from "./notion";
 import { ZIntegrationSlackConfig, ZIntegrationSlackInput } from "./slack";
 
-export const ZIntegrationType = z.enum(["googleSheets", "n8n", "airtable", "notion", "slack"]);
+export const ZIntegrationType = z.enum(["googleSheets", "n8n", "airtable", "notion", "slack", "salesforce"]);
 export type TIntegrationType = z.infer<typeof ZIntegrationType>;
 
 export const ZIntegrationConfig = z.union([

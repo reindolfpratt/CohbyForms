@@ -33,5 +33,19 @@ export const getIntegrationDetails = (integrationType: TIntegrationType, t: TFun
         connectButtonLabel: t("environments.integrations.slack.connect_with_slack"),
         notConfiguredText: t("environments.integrations.slack.slack_integration_is_not_configured"),
       };
+    case "salesforce":
+      return {
+        text: t("environments.integrations.salesforce.salesforce_integration_description"),
+        docsLink: "https://formbricks.com/docs/integrations/salesforce",
+        connectButtonLabel: t("environments.integrations.salesforce.connect_with_salesforce"),
+        notConfiguredText: t("environments.integrations.salesforce.salesforce_integration_is_not_configured"),
+      };
+    case "n8n":
+      return {
+        text: t("environments.integrations.n8n.n8n_integration_description"),
+        docsLink: "https://formbricks.com/docs/integrations/n8n",
+        connectButtonLabel: t("environments.integrations.n8n.connect_with_n8n"),
+        notConfiguredText: t("environments.integrations.n8n.n8n_integration_is_not_configured"),
+      };
   }
 };

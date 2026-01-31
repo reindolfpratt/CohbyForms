@@ -698,6 +698,8 @@
         "table_name": "Table Name"
       },
       "airtable_integration_description": "Instantly populate your Airtable table with survey data",
+      "connect_with_n8n": "Connect with n8n",
+      "connect_with_salesforce": "Connect with Salesforce",
       "connected_with_email": "Connected with {email}",
       "connecting_integration_failed_please_try_again": "Connecting integration failed. Please try again!",
       "create_survey_warning": "You have to create a survey to be able to setup this integration",
@@ -729,6 +731,8 @@
       "make_integration_description": "Integrate CohbyForm with 1000+ apps via Make",
       "manage_webhooks": "Manage Webhooks",
       "n8n_integration_description": "Integrate CohbyForm with 350+ apps via n8n",
+      "n8n_integration_description": "Instantly connect n8n with CohbyForm",
+      "n8n_integration_is_not_configured": "n8n Integration is not configured in your instance of CohbyForm.",
       "notion": {
         "col_name_of_type_is_not_supported": "{col_name} of type {type} is not supported by notion API. The data won't be reflected in your notion database.",
         "connect_with_notion": "Connect with Notion",
@@ -758,6 +762,8 @@
       },
       "notion_integration_description": "Send data to your Notion database",
       "please_select_a_survey_error": "Please select a survey",
+      "salesforce_integration_description": "Send survey responses directly to Salesforce CRM.",
+      "salesforce_integration_is_not_configured": "Salesforce Integration is not configured in your instance of CohbyForm.",
       "select_at_least_one_question_error": "Please select at least one question",
       "slack": {
         "already_connected_another_survey": "You have already connected another survey to this channel.",
