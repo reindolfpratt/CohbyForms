@@ -473,7 +473,7 @@
     "email_template_text_1": "This email was sent via CohbyForm.",
     "embed_survey_preview_email_didnt_request": "Didn't request this?",
     "embed_survey_preview_email_environment_id": "Environment ID",
-    "embed_survey_preview_email_fight_spam": "Help us fight spam and forward this mail to hola@formbricks.com",
+    "embed_survey_preview_email_fight_spam": "Help us fight spam and forward this mail to support@cohbyform.com",
     "embed_survey_preview_email_heading": "Preview Email Embed",
     "embed_survey_preview_email_subject": "CohbyForm Email Survey Preview",
     "embed_survey_preview_email_text": "This is how the code snippet looks embedded into an email:",
@@ -2075,7 +2075,7 @@
         "reset_styling": "Reset styling",
         "reset_styling_confirmation": "Are you sure you want to reset the styling to default?",
         "show_formbricks_branding_in": "Show CohbyForm Branding in {type} surveys",
-        "show_powered_by_formbricks": "Show 'Powered by CohbyForm' Signature",
+        "show_powered_by_formbricks": "Show 'Powered by Cohby Consulting Services' Signature",
         "styling_updated_successfully": "Styling updated successfully",
         "theme": "Theme",
         "theme_settings_description": "Create a style theme for all surveys. You can enable custom styling for each survey."

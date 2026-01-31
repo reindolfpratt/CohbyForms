@@ -209,7 +209,7 @@ export const PricingCard = ({
         onConfirm={() => setContactModalOpen(false)}
         buttonText="Close"
         buttonVariant="default"
-        body="To switch your billing rhythm, please reach out to hola@formbricks.com"
+        body="To switch your billing rhythm, please reach out to support@cohbyform.com"
       />
     </div>
   );
