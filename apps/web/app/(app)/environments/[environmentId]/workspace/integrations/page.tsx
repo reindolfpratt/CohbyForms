@@ -13,6 +13,7 @@ import notionLogo from "@/images/notion.png";
 import SlackLogo from "@/images/slacklogo.png";
 import WebhookLogo from "@/images/webhook.png";
 import ZapierLogo from "@/images/zapier-small.png";
+import SalesforceLogo from "@/images/salesforce-logo.svg";
 import { getIntegrations } from "@/lib/integration/service";
 import { getTranslate } from "@/lingodotdev/server";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
@@ -188,6 +189,20 @@ const Page = async (props) => {
       icon: <Image src={ActivePiecesLogo} alt="ActivePieces Logo" />,
       connected: activePiecesWebhookCount > 0,
       statusText: getStatusText(activePiecesWebhookCount, t, t("common.integration")),
+      disabled: isReadOnly,
+    },
+    {
+      connectHref: `/environments/${params.environmentId}/workspace/integrations/salesforce`,
+      connectText: `${isIntegrationConnected("salesforce") ? t("common.manage") : t("common.connect")}`,
+      connectNewTab: false,
+      docsHref: "https://developer.salesforce.com/docs", 
+      docsText: t("common.docs"),
+      docsNewTab: true,
+      label: "Salesforce",
+      description: "Sync your form responses to Salesforce Objects.",
+      icon: <Image src={SalesforceLogo} alt="Salesforce Logo" />,
+      connected: isIntegrationConnected("salesforce"),
+      statusText: isIntegrationConnected("salesforce") ? t("common.connected") : t("common.not_connected"),
       disabled: isReadOnly,
     },
   ];

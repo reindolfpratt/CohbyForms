@@ -84,6 +84,8 @@ export const env = createEnv({
     SMTP_PASSWORD: z.string().min(1).optional(),
     SMTP_AUTHENTICATED: z.enum(["1", "0"]).optional(),
     SMTP_REJECT_UNAUTHORIZED_TLS: z.enum(["1", "0"]).optional(),
+    SALESFORCE_CLIENT_ID: z.string().optional(),
+    SALESFORCE_CLIENT_SECRET: z.string().optional(),
     STRIPE_SECRET_KEY: z.string().optional(),
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
     PUBLIC_URL: z
@@ -201,6 +203,8 @@ export const env = createEnv({
     SMTP_SECURE_ENABLED: process.env.SMTP_SECURE_ENABLED,
     SMTP_USER: process.env.SMTP_USER,
     SMTP_REJECT_UNAUTHORIZED_TLS: process.env.SMTP_REJECT_UNAUTHORIZED_TLS,
+    SALESFORCE_CLIENT_ID: process.env.SALESFORCE_CLIENT_ID,
+    SALESFORCE_CLIENT_SECRET: process.env.SALESFORCE_CLIENT_SECRET,
     SMTP_AUTHENTICATED: process.env.SMTP_AUTHENTICATED,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,

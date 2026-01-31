@@ -510,6 +510,7 @@ enum IntegrationType {
   notion
   airtable
   slack
+  salesforce
 }
 
 /// Represents third-party service integrations.
