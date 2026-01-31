@@ -1,7 +1,6 @@
 import { TFunction } from "i18next";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { TIntegrationType } from "@formbricks/types/integration";
 import { getWebhookCountBySource } from "@/app/(app)/environments/[environmentId]/workspace/integrations/lib/webhook";
 import ActivePiecesLogo from "@/images/activepieces.webp";
 import AirtableLogo from "@/images/airtableLogo.svg";
@@ -10,10 +9,10 @@ import JsLogo from "@/images/jslogo.png";
 import MakeLogo from "@/images/make-small.png";
 import n8nLogo from "@/images/n8n.png";
 import notionLogo from "@/images/notion.png";
+import SalesforceLogo from "@/images/salesforce-logo.svg";
 import SlackLogo from "@/images/slacklogo.png";
 import WebhookLogo from "@/images/webhook.png";
 import ZapierLogo from "@/images/zapier-small.png";
-import SalesforceLogo from "@/images/salesforce-logo.svg";
 import { getIntegrations } from "@/lib/integration/service";
 import { getTranslate } from "@/lingodotdev/server";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
@@ -21,6 +20,8 @@ import { ProjectConfigNavigation } from "@/modules/projects/settings/components/
 import { Card } from "@/modules/ui/components/integration-card";
 import { PageContentWrapper } from "@/modules/ui/components/page-content-wrapper";
 import { PageHeader } from "@/modules/ui/components/page-header";
+
+type TIntegrationType = "googleSheets" | "notion" | "airtable" | "slack" | "n8n" | "salesforce";
 
 const getStatusText = (count: number, t: TFunction, type: string) => {
   if (count === 1) return `1 ${type}`;
@@ -195,7 +196,7 @@ const Page = async (props) => {
       connectHref: `/environments/${params.environmentId}/workspace/integrations/salesforce`,
       connectText: `${isIntegrationConnected("salesforce") ? t("common.manage") : t("common.connect")}`,
       connectNewTab: false,
-      docsHref: "https://developer.salesforce.com/docs", 
+      docsHref: "https://developer.salesforce.com/docs",
       docsText: t("common.docs"),
       docsNewTab: true,
       label: "Salesforce",
