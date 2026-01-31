@@ -51,9 +51,9 @@ export const SalesforceWrapper = ({
       ) : (
         <ConnectIntegration
           isEnabled={isEnabled}
-          integrationType={"salesforce"} // Assuming this type is accepted or just string
+          integrationType={"salesforce"}
           handleAuthorization={handleAuthorization}
-          integrationLogoSrc={null} // No logo for now, or use a default
+          integrationLogoSrc="/salesforce-logo.png"
         />
       )}
     </>
