@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { TEnvironment } from "@formbricks/types/environment";
 import { TSurvey } from "@formbricks/types/surveys/types";
-import { authorize } from "./salesforce"; // Import from local lib
+import { authorize } from "../lib/salesforce"; // Import from local lib
 import { ConnectIntegration } from "@/modules/ui/components/connect-integration";
 import { Button } from "@/modules/ui/components/button";
 

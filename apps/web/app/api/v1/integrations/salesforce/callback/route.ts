@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authorize } from "@/modules/integrations/salesforce/service";
+import { authorize } from "@/lib/salesforce/service";
 import { WEBAPP_URL } from "@/lib/constants";
 
 export async function GET(req: NextRequest) {
