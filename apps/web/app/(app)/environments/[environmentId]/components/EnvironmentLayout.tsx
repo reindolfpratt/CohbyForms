@@ -1,5 +1,4 @@
-import { MainNavigation } from "@/app/(app)/environments/[environmentId]/components/MainNavigation";
-import { TopControlBar } from "@/app/(app)/environments/[environmentId]/components/TopControlBar";
+import { JotformHeader } from "@/app/(app)/environments/[environmentId]/components/JotformHeader";
 import { IS_DEVELOPMENT, IS_FORMBRICKS_CLOUD } from "@/lib/constants";
 import { getPublicDomain } from "@/lib/getPublicUrl";
 import { getAccessFlags } from "@/lib/membership/utils";
@@ -47,7 +46,7 @@ export const EnvironmentLayout = async ({ layoutData, children }: EnvironmentLay
   }
 
   return (
-    <div className="flex h-screen min-h-screen flex-col overflow-hidden">
+    <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-slate-50">
       {IS_FORMBRICKS_CLOUD && (
         <LimitsReachedBanner
           organization={organization}
@@ -65,31 +64,25 @@ export const EnvironmentLayout = async ({ layoutData, children }: EnvironmentLay
         locale={user.locale}
       />
 
-      <div className="flex h-full">
-        <MainNavigation
-          environment={environment}
-          organization={organization}
-          user={user}
-          project={{ id: project.id, name: project.name }}
-          isFormbricksCloud={IS_FORMBRICKS_CLOUD}
-          isDevelopment={IS_DEVELOPMENT}
-          membershipRole={membership.role}
-          publicDomain={publicDomain}
-        />
-        <div id="mainContent" className="flex flex-1 flex-col overflow-hidden bg-slate-50">
-          <TopControlBar
-            environments={environments}
-            currentOrganizationId={organization.id}
-            currentProjectId={project.id}
-            isMultiOrgEnabled={isMultiOrgEnabled}
-            organizationProjectsLimit={organizationProjectsLimit}
-            isFormbricksCloud={IS_FORMBRICKS_CLOUD}
-            isLicenseActive={active}
-            isOwnerOrManager={isOwnerOrManager}
-            isAccessControlAllowed={isAccessControlAllowed}
-            membershipRole={membership.role}
-          />
-          <div className="flex-1 overflow-y-auto">{children}</div>
+      <JotformHeader
+        environment={environment}
+        organization={organization}
+        user={user}
+        project={{ id: project.id, name: project.name }}
+        environments={environments}
+        isFormbricksCloud={IS_FORMBRICKS_CLOUD}
+        isDevelopment={IS_DEVELOPMENT}
+        membershipRole={membership.role}
+        publicDomain={publicDomain}
+        isMultiOrgEnabled={isMultiOrgEnabled}
+        organizationProjectsLimit={organizationProjectsLimit}
+        isLicenseActive={active}
+        isAccessControlAllowed={isAccessControlAllowed}
+      />
+
+      <div className="flex-1 overflow-hidden">
+        <div id="mainContent" className="h-full overflow-y-auto">
+          {children}
         </div>
       </div>
     </div>

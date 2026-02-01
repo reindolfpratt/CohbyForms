@@ -20,6 +20,7 @@ import type { TResponse } from "@formbricks/types/responses";
 import type { TSurvey } from "@formbricks/types/surveys/types";
 import { TUserEmail, TUserLocale } from "@formbricks/types/user";
 import {
+  APP_NAME,
   DEBUG,
   IMPRINT_ADDRESS,
   IMPRINT_URL,
@@ -86,7 +87,7 @@ export const sendEmail = async (emailData: SendEmailDataProps): Promise<boolean>
     } as SMTPTransport.Options);
 
     const emailDefaults = {
-      from: `${MAIL_FROM_NAME ?? "Formbricks"} <${MAIL_FROM ?? "noreply@formbricks.com"}>`,
+      from: `${MAIL_FROM_NAME ?? APP_NAME} <${MAIL_FROM ?? "noreply@formbricks.com"}>`,
     };
     await transporter.sendMail({ ...emailDefaults, ...emailData });
 

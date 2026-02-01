@@ -31,14 +31,14 @@ export const OnboardingSetupInstructions = ({
 }: OnboardingSetupInstructionsProps) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const htmlSnippetForAppSurveys = `<!-- START Formbricks Surveys -->
+  const htmlSnippetForAppSurveys = `  <!-- START CohbyForm Surveys -->
   <script type="text/javascript">
   !function(){
       var appUrl = "${publicDomain}";
       var environmentId = "${environmentId}";
-      var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=appUrl+"/js/formbricks.umd.cjs",t.onload=function(){window.formbricks?window.formbricks.setup({environmentId:environmentId,appUrl:appUrl}):console.error("Formbricks library failed to load properly. The formbricks object is not available.");};var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}();
+      var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=appUrl+"/js/formbricks.umd.cjs",t.onload=function(){window.formbricks?window.formbricks.setup({environmentId:environmentId,appUrl:appUrl}):console.error("CohbyForm library failed to load properly. The SDK object is not available.");};var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}();
   </script>
-  <!-- END Formbricks Surveys -->
+  <!-- END CohbyForm Surveys -->
   `;
 
   const htmlSnippetForWebsiteSurveys = `<!-- START Formbricks Surveys -->
@@ -46,9 +46,9 @@ export const OnboardingSetupInstructions = ({
   !function(){
     var appUrl = "${publicDomain}";
     var environmentId = "${environmentId}";
-    var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=appUrl+"/js/formbricks.umd.cjs",t.onload=function(){window.formbricks?window.formbricks.setup({environmentId:environmentId,appUrl:appUrl}):console.error("Formbricks library failed to load properly. The formbricks object is not available.");};var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}();
+    var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=appUrl+"/js/formbricks.umd.cjs",t.onload=function(){window.formbricks?window.formbricks.setup({environmentId:environmentId,appUrl:appUrl}):console.error("CohbyForm library failed to load properly. The SDK object is not available.");};var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}();
   </script>
-  <!-- END Formbricks Surveys -->
+  <!-- END CohbyForm Surveys -->
   `;
 
   const npmSnippetForAppSurveys = `

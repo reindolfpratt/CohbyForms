@@ -45,7 +45,7 @@ export const RedirectUrlForm = ({ localSurvey, endingCard, updateSurvey }: Redir
               <div className="group relative">
                 {/* The highlight container is absolutely positioned behind the input */}
                 <div
-                  className={`no-scrollbar absolute top-0 z-0 mt-0.5 flex h-10 w-full overflow-scroll px-3 py-2 text-center text-sm whitespace-nowrap text-transparent`}
+                  className={`no-scrollbar absolute top-0 z-0 mt-0.5 flex h-10 w-full overflow-scroll whitespace-nowrap px-3 py-2 text-center text-sm text-transparent`}
                   dir="auto"
                   key={highlightedJSX.toString()}>
                   {highlightedJSX}
@@ -55,7 +55,7 @@ export const RedirectUrlForm = ({ localSurvey, endingCard, updateSurvey }: Redir
                   id="redirectUrl"
                   name="redirectUrl"
                   className="relative text-black caret-black"
-                  placeholder="https://formbricks.com"
+                  placeholder="https://cohby.com"
                   value={
                     recallToHeadline(
                       {
@@ -80,7 +80,7 @@ export const RedirectUrlForm = ({ localSurvey, endingCard, updateSurvey }: Redir
           id="redirectUrlLabel"
           name="redirectUrlLabel"
           className="bg-white"
-          placeholder="Formbricks App"
+          placeholder="CohbyForm App"
           value={endingCard.label ?? ""}
           onChange={(e) => updateSurvey({ label: e.target.value })}
         />

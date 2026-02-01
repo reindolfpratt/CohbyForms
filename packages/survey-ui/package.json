@@ -3,7 +3,7 @@
   "license": "MIT",
   "version": "1.0.4",
   "description": "React UI components for building surveys and forms - includes NPS, rating scales, multi-select, file upload, and more. Built with Radix UI and Tailwind CSS.",
-  "homepage": "https://formbricks.com",
+  "homepage": "https://cohby.com",
   "type": "module",
   "keywords": [
     "react",
@@ -15,18 +15,18 @@
     "rating",
     "questionnaire",
     "feedback",
-    "formbricks",
+    "cohbyform",
     "tailwindcss",
     "typescript",
     "accessible"
   ],
   "author": {
-    "name": "Formbricks",
-    "url": "https://formbricks.com"
+    "name": "Cohby Consulting Services",
+    "url": "https://cohby.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/formbricks/formbricks",
+    "url": "https://github.com/cohby/cohbyform",
     "directory": "packages/survey-ui"
   },
   "bugs": {
