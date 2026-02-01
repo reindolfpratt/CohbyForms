@@ -174,7 +174,7 @@ export const JotformHeader = ({
       {/* Right Side: Project Switcher + User Profile */}
       <div className="flex items-center gap-4">
         {/* Project Switcher - Styled for Dark Header */}
-        <div className="hidden md:block [&_.hover\\:text-slate-700:hover]:text-white [&_.text-slate-500]:text-slate-300">
+        <div className="hidden md:block [&_.text-slate-500]:text-slate-300 [&_a:hover]:text-white [&_button:hover]:text-white">
           <ProjectAndOrgSwitch
             currentEnvironmentId={environment.id}
             environments={environments}
