@@ -28,7 +28,6 @@ interface MultiLanguageCardProps {
   activeElementId: string | null;
   setActiveElementId: (elementId: string | null) => void;
   isMultiLanguageAllowed?: boolean;
-  isFormbricksCloud: boolean;
   setSelectedLanguageCode: (language: string) => void;
   locale: TUserLocale;
 }
@@ -49,7 +48,6 @@ export const MultiLanguageCard: FC<MultiLanguageCardProps> = ({
   setLocalSurvey,
   projectLanguages,
   isMultiLanguageAllowed,
-  isFormbricksCloud,
   setSelectedLanguageCode,
   locale,
 }) => {

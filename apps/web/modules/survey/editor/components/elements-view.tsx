@@ -955,7 +955,6 @@ export const ElementsView = ({
               setActiveElementId={setActiveElementId}
               activeElementId={activeElementId}
               isMultiLanguageAllowed={isMultiLanguageAllowed}
-              isFormbricksCloud={isFormbricksCloud}
               setSelectedLanguageCode={setSelectedLanguageCode}
               locale={locale}
             />
