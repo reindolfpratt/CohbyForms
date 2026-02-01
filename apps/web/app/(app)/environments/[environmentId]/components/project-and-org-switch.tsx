@@ -41,7 +41,7 @@ export const ProjectAndOrgSwitch = ({
 
   return (
     <Breadcrumb>
-      <BreadcrumbList className="gap-0 text-white [&_.hover\\:text-slate-700:hover]:text-white [&_.text-slate-500]:text-slate-300">
+      <BreadcrumbList className="gap-0 text-white [&_.text-slate-500]:text-slate-300 [&_a:hover]:text-white [&_button:hover]:text-white">
         <OrganizationBreadcrumb
           currentOrganizationId={currentOrganizationId}
           currentOrganizationName={currentOrganizationName}
