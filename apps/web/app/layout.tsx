@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     default: "CohbyForm",
   },
   description: "Advanced Survey Suite",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon/apple-touch-icon.png",
+  },
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
