@@ -12,7 +12,6 @@ interface TeamsViewProps {
   membershipRole?: TOrganizationRole;
   currentUserId: string;
   isAccessControlAllowed: boolean;
-  environmentId: string;
 }
 
 export const TeamsView = async ({
@@ -20,7 +19,6 @@ export const TeamsView = async ({
   membershipRole,
   currentUserId,
   isAccessControlAllowed,
-  environmentId,
 }: TeamsViewProps) => {
   const t = await getTranslate();
 

@@ -55,7 +55,6 @@ export const TeamsPage = async (props: { params: Promise<{ environmentId: string
         membershipRole={currentUserMembership?.role}
         currentUserId={session.user.id}
         isAccessControlAllowed={isAccessControlAllowed}
-        environmentId={params.environmentId}
       />
     </PageContentWrapper>
   );
