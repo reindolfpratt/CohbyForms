@@ -33,7 +33,7 @@ export const EnvironmentLayout = async ({ layoutData, children }: EnvironmentLay
   } = layoutData;
 
   // Calculate derived values (no queries)
-  const { isMember, isOwner, isManager } = getAccessFlags(membership.role);
+  const { isMember } = getAccessFlags(membership.role);
 
   const { features, lastChecked, isPendingDowngrade, active } = license;
   const isMultiOrgEnabled = features?.isMultiOrgEnabled ?? false;
