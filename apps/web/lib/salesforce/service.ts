@@ -1,13 +1,9 @@
 import "server-only";
-import jsforce from "jsforce";
 import { Prisma } from "@prisma/client";
+import jsforce from "jsforce";
 import { DatabaseError, UnknownError } from "@formbricks/types/errors";
+import { SALESFORCE_CLIENT_ID, SALESFORCE_CLIENT_SECRET, WEBAPP_URL } from "@/lib/constants";
 import { createOrUpdateIntegration } from "@/lib/integration/service";
-import {
-  SALESFORCE_CLIENT_ID,
-  SALESFORCE_CLIENT_SECRET,
-  WEBAPP_URL,
-} from "@/lib/constants";
 
 export const SALESFORCE_REDIRECT_URL = `${WEBAPP_URL}/api/v1/integrations/salesforce/callback`;
 
@@ -17,7 +13,7 @@ export const getAuthUrl = () => {
     clientSecret: SALESFORCE_CLIENT_SECRET,
     redirectUri: SALESFORCE_REDIRECT_URL,
   });
-  
+
   return oauth2.getAuthorizationUrl({
     scope: "api refresh_token offline_access",
   });
@@ -31,10 +27,20 @@ export const authorize = async (environmentId: string, code: string) => {
   });
 
   const connection = new jsforce.Connection({ oauth2 });
-  
+
   try {
     const userInfo = await connection.authorize(code);
-    
+
+    if (
+      !connection.accessToken ||
+      !connection.refreshToken ||
+      !connection.instanceUrl ||
+      !userInfo.id ||
+      !userInfo.organizationId
+    ) {
+      throw new Error("Incomplete Salesforce connection data");
+    }
+
     // Save the integration with refresh token
     await createOrUpdateIntegration(environmentId, {
       type: "salesforce", // Ensure this matches schema enum
