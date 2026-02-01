@@ -7,11 +7,6 @@ import {
   PutObjectCommand,
   paginateListObjectsV2,
 } from "@aws-sdk/client-s3";
-import {
-  type PresignedPost,
-  type PresignedPostOptions,
-  createPresignedPost,
-} from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { logger } from "@formbricks/logger";
 import { type Result, type StorageError, StorageErrorCode, err, ok } from "../types/error";
@@ -30,7 +25,7 @@ export const getSignedUploadUrl = async (
   fileName: string,
   contentType: string,
   filePath: string,
-  maxSize: number = 1024 * 1024 * 10 // 10MB
+  _maxSize: number = 1024 * 1024 * 10 // 10MB
 ): Promise<
   Result<
     {

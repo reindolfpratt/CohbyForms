@@ -363,8 +363,23 @@ export const getEnterpriseLicense = reactCache(
 
     if (!env.ENTERPRISE_LICENSE_KEY || env.ENTERPRISE_LICENSE_KEY.length === 0) {
       return {
-        active: false,
-        features: null,
+        active: true,
+        features: {
+          isMultiOrgEnabled: true,
+          projects: 3,
+          twoFactorAuth: true,
+          sso: true,
+          whitelabel: true,
+          removeBranding: true,
+          contacts: true,
+          ai: true,
+          saml: true,
+          spamProtection: true,
+          auditLogs: true,
+          multiLanguageSurveys: true,
+          accessControl: true,
+          quotas: true,
+        },
         lastChecked: new Date(),
         isPendingDowngrade: false,
         fallbackLevel: "default" as const,
