@@ -6,12 +6,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UpgradePrompt } from "@/modules/ui/components/upgrade-prompt";
 
-interface TargetingLockedCardProps {
-  isFormbricksCloud: boolean;
-  environmentId: string;
-}
+interface TargetingLockedCardProps {}
 
-export const TargetingLockedCard = ({ isFormbricksCloud, environmentId }: TargetingLockedCardProps) => {
+export const TargetingLockedCard = ({}: TargetingLockedCardProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
