@@ -38,7 +38,6 @@ export const EnvironmentLayout = async ({ layoutData, children }: EnvironmentLay
   const { features, lastChecked, isPendingDowngrade, active } = license;
   const isMultiOrgEnabled = features?.isMultiOrgEnabled ?? false;
   const organizationProjectsLimit = await getOrganizationProjectsLimit(organization.billing.limits);
-  const isOwnerOrManager = isOwner || isManager;
 
   // Validate that project permission exists for members
   if (isMember && !projectPermission) {
