@@ -13,7 +13,7 @@ import { getIntegrationDetails } from "./lib/utils";
 
 interface ConnectIntegrationProps {
   isEnabled: boolean;
-  integrationType: TIntegrationType | "salesforce";
+  integrationType: TIntegrationType;
   handleAuthorization: () => void;
   integrationLogoSrc: string | StaticImageData;
 }

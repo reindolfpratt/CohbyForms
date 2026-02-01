@@ -2,15 +2,17 @@ import { z } from "zod";
 import { ZIntegrationAirtableConfig, ZIntegrationAirtableInput } from "./airtable";
 import { ZIntegrationGoogleSheetsConfig, ZIntegrationGoogleSheetsInput } from "./google-sheet";
 import { ZIntegrationNotionConfig, ZIntegrationNotionInput } from "./notion";
+import { ZIntegrationSalesforceConfig, ZIntegrationSalesforceInput } from "./salesforce";
 import { ZIntegrationSlackConfig, ZIntegrationSlackInput } from "./slack";
 
-export const ZIntegrationType = z.enum(["googleSheets", "n8n", "airtable", "notion", "slack", "salesforce"]);
+export const ZIntegrationType = z.enum(["googleSheets", "n8n", "airtable", "notion", "salesforce", "slack"]);
 export type TIntegrationType = z.infer<typeof ZIntegrationType>;
 
 export const ZIntegrationConfig = z.union([
   ZIntegrationGoogleSheetsConfig,
   ZIntegrationAirtableConfig,
   ZIntegrationNotionConfig,
+  ZIntegrationSalesforceConfig,
   ZIntegrationSlackConfig,
 ]);
 
@@ -40,6 +42,7 @@ export const ZIntegrationInput = z.discriminatedUnion("type", [
   ZIntegrationGoogleSheetsInput,
   ZIntegrationAirtableInput,
   ZIntegrationNotionInput,
+  ZIntegrationSalesforceInput,
   ZIntegrationSlackInput,
 ]);
 export type TIntegrationInput = z.infer<typeof ZIntegrationInput>;
