@@ -14,7 +14,7 @@ import { getFormattedErrorMessage } from "@/lib/utils/helper";
 import { Alert, AlertDescription } from "@/modules/ui/components/alert";
 import { Button } from "@/modules/ui/components/button";
 import { ConfirmationModal } from "@/modules/ui/components/confirmation-modal";
-import { ModalButton, UpgradePrompt } from "@/modules/ui/components/upgrade-prompt";
+import { UpgradePrompt } from "@/modules/ui/components/upgrade-prompt";
 import {
   createLanguageAction,
   deleteLanguageAction,
