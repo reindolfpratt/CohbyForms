@@ -1,11 +1,7 @@
 import { Project } from "@prisma/client";
 import { CalendarClockIcon, CheckCircle2Icon, HelpCircleIcon, PauseCircleIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { TSurveyClosedMessage } from "@formbricks/types/surveys/types";
 import { getTranslate } from "@/lingodotdev/server";
-import { Button } from "@/modules/ui/components/button";
-import footerLogo from "../lib/footerlogo.svg";
 
 export const SurveyInactive = async ({
   status,
@@ -24,7 +20,6 @@ export const SurveyInactive = async ({
     "response submitted": <CheckCircle2Icon className="h-20 w-20" />,
     "link expired": <CalendarClockIcon className="h-20 w-20" />,
   };
-
   const descriptions = {
     paused: t("s.paused"),
     completed: t("s.completed"),
@@ -32,13 +27,6 @@ export const SurveyInactive = async ({
     "response submitted": t("s.response_submitted"),
     "link expired": t("c.link_expired_description"),
   };
-
-  const showCTA =
-    status !== "link invalid" &&
-    status !== "link expired" &&
-    status !== "response submitted" &&
-    ((status !== "paused" && status !== "completed") || project?.linkSurveyBranding || !project) &&
-    !(status === "completed" && surveyClosedMessage);
 
   return (
     <div className="flex h-full flex-col items-center justify-between bg-gradient-to-br from-slate-200 to-slate-50 px-4 py-8 text-center">
@@ -54,19 +42,7 @@ export const SurveyInactive = async ({
             ? surveyClosedMessage.subheading
             : descriptions[status]}
         </p>
-        {showCTA && (
-          <Button className="mt-2" asChild>
-            <Link href="https://formbricks.com">{t("s.create_your_own")}</Link>
-          </Button>
-        )}
       </div>
-      {(!project || project.linkSurveyBranding) && (
-        <div>
-          <Link href="https://formbricks.com">
-            <Image src={footerLogo as string} alt="Brand logo" className="mx-auto w-40" />
-          </Link>
-        </div>
-      )}
     </div>
   );
 };

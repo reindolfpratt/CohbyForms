@@ -1,7 +1,6 @@
 "use client";
 
 import { TrashIcon } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -147,12 +146,6 @@ export const ActionSettingsTab = ({
                   {t("common.delete")}
                 </Button>
               ) : null}
-
-              <Button variant="secondary" asChild>
-                <Link href="https://formbricks.com/docs/actions/no-code" target="_blank">
-                  {t("common.read_docs")}
-                </Link>
-              </Button>
             </div>
 
             {!isReadOnly ? (

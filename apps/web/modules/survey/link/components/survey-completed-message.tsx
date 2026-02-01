@@ -1,10 +1,7 @@
 import { Project } from "@prisma/client";
 import { CheckCircle2Icon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { TSurveySingleUse } from "@formbricks/types/surveys/types";
 import { getTranslate } from "@/lingodotdev/server";
-import footerLogo from "../lib/footerlogo.svg";
 
 interface SurveyCompletedMessageProps {
   singleUseMessage: TSurveySingleUse | null;
@@ -25,13 +22,6 @@ export const SurveyCompletedMessage = async ({ singleUseMessage, project }: Surv
           {singleUseMessage?.subheading ?? defaultSubheading}
         </p>
       </div>
-      {(!project || project.linkSurveyBranding) && (
-        <div>
-          <Link href="https://formbricks.com">
-            <Image src={footerLogo as string} alt="Brand logo" className="mx-auto w-40" />
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
