@@ -41,20 +41,7 @@ export const TargetingLockedCard = ({ isFormbricksCloud, environmentId }: Target
           <UpgradePrompt
             title={t("environments.surveys.edit.unlock_targeting_title")}
             description={t("environments.surveys.edit.unlock_targeting_description")}
-            buttons={[
-              {
-                text: isFormbricksCloud ? t("common.start_free_trial") : t("common.request_trial_license"),
-                href: isFormbricksCloud
-                  ? `/environments/${environmentId}/settings/billing`
-                  : "https://formbricks.com/upgrade-self-hosting-license",
-              },
-              {
-                text: t("common.learn_more"),
-                href: isFormbricksCloud
-                  ? `/environments/${environmentId}/settings/billing`
-                  : "https://formbricks.com/learn-more-self-hosting-license",
-              },
-            ]}
+            buttons={[]}
           />
         </div>
       </Collapsible.CollapsibleContent>

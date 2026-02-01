@@ -170,21 +170,6 @@ export function EditLanguage({
     setIsEditing(false);
   };
 
-  const buttons: [ModalButton, ModalButton] = [
-    {
-      text: isFormbricksCloud ? t("common.start_free_trial") : t("common.request_trial_license"),
-      href: isFormbricksCloud
-        ? `/environments/${environmentId}/settings/billing`
-        : "https://formbricks.com/upgrade-self-hosting-license",
-    },
-    {
-      text: t("common.learn_more"),
-      href: isFormbricksCloud
-        ? `/environments/${environmentId}/settings/billing`
-        : "https://formbricks.com/learn-more-self-hosting-license",
-    },
-  ];
-
   const handleSaveChanges = async () => {
     if (!validateLanguages(languages, t)) return;
     await Promise.all(
@@ -239,7 +224,7 @@ export function EditLanguage({
                 ))}
               </>
             ) : (
-              <p className="text-sm text-slate-500 italic">
+              <p className="text-sm italic text-slate-500">
                 {t("environments.workspace.languages.no_language_found")}
               </p>
             )}
@@ -280,7 +265,7 @@ export function EditLanguage({
           description={t(
             "environments.settings.general.use_multi_language_surveys_with_a_higher_plan_description"
           )}
-          buttons={buttons}
+          buttons={[]}
         />
       )}
     </>
