@@ -1,3 +1,4 @@
+import { JSX } from "preact";
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 
