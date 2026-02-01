@@ -762,8 +762,11 @@
       },
       "notion_integration_description": "Send data to your Notion database",
       "please_select_a_survey_error": "Please select a survey",
-      "salesforce_integration_description": "Send survey responses directly to Salesforce CRM.",
-      "salesforce_integration_is_not_configured": "Salesforce Integration is not configured in your instance of CohbyForm.",
+      "salesforce": {
+        "connect_with_salesforce": "Connect with Salesforce",
+        "salesforce_integration_description": "Send survey responses directly to Salesforce CRM.",
+        "salesforce_integration_is_not_configured": "Salesforce Integration is not configured in your instance of CohbyForm."
+      },
       "select_at_least_one_question_error": "Please select at least one question",
       "slack": {
         "already_connected_another_survey": "You have already connected another survey to this channel.",
