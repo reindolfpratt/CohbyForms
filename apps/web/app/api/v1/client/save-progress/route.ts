@@ -4,8 +4,8 @@ import { prisma } from "@formbricks/database";
 import { logger } from "@formbricks/logger";
 import { getPublicDomain } from "@/lib/getPublicUrl";
 import { createResumeToken } from "@/lib/jwt";
+import { getSurvey } from "@/lib/survey/service";
 import { sendEmail } from "@/modules/email";
-import { getSurvey } from "@/modules/survey/service";
 
 const ZSaveProgressInput = z.object({
   surveyId: z.string(),
