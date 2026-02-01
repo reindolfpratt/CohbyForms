@@ -4,6 +4,7 @@ import {
   type DeleteObjectsCommandOutput,
   GetObjectCommand,
   HeadObjectCommand,
+  PutObjectCommand,
   paginateListObjectsV2,
 } from "@aws-sdk/client-s3";
 import {
@@ -34,7 +35,7 @@ export const getSignedUploadUrl = async (
   Result<
     {
       signedUrl: string;
-      presignedFields: PresignedPost["fields"];
+      presignedFields: Record<string, string>;
     },
     StorageError
   >
@@ -49,10 +50,6 @@ export const getSignedUploadUrl = async (
       });
     }
 
-    const postConditions: PresignedPostOptions["Conditions"] = maxSize
-      ? [["content-length-range", 0, maxSize]]
-      : undefined;
-
     if (!S3_BUCKET_NAME) {
       logger.error("Failed to get signed upload URL: S3 bucket name is not set");
       return err({
@@ -60,20 +57,17 @@ export const getSignedUploadUrl = async (
       });
     }
 
-    const { fields, url } = await createPresignedPost(s3Client, {
-      Expires: 2 * 60, // 2 minutes
+    const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
-      Fields: {
-        "Content-Type": contentType,
-        // "Content-Encoding": "base64",
-      },
-      Conditions: postConditions,
+      ContentType: contentType,
     });
 
+    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 2 * 60 });
+
     return ok({
-      signedUrl: url,
-      presignedFields: fields,
+      signedUrl,
+      presignedFields: {}, // Empty fields for PUT
     });
   } catch (error) {
     logger.error({ error }, "Failed to get signed upload URL");
