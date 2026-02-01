@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { logger } from "@formbricks/logger";
 import { ZId } from "@formbricks/types/common";
 import { TSurvey } from "@formbricks/types/surveys/types";
+import { verifyResumeToken } from "@/lib/jwt";
+import { getResponse } from "@/lib/response/service";
 import { findMatchingLocale } from "@/lib/utils/locale";
 import { getMultiLanguagePermission } from "@/modules/ee/license-check/lib/utils";
 import { getResponseCountBySurveyId } from "@/modules/survey/lib/response";
@@ -23,6 +25,7 @@ interface LinkSurveyPageProps {
     lang?: string;
     embed?: string;
     preview?: string;
+    resume?: string;
   }>;
 }
 
@@ -102,14 +105,23 @@ export const LinkSurveyPage = async (props: LinkSurveyPageProps) => {
     singleUseId = validatedSingleUseId;
   }
 
+  const resumeToken = searchParams.resume;
+  let resumedResponseId: string | null = null;
+
+  if (resumeToken) {
+    resumedResponseId = verifyResumeToken(resumeToken);
+  }
+
   // Stage 2: Parallel fetch of all remaining data
-  const [environmentContext, locale, singleUseResponse] = await Promise.all([
+  const [environmentContext, locale, singleUseResponse, resumedResponse] = await Promise.all([
     getEnvironmentContextForLinkSurvey(survey.environmentId),
     findMatchingLocale(),
     // Only fetch single-use response if we have a validated ID
     isSingleUseSurvey && singleUseId
       ? getResponseBySingleUseId(survey.id, singleUseId)()
       : Promise.resolve(undefined),
+    // Fetch resumed response if valid token
+    resumedResponseId ? getResponse(resumedResponseId) : Promise.resolve(undefined),
   ]);
 
   // Stage 3: Get multi-language permission (depends on environmentContext)
@@ -129,8 +141,7 @@ export const LinkSurveyPage = async (props: LinkSurveyPageProps) => {
   return renderSurvey({
     survey,
     searchParams,
-    singleUseId,
-    singleUseResponse: singleUseResponse ?? undefined,
+    singleUseResponse: singleUseResponse ?? resumedResponse ?? undefined,
     isPreview,
     environmentContext,
     locale,

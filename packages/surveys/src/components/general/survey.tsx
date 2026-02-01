@@ -11,6 +11,7 @@ import type {
 import { TUploadFileConfig } from "@formbricks/types/storage";
 import { TSurveyBlock, TSurveyBlockLogic } from "@formbricks/types/surveys/blocks";
 import { TSurveyElement } from "@formbricks/types/surveys/elements";
+import { SaveProgressModal } from "@/components/general/SaveProgressModal";
 import { BlockConditional } from "@/components/general/block-conditional";
 import { EndingCard } from "@/components/general/ending-card";
 import { ErrorComponent } from "@/components/general/error-component";
@@ -98,9 +99,8 @@ export function Survey({
     return null;
   }, [appUrl, environmentId, mode, survey.id, userId, singleUseId, singleUseResponseId, contactId]);
 
-  // Update the responseQueue to use the stored responseId
-
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
 
   const [localSurvey, setlocalSurvey] = useState<TJsEnvironmentStateSurvey>(survey);
   const [currentVariables, setCurrentVariables] = useState<TResponseVariables>({});
@@ -828,6 +828,7 @@ export function Survey({
               onOpenExternalURL={onOpenExternalURL}
               dir={dir}
               fullSizeCards={fullSizeCards}
+              onSave={() => setIsSaveModalOpen(true)}
             />
           )
         );
@@ -908,16 +909,25 @@ export function Survey({
   };
 
   return (
-    <StackedCardsContainer
-      cardArrangement={cardArrangement}
-      currentBlockId={blockId}
-      getCardContent={getCardContent}
-      survey={localSurvey}
-      styling={styling}
-      setBlockId={setBlockId}
-      shouldResetBlockId={shouldResetQuestionId}
-      fullSizeCards={fullSizeCards}
-      placement={placement}
-    />
+    <>
+      <StackedCardsContainer
+        cardArrangement={cardArrangement}
+        currentBlockId={blockId}
+        getCardContent={getCardContent}
+        survey={localSurvey}
+        styling={styling}
+        setBlockId={setBlockId}
+        shouldResetBlockId={shouldResetQuestionId}
+        fullSizeCards={fullSizeCards}
+        placement={placement}
+      />
+      <SaveProgressModal
+        open={isSaveModalOpen}
+        setOpen={setIsSaveModalOpen}
+        surveyId={survey.id}
+        responseId={surveyState?.responseId ?? undefined}
+        saveProgressApiUrl={appUrl ? `${appUrl}/api/v1/client/save-progress` : undefined}
+      />
+    </>
   );
 }

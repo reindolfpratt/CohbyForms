@@ -8,6 +8,7 @@ import { type TSurveyElement, type TSurveyRankingElement } from "@formbricks/typ
 import { TSurveyLanguage } from "@formbricks/types/surveys/types";
 import { TValidationErrorMap } from "@formbricks/types/surveys/validation-rules";
 import { BackButton } from "@/components/buttons/back-button";
+import { SaveButton } from "@/components/buttons/save-button";
 import { SubmitButton } from "@/components/buttons/submit-button";
 import { ElementConditional } from "@/components/general/element-conditional";
 import { ScrollableContainer } from "@/components/wrappers/scrollable-container";
@@ -36,6 +37,7 @@ interface BlockConditionalProps {
   dir?: "ltr" | "rtl" | "auto";
   fullSizeCards: boolean;
   surveyLanguages: TSurveyLanguage[];
+  onSave?: () => void;
 }
 
 export function BlockConditional({
@@ -59,6 +61,7 @@ export function BlockConditional({
   dir,
   fullSizeCards,
   surveyLanguages,
+  onSave,
 }: Readonly<BlockConditionalProps>) {
   // Track the current element being filled (for TTC tracking)
   const [currentElementId, setCurrentElementId] = useState(block.elements[0]?.id);
@@ -358,15 +361,18 @@ export function BlockConditional({
                 tabIndex={0}
               />
             </div>
-            {!isFirstBlock && !isBackButtonHidden && (
-              <BackButton
-                backButtonLabel={
-                  block.backButtonLabel ? getLocalizedValue(block.backButtonLabel, languageCode) : undefined
-                }
-                onClick={onBack}
-                tabIndex={0}
-              />
-            )}
+            <div className="flex gap-2">
+              {onSave && <SaveButton onClick={onSave} tabIndex={0} />}
+              {!isFirstBlock && !isBackButtonHidden && (
+                <BackButton
+                  backButtonLabel={
+                    block.backButtonLabel ? getLocalizedValue(block.backButtonLabel, languageCode) : undefined
+                  }
+                  onClick={onBack}
+                  tabIndex={0}
+                />
+              )}
+            </div>
           </div>
         </div>
       </ScrollableContainer>

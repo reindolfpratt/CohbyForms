@@ -300,3 +300,36 @@ export const verifyInviteToken = (token: string): { inviteId: string; email: str
     throw new Error("Invalid or expired invite token");
   }
 };
+
+export const createResumeToken = (responseId: string): string => {
+  if (!NEXTAUTH_SECRET) {
+    throw new Error("NEXTAUTH_SECRET is not set");
+  }
+
+  if (!ENCRYPTION_KEY) {
+    throw new Error("ENCRYPTION_KEY is not set");
+  }
+
+  const encryptedResponseId = symmetricEncrypt(responseId, ENCRYPTION_KEY);
+  return jwt.sign({ responseId: encryptedResponseId }, NEXTAUTH_SECRET, {
+    expiresIn: "30d", // Token valid for 30 days
+  });
+};
+
+export const verifyResumeToken = (token: string): string | null => {
+  if (!NEXTAUTH_SECRET) return null;
+  if (!ENCRYPTION_KEY) return null;
+
+  try {
+    const payload = jwt.verify(token, NEXTAUTH_SECRET, { algorithms: ["HS256"] }) as JwtPayload & {
+      responseId: string;
+    };
+
+    if (!payload.responseId) return null;
+
+    return decryptWithFallback(payload.responseId, ENCRYPTION_KEY);
+  } catch (error) {
+    logger.error(error, "Resume token verification failed");
+    return null;
+  }
+};
