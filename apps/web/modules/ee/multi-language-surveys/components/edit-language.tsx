@@ -29,8 +29,6 @@ interface EditLanguageProps {
   locale: TUserLocale;
   isReadOnly: boolean;
   isMultiLanguageAllowed: boolean;
-  environmentId: string;
-  isFormbricksCloud: boolean;
 }
 
 const checkIfDuplicateExists = (arr: string[]) => {
@@ -81,14 +79,7 @@ const validateLanguages = (languages: Language[], t: TFunction) => {
   return true;
 };
 
-export function EditLanguage({
-  project,
-  locale,
-  isReadOnly,
-  isMultiLanguageAllowed,
-  environmentId,
-  isFormbricksCloud,
-}: EditLanguageProps) {
+export function EditLanguage({ project, locale, isReadOnly, isMultiLanguageAllowed }: EditLanguageProps) {
   const { t } = useTranslation();
   const [languages, setLanguages] = useState<Language[]>(project.languages);
   const [isEditing, setIsEditing] = useState(false);

@@ -1,5 +1,4 @@
 import { SettingsCard } from "@/app/(app)/environments/[environmentId]/settings/components/SettingsCard";
-import { IS_FORMBRICKS_CLOUD } from "@/lib/constants";
 import { getUser } from "@/lib/user/service";
 import { getTranslate } from "@/lingodotdev/server";
 import { getMultiLanguagePermission } from "@/modules/ee/license-check/lib/utils";
@@ -36,8 +35,6 @@ export const LanguagesPage = async (props: { params: Promise<{ environmentId: st
           locale={user.locale}
           isReadOnly={isReadOnly}
           isMultiLanguageAllowed={isMultiLanguageAllowed}
-          environmentId={params.environmentId}
-          isFormbricksCloud={IS_FORMBRICKS_CLOUD}
         />
       </SettingsCard>
     </PageContentWrapper>
