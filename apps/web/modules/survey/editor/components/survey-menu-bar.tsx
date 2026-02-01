@@ -450,13 +450,13 @@ export const SurveyMenuBar = ({
   };
 
   return (
-    <div className="border-b border-slate-200 bg-white px-5 py-2.5 sm:flex sm:items-center sm:justify-between">
+    <div className="border-b border-slate-700 bg-[#0a1551] px-5 py-2.5 text-white sm:flex sm:items-center sm:justify-between">
       <div className="flex h-full items-center space-x-2 whitespace-nowrap">
         {!isCxMode && (
           <Button
             size="sm"
             variant="secondary"
-            className="h-full"
+            className="h-full text-slate-700"
             onClick={() => {
               handleBack();
             }}>
@@ -471,7 +471,7 @@ export const SurveyMenuBar = ({
             const updatedSurvey = { ...localSurvey, name: e.target.value };
             setLocalSurvey(updatedSurvey);
           }}
-          className="h-8 w-72 border-white py-0 hover:border-slate-200"
+          className="h-8 w-72 border-transparent bg-transparent text-white hover:border-slate-500 focus:border-slate-500"
         />
       </div>
 
