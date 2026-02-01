@@ -17,6 +17,8 @@ import ZapierLogo from "@/images/zapier-small.png";
 import { getIntegrations } from "@/lib/integration/service";
 import { getTranslate } from "@/lingodotdev/server";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
+import { ProjectConfigNavigation } from "@/modules/projects/settings/components/project-config-navigation";
+import { Card } from "@/modules/ui/components/integration-card";
 import { PageContentWrapper } from "@/modules/ui/components/page-content-wrapper";
 import { PageHeader } from "@/modules/ui/components/page-header";
 
