@@ -103,10 +103,6 @@ export const ContactSurveyPage = async (props: ContactSurveyPageProps) => {
 
   const existingResponse = await getExistingContactResponse(surveyId, contactId)();
   if (existingResponse) {
-    const survey = await getSurvey(surveyId);
-    if (survey) {
-      return <SurveyInactive status="response submitted" />;
-    }
     return <SurveyInactive status="response submitted" />;
   }
 
