@@ -13,7 +13,6 @@ interface LinkSurveyWrapperProps {
   children: JSX.Element;
   project: Pick<Project, "styling" | "logo" | "linkSurveyBranding">;
   isWelcomeCardEnabled: boolean;
-  surveyId: string;
   surveyType: SurveyType;
   isPreview: boolean;
   isEmbed: boolean;
@@ -22,7 +21,6 @@ interface LinkSurveyWrapperProps {
   IMPRINT_URL?: string;
   PRIVACY_URL?: string;
   IS_FORMBRICKS_CLOUD: boolean;
-  publicDomain: string;
   isBrandingEnabled: boolean;
   dir?: "ltr" | "rtl" | "auto";
 }
