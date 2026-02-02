@@ -9,11 +9,11 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-1">
             <Image
-              src="/logo-transparent.png"
+              src="/cohbyform-logo.png"
               alt="CohbyForm"
-              width={120}
-              height={36}
-              className="mb-4 h-9 w-auto brightness-0 invert"
+              width={160}
+              height={50}
+              className="mb-4 h-12 w-auto"
             />
             <p className="text-sm leading-relaxed">
               Beautiful forms that feel like a conversation. Get more responses with less effort.

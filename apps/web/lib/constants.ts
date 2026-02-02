@@ -27,7 +27,9 @@ export const IMPRINT_URL = env.IMPRINT_URL;
 export const IMPRINT_ADDRESS = env.IMPRINT_ADDRESS;
 
 export const PASSWORD_RESET_DISABLED = env.PASSWORD_RESET_DISABLED === "1";
-export const EMAIL_VERIFICATION_DISABLED = env.EMAIL_VERIFICATION_DISABLED === "1";
+// Disable email verification if explicitly set OR if SMTP is not configured
+export const EMAIL_VERIFICATION_DISABLED =
+  env.EMAIL_VERIFICATION_DISABLED === "1" || !(env.SMTP_HOST && env.SMTP_PORT);
 
 export const GOOGLE_OAUTH_ENABLED = !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET);
 export const GITHUB_OAUTH_ENABLED = !!(env.GITHUB_ID && env.GITHUB_SECRET);

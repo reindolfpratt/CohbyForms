@@ -94,7 +94,8 @@ export const sendEmail = async (emailData: SendEmailDataProps): Promise<boolean>
     return true;
   } catch (error) {
     logger.error(error, "Error in sendEmail");
-    throw new InvalidInputError("Incorrect SMTP credentials");
+    // Return false instead of throwing - let calling code handle the failure gracefully
+    return false;
   }
 };
 
