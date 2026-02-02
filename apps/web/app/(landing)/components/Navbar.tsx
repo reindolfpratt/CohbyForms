@@ -18,7 +18,7 @@ export const LandingNavbar = () => {
   return (
     <nav
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 shadow-sm backdrop-blur-md" : "bg-transparent"
+        scrolled ? "bg-white/95 shadow-sm backdrop-blur-md" : "bg-[#1a1625]"
       }`}>
       <div className="mx-auto max-w-7xl px-6 py-4">
         <div className="flex items-center justify-between">
@@ -29,7 +29,7 @@ export const LandingNavbar = () => {
               alt="CohbyForm"
               width={140}
               height={40}
-              className="h-10 w-auto"
+              className={`h-10 w-auto transition-all duration-300 ${!scrolled ? "brightness-0 invert" : ""}`}
             />
           </Link>
 
@@ -37,17 +37,23 @@ export const LandingNavbar = () => {
           <div className="hidden items-center gap-8 md:flex">
             <Link
               href="#features"
-              className="font-medium text-slate-600 transition-colors hover:text-slate-900">
+              className={`font-medium transition-colors ${
+                scrolled ? "text-slate-600 hover:text-slate-900" : "text-purple-200/80 hover:text-white"
+              }`}>
               Features
             </Link>
             <Link
               href="#how-it-works"
-              className="font-medium text-slate-600 transition-colors hover:text-slate-900">
+              className={`font-medium transition-colors ${
+                scrolled ? "text-slate-600 hover:text-slate-900" : "text-purple-200/80 hover:text-white"
+              }`}>
               How It Works
             </Link>
             <Link
               href="#integrations"
-              className="font-medium text-slate-600 transition-colors hover:text-slate-900">
+              className={`font-medium transition-colors ${
+                scrolled ? "text-slate-600 hover:text-slate-900" : "text-purple-200/80 hover:text-white"
+              }`}>
               Integrations
             </Link>
           </div>
@@ -56,13 +62,19 @@ export const LandingNavbar = () => {
           <div className="flex items-center gap-4">
             <Link
               href="/auth/login"
-              className="font-medium text-slate-600 transition-colors hover:text-slate-900">
+              className={`font-medium transition-colors ${
+                scrolled ? "text-slate-600 hover:text-slate-900" : "text-purple-200/80 hover:text-white"
+              }`}>
               Log in
             </Link>
             <Link
               href="/auth/login"
-              className="rounded-full bg-gradient-to-r from-teal-500 to-blue-600 px-6 py-2.5 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-500/25">
-              Get Started Free
+              className={`rounded-full px-6 py-2.5 font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
+                scrolled
+                  ? "bg-gradient-to-r from-teal-500 to-blue-600 text-white hover:shadow-lg hover:shadow-teal-500/25"
+                  : "border border-white/60 bg-transparent text-white hover:bg-white hover:text-[#1a1625]"
+              }`}>
+              Sign up
             </Link>
           </div>
         </div>
