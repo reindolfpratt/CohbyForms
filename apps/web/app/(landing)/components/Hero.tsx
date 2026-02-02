@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
@@ -56,9 +55,9 @@ export const Hero = () => {
           {/* CTA Button */}
           <div className="animate-on-scroll mb-8 flex flex-col items-center justify-center gap-4 opacity-0">
             <Link
-              href="/auth/login"
+              href="/auth/signup"
               className="rounded-full border-2 border-white/80 bg-transparent px-8 py-3 text-base font-medium text-white transition-all duration-300 hover:bg-white hover:text-[#1a1625]">
-              See plans
+              Get Started Free
             </Link>
           </div>
         </div>

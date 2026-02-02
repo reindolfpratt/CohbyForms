@@ -68,7 +68,7 @@ export const LandingNavbar = () => {
               Log in
             </Link>
             <Link
-              href="/auth/login"
+              href="/auth/signup"
               className={`rounded-full px-6 py-2.5 font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
                 scrolled
                   ? "bg-gradient-to-r from-teal-500 to-blue-600 text-white hover:shadow-lg hover:shadow-teal-500/25"
