@@ -101,6 +101,7 @@ export function Survey({
 
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+  const [currentResponseId, setCurrentResponseId] = useState<string | null>(null);
 
   const [localSurvey, setlocalSurvey] = useState<TJsEnvironmentStateSurvey>(survey);
   const [currentVariables, setCurrentVariables] = useState<TResponseVariables>({});
@@ -133,6 +134,10 @@ export function Survey({
               setIsSurveyFinished(true);
               setBlockId(quotaInfo.endingCardId);
             }
+          },
+          setSurveyState: (state) => {
+            // Update the currentResponseId when surveyState changes
+            setCurrentResponseId(state.responseId);
           },
         },
         surveyState
@@ -925,7 +930,7 @@ export function Survey({
         open={isSaveModalOpen}
         setOpen={setIsSaveModalOpen}
         surveyId={survey.id}
-        responseId={surveyState?.responseId ?? undefined}
+        responseId={currentResponseId ?? surveyState?.responseId ?? undefined}
         saveProgressApiUrl={appUrl ? `${appUrl}/api/v1/client/save-progress` : undefined}
       />
     </>
