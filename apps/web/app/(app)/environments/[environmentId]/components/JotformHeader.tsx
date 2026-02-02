@@ -233,16 +233,16 @@ export const JotformHeader = ({
             ))}
             <DropdownMenuItem
               onClick={async () => {
-                const loginUrl = `${publicDomain}/auth/login`;
+                const homeUrl = `${publicDomain}/`;
                 await signOutWithAudit({
                   reason: "user_initiated",
-                  redirectUrl: loginUrl,
+                  redirectUrl: homeUrl,
                   organizationId: organization.id,
                   redirect: false,
-                  callbackUrl: loginUrl,
+                  callbackUrl: homeUrl,
                   clearEnvironmentId: true,
                 });
-                router.push(loginUrl);
+                router.push(homeUrl);
               }}
               className="text-red-600 focus:bg-red-50 focus:text-red-600">
               <LogOutIcon className="mr-2 h-4 w-4" />

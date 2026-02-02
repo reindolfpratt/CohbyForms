@@ -101,10 +101,10 @@ export const LandingSidebar = ({ user, organization }: LandingSidebarProps) => {
               onClick={async () => {
                 await signOutWithAudit({
                   reason: "user_initiated",
-                  redirectUrl: "/auth/login",
+                  redirectUrl: "/",
                   organizationId: organization.id,
                   redirect: true,
-                  callbackUrl: "/auth/login",
+                  callbackUrl: "/",
                   clearEnvironmentId: true,
                 });
               }}

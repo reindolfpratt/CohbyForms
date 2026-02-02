@@ -124,7 +124,7 @@ export const Footer = () => {
             </Link>
             {/* LinkedIn */}
             <Link
-              href="https://www.linkedin.com/company/cohby-consulting"
+              href="https://www.linkedin.com/company/cohby-consulting-services/"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-white">
