@@ -81,7 +81,7 @@ export const renderSurvey = async ({
 
   // Check if single-use survey has already been completed
   if (singleUseResponse?.finished) {
-    return <SurveyCompletedMessage singleUseMessage={survey.singleUse} project={project} />;
+    return <SurveyCompletedMessage singleUseMessage={survey.singleUse} />;
   }
 
   // Handle email verification flow if enabled
