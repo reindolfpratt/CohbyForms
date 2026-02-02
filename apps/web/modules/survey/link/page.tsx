@@ -100,7 +100,7 @@ export const LinkSurveyPage = async (props: LinkSurveyPageProps) => {
     if (!validatedSingleUseId) {
       // Need to fetch project for error page - fetch environmentContext for it
       const environmentContext = await getEnvironmentContextForLinkSurvey(survey.environmentId);
-      return <SurveyInactive status="link invalid" project={environmentContext.project} />;
+      return <SurveyInactive status="link invalid" />;
     }
     singleUseId = validatedSingleUseId;
   }

@@ -1,4 +1,3 @@
-import { Project } from "@prisma/client";
 import { CalendarClockIcon, CheckCircle2Icon, HelpCircleIcon, PauseCircleIcon } from "lucide-react";
 import { TSurveyClosedMessage } from "@formbricks/types/surveys/types";
 import { getTranslate } from "@/lingodotdev/server";
@@ -6,11 +5,9 @@ import { getTranslate } from "@/lingodotdev/server";
 export const SurveyInactive = async ({
   status,
   surveyClosedMessage,
-  project,
 }: {
   status: "paused" | "completed" | "link invalid" | "response submitted" | "link expired";
   surveyClosedMessage?: TSurveyClosedMessage | null;
-  project?: Pick<Project, "linkSurveyBranding">;
 }) => {
   const t = await getTranslate();
   const icons = {

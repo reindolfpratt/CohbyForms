@@ -12,7 +12,6 @@ import { getExistingContactResponse } from "@/modules/survey/link/lib/data";
 import { getEnvironmentContextForLinkSurvey } from "@/modules/survey/link/lib/environment";
 import { checkAndValidateSingleUseId } from "@/modules/survey/link/lib/helper";
 import { getBasicSurveyMetadata, getSurveyOpenGraphMetadata } from "@/modules/survey/link/lib/metadata-utils";
-import { getProjectByEnvironmentId } from "@/modules/survey/link/lib/project";
 
 interface ContactSurveyPageProps {
   params: Promise<{
@@ -106,8 +105,7 @@ export const ContactSurveyPage = async (props: ContactSurveyPageProps) => {
   if (existingResponse) {
     const survey = await getSurvey(surveyId);
     if (survey) {
-      const project = await getProjectByEnvironmentId(survey.environmentId);
-      return <SurveyInactive status="response submitted" project={project || undefined} />;
+      return <SurveyInactive status="response submitted" />;
     }
     return <SurveyInactive status="response submitted" />;
   }
@@ -128,7 +126,7 @@ export const ContactSurveyPage = async (props: ContactSurveyPageProps) => {
     const validatedSingleUseId = checkAndValidateSingleUseId(suId, isSingleUseSurveyEncrypted);
     if (!validatedSingleUseId) {
       const environmentContext = await getEnvironmentContextForLinkSurvey(survey.environmentId);
-      return <SurveyInactive status="link invalid" project={environmentContext.project} />;
+      return <SurveyInactive status="link invalid" />;
     }
 
     singleUseId = validatedSingleUseId;

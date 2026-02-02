@@ -76,13 +76,7 @@ export const renderSurvey = async ({
   const isSpamProtectionEnabled = Boolean(IS_RECAPTCHA_CONFIGURED && survey.recaptcha?.enabled);
 
   if (survey.status !== "inProgress") {
-    return (
-      <SurveyInactive
-        status={survey.status}
-        surveyClosedMessage={survey.surveyClosedMessage}
-        project={project}
-      />
-    );
+    return <SurveyInactive status={survey.status} surveyClosedMessage={survey.surveyClosedMessage} />;
   }
 
   // Check if single-use survey has already been completed
