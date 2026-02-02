@@ -10,6 +10,13 @@ interface SaveProgressModalProps {
   saveProgressApiUrl?: string;
 }
 
+interface SaveProgressResponse {
+  success: boolean;
+  resumeLink?: string;
+  emailSent?: boolean;
+  message?: string;
+}
+
 export const SaveProgressModal = ({
   open,
   setOpen,
@@ -22,6 +29,9 @@ export const SaveProgressModal = ({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [resumeLink, setResumeLink] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const handleSave = async (e: JSX.TargetedEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,11 +56,34 @@ export const SaveProgressModal = ({
         throw new Error("Failed to save progress");
       }
 
+      const data: SaveProgressResponse = await res.json();
       setSuccess(true);
+      setResumeLink(data.resumeLink || null);
+      setEmailSent(data.emailSent || false);
     } catch (err) {
       setError(t("common.error_occurred", "An error occurred. Please try again."));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    if (resumeLink) {
+      try {
+        await navigator.clipboard.writeText(resumeLink);
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2000);
+      } catch (err) {
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = resumeLink;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        setLinkCopied(true);
+        setTimeout(() => setLinkCopied(false), 2000);
+      }
     }
   };
 
@@ -70,12 +103,14 @@ export const SaveProgressModal = ({
             <h2 className="text-heading text-xl font-bold">
               {t("common.save_and_continue_later", "Save & Continue Later")}
             </h2>
-            <p className="text-subheading mt-2 text-sm">
-              {t(
-                "common.enter_email_to_resume",
-                "Enter your email to receive a link to resume your form later."
-              )}
-            </p>
+            {!success && (
+              <p className="text-subheading mt-2 text-sm">
+                {t(
+                  "common.enter_email_to_resume",
+                  "Enter your email to receive a link to resume your form later."
+                )}
+              </p>
+            )}
           </div>
 
           {success ? (
@@ -89,9 +124,35 @@ export const SaveProgressModal = ({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <p className="text-heading mb-6 font-medium">
-                {t("common.link_sent", "Link sent! Check your inbox.")}
+              <p className="text-heading mb-4 font-medium">
+                {emailSent
+                  ? t("common.link_sent", "Link sent! Check your inbox.")
+                  : t("common.progress_saved", "Your progress has been saved!")}
               </p>
+
+              {/* Show resume link if email wasn't sent */}
+              {!emailSent && resumeLink && (
+                <div className="mb-4 rounded-lg bg-slate-100 p-3 text-left">
+                  <p className="text-subheading mb-2 text-xs">
+                    {t("common.copy_link_to_resume", "Copy this link to resume later:")}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      readOnly
+                      value={resumeLink}
+                      className="min-w-0 flex-1 truncate rounded border border-slate-300 bg-white px-2 py-1 text-xs"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className="shrink-0 rounded bg-slate-900 px-3 py-1 text-xs font-medium text-white hover:bg-slate-800">
+                      {linkCopied ? t("common.copied", "Copied!") : t("common.copy", "Copy")}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <button
                 type="button"
                 className="bg-brand text-on-brand focus:ring-focus focus:outline-hidden w-full rounded-md px-4 py-2 font-medium hover:opacity-90 focus:ring-2 focus:ring-offset-2"

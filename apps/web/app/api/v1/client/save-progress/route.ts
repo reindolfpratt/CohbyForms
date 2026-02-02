@@ -76,13 +76,22 @@ export const POST = async (request: Request) => {
       </html>
     `;
 
-    await sendEmail({
+    // Try to send email, but don't fail if email sending doesn't work
+    const emailSent = await sendEmail({
       to: email,
       subject: `Continue your form: ${survey.name}`,
       html: htmlData,
     });
 
-    return NextResponse.json({ success: true });
+    // Return success with the resume link - even if email fails, user can use the link
+    return NextResponse.json({
+      success: true,
+      resumeLink: resumeLink,
+      emailSent: emailSent,
+      message: emailSent
+        ? "A link has been sent to your email!"
+        : "Your progress has been saved. Copy this link to continue later.",
+    });
   } catch (error) {
     logger.error(error, "Error saving progress");
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
