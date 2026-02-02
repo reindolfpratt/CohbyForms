@@ -220,6 +220,7 @@ export const getExistingContactResponse = reactCache((surveyId: string, contactI
       select: {
         id: true,
         finished: true,
+        data: true,
       },
     });
 
