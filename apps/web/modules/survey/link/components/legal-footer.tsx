@@ -7,15 +7,9 @@ interface LegalFooterProps {
   IMPRINT_URL?: string;
   PRIVACY_URL?: string;
   IS_FORMBRICKS_CLOUD: boolean;
-  surveyUrl: string;
 }
 
-export const LegalFooter = ({
-  IMPRINT_URL,
-  PRIVACY_URL,
-  IS_FORMBRICKS_CLOUD,
-  surveyUrl,
-}: LegalFooterProps) => {
+export const LegalFooter = ({ IMPRINT_URL, PRIVACY_URL, IS_FORMBRICKS_CLOUD }: LegalFooterProps) => {
   const { t } = useTranslation();
   if (!IMPRINT_URL && !PRIVACY_URL && !IS_FORMBRICKS_CLOUD) return null;
 
