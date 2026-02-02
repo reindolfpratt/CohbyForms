@@ -177,6 +177,11 @@ export class ResponseQueue {
         if (!response.ok) {
           return err(response.error);
         }
+
+        // Also call setSurveyState on update so React state is synced
+        if (this.config.setSurveyState) {
+          this.config.setSurveyState(this.surveyState);
+        }
       } else {
         response = await this.api.createResponse({
           ...responseUpdate,
