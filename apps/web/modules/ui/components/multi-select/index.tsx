@@ -58,7 +58,7 @@ export function MultiSelect<T extends string, K extends TOption<T>["value"][]>(
         setSelected(newSelected);
       }
     }
-  }, [value, options]);
+  }, [value, options, selected]);
 
   // Sync user-initiated selected changes to parent via onChange (deferred to avoid render issues)
   const prevSelectedRef = React.useRef(selected);
@@ -112,7 +112,7 @@ export function MultiSelect<T extends string, K extends TOption<T>["value"][]>(
         input.blur();
       }
     },
-    [onChange, disabled]
+    [disabled]
   );
 
   const selectableOptions = React.useMemo(() => {

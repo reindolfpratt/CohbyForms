@@ -46,11 +46,7 @@ export const SurveysList = ({
   const [surveyFilters, setSurveyFilters] = useState<TSurveyFilters>(initialFilters);
   const [isFilterInitialized, setIsFilterInitialized] = useState(false);
 
-  const { name, createdBy, status, type, sortBy } = surveyFilters;
-  const filters = useMemo(
-    () => getFormattedFilters(surveyFilters, userId),
-    [name, JSON.stringify(createdBy), JSON.stringify(status), JSON.stringify(type), sortBy, userId]
-  );
+  const filters = useMemo(() => getFormattedFilters(surveyFilters, userId), [surveyFilters, userId]);
   const [parent] = useAutoAnimate();
 
   useEffect(() => {

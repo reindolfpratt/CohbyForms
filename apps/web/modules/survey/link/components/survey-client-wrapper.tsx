@@ -99,7 +99,7 @@ export const SurveyClientWrapper = ({
       if (answer) fieldsRecord[field] = answer;
     }
     return fieldsRecord;
-  }, [searchParams, JSON.stringify(survey.hiddenFields.fieldIds || [])]);
+  }, [searchParams, survey.hiddenFields.fieldIds]);
 
   // Include verified email in hidden fields if available
   const getVerifiedEmail = useMemo<Record<string, string> | null>(() => {
@@ -125,7 +125,7 @@ export const SurveyClientWrapper = ({
 
   return (
     <>
-      {/* Inject custom scripts for tracking/analytics (self-hosted only) */}
+      {/* Inject custom scripts for tracking/tracking (self-hosted only) */}
       {!IS_FORMBRICKS_CLOUD && !isPreview && (
         <CustomScriptsInjector
           projectScripts={project.customHeadScripts}
@@ -135,14 +135,12 @@ export const SurveyClientWrapper = ({
       )}
       <LinkSurveyWrapper
         project={project}
-        surveyId={survey.id}
         isWelcomeCardEnabled={survey.welcomeCard.enabled}
         isPreview={isPreview}
         surveyType={survey.type}
         determineStyling={() => styling}
         handleResetSurvey={handleResetSurvey}
         isEmbed={isEmbed}
-        publicDomain={publicDomain}
         IS_FORMBRICKS_CLOUD={IS_FORMBRICKS_CLOUD}
         IMPRINT_URL={IMPRINT_URL}
         PRIVACY_URL={PRIVACY_URL}

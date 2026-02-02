@@ -1,14 +1,12 @@
-import { Project } from "@prisma/client";
 import { CheckCircle2Icon } from "lucide-react";
 import { TSurveySingleUse } from "@formbricks/types/surveys/types";
 import { getTranslate } from "@/lingodotdev/server";
 
 interface SurveyCompletedMessageProps {
   singleUseMessage: TSurveySingleUse | null;
-  project?: Pick<Project, "linkSurveyBranding">;
 }
 
-export const SurveyCompletedMessage = async ({ singleUseMessage, project }: SurveyCompletedMessageProps) => {
+export const SurveyCompletedMessage = async ({ singleUseMessage }: SurveyCompletedMessageProps) => {
   const t = await getTranslate();
   const defaultHeading = t("s.survey_already_answered_heading");
   const defaultSubheading = t("s.survey_already_answered_subheading");

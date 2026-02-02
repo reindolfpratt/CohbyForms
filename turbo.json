@@ -247,6 +247,8 @@
         "UNSPLASH_ACCESS_KEY",
         "PROMETHEUS_ENABLED",
         "PROMETHEUS_EXPORTER_PORT",
+        "SALESFORCE_CLIENT_ID",
+        "SALESFORCE_CLIENT_SECRET",
         "USER_MANAGEMENT_MINIMUM_ROLE"
       ],
       "outputs": ["dist/**", ".next/**"]
