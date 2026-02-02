@@ -125,7 +125,6 @@ export const ContactSurveyPage = async (props: ContactSurveyPageProps) => {
   if (isSingleUseSurvey) {
     const validatedSingleUseId = checkAndValidateSingleUseId(suId, isSingleUseSurveyEncrypted);
     if (!validatedSingleUseId) {
-      const environmentContext = await getEnvironmentContextForLinkSurvey(survey.environmentId);
       return <SurveyInactive status="link invalid" />;
     }
 
