@@ -10,16 +10,19 @@ import { getUserProjectEnvironmentsByOrganizationIds } from "@/lib/project/servi
 import { getUser } from "@/lib/user/service";
 import { authOptions } from "@/modules/auth/lib/authOptions";
 import { ClientLogout } from "@/modules/ui/components/client-logout";
+import LandingPage from "./(landing)/page";
 
 const Page = async () => {
   const session: Session | null = await getServerSession(authOptions);
   const isFreshInstance = await getIsFreshInstance();
 
+  // Show landing page for unauthenticated users (unless fresh instance)
   if (!session) {
     if (isFreshInstance) {
       return redirect("/setup/intro");
     } else {
-      return redirect("/auth/login");
+      // Show the marketing landing page
+      return <LandingPage />;
     }
   }
 
