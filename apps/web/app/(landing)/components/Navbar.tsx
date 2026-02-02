@@ -29,7 +29,7 @@ export const LandingNavbar = () => {
               alt="CohbyForm"
               width={140}
               height={40}
-              className={`h-10 w-auto transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`}
+              className="h-10 w-auto"
             />
           </Link>
 
@@ -68,7 +68,7 @@ export const LandingNavbar = () => {
               Log in
             </Link>
             <Link
-              href="/auth/login"
+              href="/auth/signup"
               className={`rounded-full px-6 py-2.5 font-semibold transition-all duration-300 hover:-translate-y-0.5 ${
                 scrolled
                   ? "bg-slate-900 text-white hover:bg-slate-800"

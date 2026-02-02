@@ -57,7 +57,7 @@ export const SAML_PRODUCT = "formbricks";
 export const SAML_AUDIENCE = "https://saml.formbricks.com";
 export const SAML_PATH = "/api/auth/saml/callback";
 
-export const SIGNUP_ENABLED = IS_FORMBRICKS_CLOUD || IS_DEVELOPMENT || E2E_TESTING;
+export const SIGNUP_ENABLED = true; // Enable signup for all environments
 export const EMAIL_AUTH_ENABLED = env.EMAIL_AUTH_DISABLED !== "1";
 export const INVITE_DISABLED = env.INVITE_DISABLED === "1";
 

@@ -77,7 +77,7 @@ export const Hero = () => {
         {/* CTA Buttons */}
         <div className="animate-on-scroll mb-16 flex flex-col items-center justify-center gap-4 opacity-0 sm:flex-row">
           <Link
-            href="/auth/login"
+            href="/auth/signup"
             className="group flex items-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-[#1a1625] shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
             Get Started Free
             <svg
