@@ -23,6 +23,7 @@ interface SurveyClientWrapperProps {
   isEmbed: boolean;
   singleUseId?: string;
   singleUseResponseId?: string;
+  resumedResponseData?: TResponseData;
   contactId?: string;
   recaptchaSiteKey?: string;
   isSpamProtectionEnabled: boolean;
@@ -46,6 +47,7 @@ export const SurveyClientWrapper = ({
   isEmbed,
   singleUseId,
   singleUseResponseId,
+  resumedResponseData,
   contactId,
   recaptchaSiteKey,
   isSpamProtectionEnabled,
@@ -82,6 +84,16 @@ export const SurveyClientWrapper = ({
   }, [welcomeCardEnabled, elements, startAt]);
 
   const prefillValue = getPrefillValue(survey, searchParams, languageCode);
+
+  // Merge resumed response data with URL prefill data (URL params take precedence)
+  const mergedPrefillData = useMemo(() => {
+    if (!resumedResponseData && !prefillValue) return undefined;
+    return {
+      ...resumedResponseData,
+      ...prefillValue,
+    };
+  }, [resumedResponseData, prefillValue]);
+
   const [autoFocus, setAutoFocus] = useState(false);
 
   // Enable autofocus only when not in iframe
@@ -156,7 +168,7 @@ export const SurveyClientWrapper = ({
           isBrandingEnabled={project.linkSurveyBranding}
           shouldResetQuestionId={false}
           autoFocus={autoFocus}
-          prefillResponseData={prefillValue}
+          prefillResponseData={mergedPrefillData}
           skipPrefilled={skipPrefilled}
           responseCount={responseCount}
           getSetBlockId={(f: (value: string) => void) => {

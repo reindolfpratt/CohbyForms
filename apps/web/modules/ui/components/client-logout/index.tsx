@@ -9,9 +9,9 @@ export const ClientLogout = () => {
   useEffect(() => {
     signOutWithAudit({
       reason: "forced_logout",
-      redirectUrl: "/auth/login",
+      redirectUrl: "/",
       redirect: false,
-      callbackUrl: "/auth/login",
+      callbackUrl: "/",
       clearEnvironmentId: true,
     });
   });

@@ -15,7 +15,7 @@ interface PinScreenProps {
   surveyId: string;
   project: Pick<Project, "styling" | "logo" | "linkSurveyBranding" | "customHeadScripts">;
   singleUseId?: string;
-  singleUseResponse?: Pick<Response, "id" | "finished">;
+  singleUseResponse?: Pick<Response, "id" | "finished" | "data">;
   publicDomain: string;
   IMPRINT_URL?: string;
   PRIVACY_URL?: string;

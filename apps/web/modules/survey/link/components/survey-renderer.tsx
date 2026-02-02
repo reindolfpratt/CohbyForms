@@ -1,6 +1,7 @@
 import { type Response } from "@prisma/client";
 import { notFound } from "next/navigation";
 import { TProjectStyling } from "@formbricks/types/project";
+import { TResponseData } from "@formbricks/types/responses";
 import { TSurvey, TSurveyStyling } from "@formbricks/types/surveys/types";
 import { TUserLocale } from "@formbricks/types/user";
 import {
@@ -29,7 +30,7 @@ interface SurveyRendererProps {
     suId?: string;
   };
   singleUseId?: string;
-  singleUseResponse?: Pick<Response, "id" | "finished">;
+  singleUseResponse?: Pick<Response, "id" | "finished" | "data">;
   contactId?: string;
   isPreview: boolean;
   // New props - pre-fetched in parent
@@ -163,6 +164,7 @@ export const renderSurvey = async ({
       isEmbed={isEmbed}
       singleUseId={singleUseId}
       singleUseResponseId={singleUseResponse?.id}
+      resumedResponseData={singleUseResponse?.data as TResponseData | undefined}
       contactId={contactId}
       recaptchaSiteKey={RECAPTCHA_SITE_KEY}
       isSpamProtectionEnabled={isSpamProtectionEnabled}
