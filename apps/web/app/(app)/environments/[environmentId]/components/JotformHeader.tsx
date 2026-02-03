@@ -21,7 +21,6 @@ import { TOrganization } from "@formbricks/types/organizations";
 import { TUser } from "@formbricks/types/user";
 import { ProjectAndOrgSwitch } from "@/app/(app)/environments/[environmentId]/components/project-and-org-switch";
 import { isNewerVersion } from "@/app/(app)/environments/[environmentId]/lib/utils";
-import FBLogo from "@/images/formbricks-wordmark.svg";
 import { cn } from "@/lib/cn";
 import { getAccessFlags } from "@/lib/membership/utils";
 import { useSignOut } from "@/modules/auth/hooks/use-sign-out";
@@ -143,10 +142,7 @@ export const JotformHeader = ({
       <div className="flex items-center gap-6">
         {/* Logo */}
         <Link href={mainNavigationLink} className="flex items-center">
-          {/* Using a placeholder div if FBLogo svg needs fill adjustment, effectively masked by image component */}
-          <div className="brightness-0 invert filter">
-            <Image src={FBLogo} width={140} height={28} alt="CohbyForm Logo" className="h-auto w-auto" />
-          </div>
+          <span className="text-xl font-bold text-white">CohbyForm</span>
         </Link>
 
         {/* Navigation Links */}
