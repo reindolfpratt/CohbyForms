@@ -179,6 +179,10 @@ export class ResponseQueue {
         }
 
         // Also call setSurveyState on update so React state is synced
+        console.log(
+          "[SaveProgress Debug] Response UPDATE succeeded, responseId:",
+          this.surveyState.responseId
+        );
         if (this.config.setSurveyState) {
           this.config.setSurveyState(this.surveyState);
         }
@@ -199,6 +203,7 @@ export class ResponseQueue {
         }
 
         this.surveyState.updateResponseId(response.data.id);
+        console.log("[SaveProgress Debug] Response CREATED, new responseId:", response.data.id);
         if (this.config.setSurveyState) {
           this.config.setSurveyState(this.surveyState);
         }

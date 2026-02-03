@@ -137,7 +137,10 @@ export function Survey({
           },
           setSurveyState: (state) => {
             // Update the currentResponseId when surveyState changes
-            setCurrentResponseId(state.responseId);
+            console.log("[SaveProgress Debug] setSurveyState called with responseId:", state.responseId);
+            if (state.responseId) {
+              setCurrentResponseId(state.responseId);
+            }
           },
         },
         surveyState
