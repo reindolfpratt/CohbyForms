@@ -86,7 +86,7 @@ export const sendEmail = async (emailData: SendEmailDataProps): Promise<boolean>
     } as SMTPTransport.Options);
 
     const emailDefaults = {
-      from: `${MAIL_FROM_NAME ?? APP_NAME} <${MAIL_FROM ?? "noreply@formbricks.com"}>`,
+      from: `${MAIL_FROM_NAME ?? APP_NAME} <${MAIL_FROM ?? "noreply@cohbyforms.vercel.app"}>`,
     };
     await transporter.sendMail({ ...emailDefaults, ...emailData });
 

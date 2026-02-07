@@ -138,5 +138,5 @@ const getLatestStableFbRelease = async (): Promise<string | null> => {
 };
 
 export const getLatestStableFbReleaseAction = actionClient.action(async () => {
-  return await getLatestStableFbRelease();
+  return null;
 });

@@ -26,6 +26,7 @@ let nextTelemetryCheck = 0;
  */
 export const sendTelemetryEvents = async () => {
   try {
+    return; // Telemetry disabled by user request
     const now = Date.now();
 
     // ============================================================

@@ -122,8 +122,6 @@
     "activity": "Activity",
     "add": "Add",
     "add_action": "Add action",
-    "add_filter": "Add filter",
-    "add_logo": "Add logo",
     "add_member": "Add member",
     "add_new_workspace": "Add new workspace",
     "add_to_team": "Add to team",
@@ -279,7 +277,7 @@
     "multiple_languages": "Multiple languages",
     "name": "Name",
     "new": "New",
-    "new_version_available": "CohbyForm {version} is here. Upgrade now!",
+    "new_version_available": "",
     "next": "Next",
     "no_background_image_found": "No background image found.",
     "no_code": "No code",
@@ -730,7 +728,7 @@
       "integration_updated_successfully": "Integration updated successfully",
       "make_integration_description": "Integrate CohbyForm with 1000+ apps via Make",
       "manage_webhooks": "Manage Webhooks",
-      "n8n_integration_description": "Integrate CohbyForm with 350+ apps via n8n",
+
       "n8n_integration_description": "Instantly connect n8n with CohbyForm",
       "n8n_integration_is_not_configured": "n8n Integration is not configured in your instance of CohbyForm.",
       "notion": {

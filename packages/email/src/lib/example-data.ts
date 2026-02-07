@@ -7,15 +7,15 @@ import { TSurvey } from "@formbricks/types/surveys/types";
 export const exampleData = {
   verificationEmail: {
     verifyLink: "https://app.formbricks.com/auth/verify?token=example-verification-token",
-    verificationRequestLink: "https://app.formbricks.com/auth/verification-requested",
+    verificationRequestLink: "https://cohbyforms.vercel.app/auth/verification-requested",
   },
 
   forgotPasswordEmail: {
-    verifyLink: "https://app.formbricks.com/auth/forgot-password/reset?token=example-reset-token",
+    verifyLink: "https://cohbyforms.vercel.app/",
   },
 
   newEmailVerification: {
-    verifyLink: "https://app.formbricks.com/verify-email-change?token=example-email-change-token",
+    verifyLink: "https://cohbyforms.vercel.app/",
   },
 
   passwordResetNotifyEmail: {
@@ -25,7 +25,7 @@ export const exampleData = {
   inviteEmail: {
     inviteeName: "Jane Smith",
     inviterName: "John Doe",
-    verifyLink: "https://app.formbricks.com/invite?token=example-invite-token",
+    verifyLink: "https://cohbyforms.vercel.app/",
   },
 
   inviteAcceptedEmail: {
@@ -36,7 +36,7 @@ export const exampleData = {
   linkSurveyEmail: {
     surveyName: "Customer Satisfaction Survey",
     surveyLink:
-      "https://app.formbricks.com/s/example-survey-id?verify=example-token&suId=example-single-use-id",
+      "https://cohbyforms.vercel.app/s/example-survey-id?verify=example-token&suId=example-single-use-id",
   },
 
   embedSurveyPreviewEmail: {
@@ -112,7 +112,7 @@ export const exampleData = {
       language: "default",
       displayId: null,
     } as unknown as TResponse,
-    WEBAPP_URL: "https://app.formbricks.com",
+    WEBAPP_URL: "https://cohbyforms.vercel.app",
     environmentId: "env-123",
     organization: {
       id: "org-123",
@@ -173,9 +173,9 @@ export const exampleData = {
   },
 
   legalProps: {
-    privacyUrl: "https://formbricks.com/privacy",
-    termsUrl: "https://formbricks.com/terms",
-    imprintUrl: "https://formbricks.com/imprint",
+    privacyUrl: "https://cohbyforms.vercel.app/privacy",
+    termsUrl: "https://cohbyforms.vercel.app/terms",
+    imprintUrl: "https://cohbyforms.vercel.app/imprint",
     imprintAddress: "Formbricks GmbH, Example Street 123, 12345 Berlin, Germany",
   },
 };
