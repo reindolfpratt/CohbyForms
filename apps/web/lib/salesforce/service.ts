@@ -14,10 +14,18 @@ export const getAuthUrl = (environmentId: string) => {
     redirectUri: SALESFORCE_REDIRECT_URL,
   });
 
-  return oauth2.getAuthorizationUrl({
+  let authUrl = oauth2.getAuthorizationUrl({
     scope: "api refresh_token offline_access",
     state: environmentId,
   });
+
+  // Manually append state if jsforce didn't add it (safety fallback)
+  if (!authUrl.includes("state=") && environmentId) {
+    const separator = authUrl.includes("?") ? "&" : "?";
+    authUrl = `${authUrl}${separator}state=${environmentId}`;
+  }
+
+  return authUrl;
 };
 
 export const authorize = async (environmentId: string, code: string) => {
