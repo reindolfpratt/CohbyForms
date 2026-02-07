@@ -24,6 +24,8 @@ export const SalesforceWrapper = ({
 }: SalesforceWrapperProps) => {
   const [isConnected, setIsConnected] = useState(isSalesforceConnected);
 
+  console.log("SalesforceWrapper Version: 4.0 - manual state append + fixed redirect path in backend");
+
   const handleAuthorization = async () => {
     try {
       const url = await authorize(environment.id, webAppUrl);
