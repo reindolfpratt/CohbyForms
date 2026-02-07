@@ -122,21 +122,6 @@ export const getActiveInactiveSurveysAction = authenticatedActionClient
     return response;
   });
 
-const getLatestStableFbRelease = async (): Promise<string | null> => {
-  try {
-    const res = await fetch("https://api.github.com/repos/formbricks/formbricks/releases/latest");
-    const release = await res.json();
-
-    if (release && release.tag_name) {
-      return release.tag_name;
-    }
-
-    return null;
-  } catch (error) {
-    throw new Error("Failed to get latest stable Formbricks release", { cause: error });
-  }
-};
-
 export const getLatestStableFbReleaseAction = actionClient.action(async () => {
   return null;
 });
