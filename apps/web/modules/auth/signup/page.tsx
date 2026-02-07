@@ -56,30 +56,28 @@ export const SignupPage = async ({ searchParams: searchParamsProps }) => {
   const emailFromSearchParams = searchParams["email"];
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-[#00C4B8]">
-      <FormWrapper>
-        <SignupForm
-          webAppUrl={WEBAPP_URL}
-          termsUrl={TERMS_URL}
-          privacyUrl={PRIVACY_URL}
-          emailVerificationDisabled={EMAIL_VERIFICATION_DISABLED}
-          emailAuthEnabled={EMAIL_AUTH_ENABLED}
-          googleOAuthEnabled={GOOGLE_OAUTH_ENABLED}
-          githubOAuthEnabled={GITHUB_OAUTH_ENABLED}
-          azureOAuthEnabled={AZURE_OAUTH_ENABLED}
-          oidcOAuthEnabled={OIDC_OAUTH_ENABLED}
-          oidcDisplayName={OIDC_DISPLAY_NAME}
-          userLocale={locale}
-          emailFromSearchParams={emailFromSearchParams}
-          isSsoEnabled={isSsoEnabled}
-          samlSsoEnabled={samlSsoEnabled}
-          isTurnstileConfigured={IS_TURNSTILE_CONFIGURED}
-          samlTenant={SAML_TENANT}
-          samlProduct={SAML_PRODUCT}
-          turnstileSiteKey={TURNSTILE_SITE_KEY}
-          isFormbricksCloud={IS_FORMBRICKS_CLOUD}
-        />
-      </FormWrapper>
-    </div>
+    <FormWrapper>
+      <SignupForm
+        webAppUrl={WEBAPP_URL}
+        termsUrl={TERMS_URL}
+        privacyUrl={PRIVACY_URL}
+        emailVerificationDisabled={EMAIL_VERIFICATION_DISABLED}
+        emailAuthEnabled={EMAIL_AUTH_ENABLED}
+        googleOAuthEnabled={GOOGLE_OAUTH_ENABLED}
+        githubOAuthEnabled={GITHUB_OAUTH_ENABLED}
+        azureOAuthEnabled={AZURE_OAUTH_ENABLED}
+        oidcOAuthEnabled={OIDC_OAUTH_ENABLED}
+        oidcDisplayName={OIDC_DISPLAY_NAME}
+        userLocale={locale}
+        emailFromSearchParams={emailFromSearchParams}
+        isSsoEnabled={isSsoEnabled}
+        samlSsoEnabled={samlSsoEnabled}
+        isTurnstileConfigured={IS_TURNSTILE_CONFIGURED}
+        samlTenant={SAML_TENANT}
+        samlProduct={SAML_PRODUCT}
+        turnstileSiteKey={TURNSTILE_SITE_KEY}
+        isFormbricksCloud={IS_FORMBRICKS_CLOUD}
+      />
+    </FormWrapper>
   );
 };
