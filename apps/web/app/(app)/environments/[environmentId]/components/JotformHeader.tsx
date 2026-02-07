@@ -35,6 +35,7 @@ interface JotformHeaderProps {
   organization: TOrganization;
   project: { id: string; name: string };
   environments: TEnvironment[];
+  isFormbricksCloud: boolean;
   membershipRole?: TOrganizationRole;
   publicDomain: string;
   isMultiOrgEnabled: boolean;
@@ -49,6 +50,7 @@ export const JotformHeader = ({
   user,
   project,
   environments,
+  isFormbricksCloud,
   membershipRole,
   publicDomain,
   isMultiOrgEnabled,
@@ -61,7 +63,8 @@ export const JotformHeader = ({
   const { t } = useTranslation();
   const { signOut: signOutWithAudit } = useSignOut({ id: user.id, email: user.email });
 
-  const { isMember, isBilling } = getAccessFlags(membershipRole);
+  const { isMember, isBilling, isManager, isOwner } = getAccessFlags(membershipRole);
+  const isOwnerOrManager = isOwner || isManager;
 
   const mainNavigation = useMemo(
     () => [

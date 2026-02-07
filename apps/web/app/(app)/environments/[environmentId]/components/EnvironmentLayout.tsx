@@ -69,6 +69,7 @@ export const EnvironmentLayout = async ({ layoutData, children }: EnvironmentLay
         user={user}
         project={{ id: project.id, name: project.name }}
         environments={environments}
+        isFormbricksCloud={IS_FORMBRICKS_CLOUD}
         membershipRole={membership.role}
         publicDomain={publicDomain}
         isMultiOrgEnabled={isMultiOrgEnabled}
