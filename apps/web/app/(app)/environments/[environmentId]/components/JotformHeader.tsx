@@ -6,24 +6,21 @@ import {
   Cog,
   LogOutIcon,
   MessageCircle,
-  RocketIcon,
   UserCircleIcon,
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TEnvironment } from "@formbricks/types/environment";
 import { TOrganizationRole } from "@formbricks/types/memberships";
 import { TOrganization } from "@formbricks/types/organizations";
 import { TUser } from "@formbricks/types/user";
 import { ProjectAndOrgSwitch } from "@/app/(app)/environments/[environmentId]/components/project-and-org-switch";
-import { isNewerVersion } from "@/app/(app)/environments/[environmentId]/lib/utils";
 import { cn } from "@/lib/cn";
 import { getAccessFlags } from "@/lib/membership/utils";
 import { useSignOut } from "@/modules/auth/hooks/use-sign-out";
-import { getLatestStableFbReleaseAction } from "@/modules/projects/settings/(setup)/app-connection/actions";
 import { ProfileAvatar } from "@/modules/ui/components/avatars";
 import {
   DropdownMenu,
@@ -31,7 +28,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/modules/ui/components/dropdown-menu";
-import packageJson from "../../../../../package.json";
 
 interface JotformHeaderProps {
   environment: TEnvironment;
@@ -68,10 +64,8 @@ export const JotformHeader = ({
   const pathname = usePathname();
   const { t } = useTranslation();
   const { signOut: signOutWithAudit } = useSignOut({ id: user.id, email: user.email });
-  const [latestVersion, setLatestVersion] = useState("");
 
-  const { isManager, isOwner, isMember, isBilling } = getAccessFlags(membershipRole);
-  const isOwnerOrManager = isManager || isOwner;
+  const { isMember, isBilling } = getAccessFlags(membershipRole);
 
   const mainNavigation = useMemo(
     () => [
@@ -117,21 +111,6 @@ export const JotformHeader = ({
       icon: ArrowUpRightIcon,
     },
   ];
-
-  useEffect(() => {
-    async function loadReleases() {
-      const res = await getLatestStableFbReleaseAction();
-      if (res?.data) {
-        const latestVersionTag = res.data;
-        const currentVersionTag = `v${packageJson.version}`;
-
-        if (isNewerVersion(currentVersionTag, latestVersionTag)) {
-          setLatestVersion(latestVersionTag);
-        }
-      }
-    }
-    if (isOwnerOrManager) loadReleases();
-  }, [isOwnerOrManager]);
 
   const mainNavigationLink = `/environments/${environment.id}/${isBilling ? "settings/billing/" : "surveys/"}`;
 
@@ -184,17 +163,6 @@ export const JotformHeader = ({
             isAccessControlAllowed={isAccessControlAllowed}
           />
         </div>
-
-        {/* New Version Alert */}
-        {isOwnerOrManager && latestVersion && !isFormbricksCloud && !isDevelopment && (
-          <Link
-            href="https://github.com/formbricks/formbricks/releases"
-            target="_blank"
-            className="hidden items-center space-x-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-white hover:bg-white/20 lg:flex">
-            <RocketIcon strokeWidth={1.5} className="h-3 w-3" />
-            <span>{t("common.new_version_available", { version: latestVersion })}</span>
-          </Link>
-        )}
 
         {/* User Dropdown */}
         <DropdownMenu>
