@@ -180,3 +180,89 @@ input[type="range"]::-webkit-slider-thumb {
 .animate-pulse-slow {
   animation: pulse-slow 4s ease-in-out infinite;
 }
+
+/* Auth Page Animations */
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-30px) translateX(15px);
+  }
+}
+
+@keyframes float-medium {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(25px) translateX(-20px);
+  }
+}
+
+@keyframes float-fast {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(20px) translateX(10px);
+  }
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
+
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: rotate(12deg) translateY(0);
+  }
+  50% {
+    transform: rotate(12deg) translateY(-15px);
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 5s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 6s ease-in-out infinite;
+}
+
