@@ -7,7 +7,7 @@ import { createOrUpdateIntegration } from "@/lib/integration/service";
 
 export const SALESFORCE_REDIRECT_URL = `${WEBAPP_URL}/api/v1/integrations/salesforce/callback`;
 
-export const getAuthUrl = () => {
+export const getAuthUrl = (environmentId: string) => {
   const oauth2 = new jsforce.OAuth2({
     clientId: SALESFORCE_CLIENT_ID,
     clientSecret: SALESFORCE_CLIENT_SECRET,
@@ -16,6 +16,7 @@ export const getAuthUrl = () => {
 
   return oauth2.getAuthorizationUrl({
     scope: "api refresh_token offline_access",
+    state: environmentId,
   });
 };
 
