@@ -172,7 +172,10 @@ async function handlePostUserCreation(
     await handleOrganizationCreation(ctx, user);
   }
 
-  if (!emailVerificationDisabled) {
+  if (emailVerificationDisabled) {
+    // If email verification is disabled, mark the email as verified immediately
+    await updateUser(user.id, { emailVerified: new Date() });
+  } else {
     await sendVerificationEmail({ id: user.id, email: user.email, locale: user.locale });
   }
 }
