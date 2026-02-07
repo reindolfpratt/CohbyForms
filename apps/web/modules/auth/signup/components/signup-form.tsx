@@ -175,7 +175,7 @@ export const SignupForm = ({
                               name="name"
                               autoFocus
                               onChange={(e) => field.onChange(e.target.value)}
-                              placeholder="Full name"
+                              placeholder="Organization name"
                               className="bg-white"
                             />
                             {error?.message && <FormError className="text-left">{error.message}</FormError>}
