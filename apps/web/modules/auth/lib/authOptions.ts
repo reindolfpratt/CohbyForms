@@ -346,6 +346,12 @@ export const authOptions: NextAuthOptions = {
         "";
 
       if (account?.provider === "credentials" || account?.provider === "token") {
+        // If email verification is disabled, auto-verify the user on login
+        if (EMAIL_VERIFICATION_DISABLED && !user.emailVerified) {
+          await updateUser(user.id, { emailVerified: new Date() });
+          user.emailVerified = new Date();
+        }
+
         // check if user's email is verified or not
         if (!user.emailVerified && !EMAIL_VERIFICATION_DISABLED) {
           logger.error("Email Verification is Pending");
