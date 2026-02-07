@@ -6,7 +6,7 @@ export const getIntegrationDetails = (integrationType: TIntegrationType, t: TFun
     case "googleSheets":
       return {
         text: t("environments.integrations.google_sheets.google_sheets_integration_description"),
-        docsLink: "https://formbricks.com/docs/integrations/google-sheets",
+        docsLink: "https://cohbyforms.vercel.app/docs",
         connectButtonLabel: t("environments.integrations.google_sheets.connect_with_google_sheets"),
         notConfiguredText: t(
           "environments.integrations.google_sheets.google_sheet_integration_is_not_configured"
@@ -15,35 +15,35 @@ export const getIntegrationDetails = (integrationType: TIntegrationType, t: TFun
     case "airtable":
       return {
         text: t("environments.integrations.airtable.airtable_integration_description"),
-        docsLink: "https://formbricks.com/docs/integrations/airtable",
+        docsLink: "https://cohbyforms.vercel.app/docs",
         connectButtonLabel: t("environments.integrations.airtable.connect_with_airtable"),
         notConfiguredText: t("environments.integrations.airtable.airtable_integration_is_not_configured"),
       };
     case "notion":
       return {
         text: t("environments.integrations.notion.notion_integration_description"),
-        docsLink: "https://formbricks.com/docs/integrations/notion",
+        docsLink: "https://cohbyforms.vercel.app/docs",
         connectButtonLabel: t("environments.integrations.notion.connect_with_notion"),
         notConfiguredText: t("environments.integrations.notion.notion_integration_is_not_configured"),
       };
     case "slack":
       return {
         text: t("environments.integrations.slack.slack_integration_description"),
-        docsLink: "https://formbricks.com/docs/integrations/slack",
+        docsLink: "https://cohbyforms.vercel.app/docs",
         connectButtonLabel: t("environments.integrations.slack.connect_with_slack"),
         notConfiguredText: t("environments.integrations.slack.slack_integration_is_not_configured"),
       };
     case "salesforce":
       return {
         text: t("environments.integrations.salesforce.salesforce_integration_description"),
-        docsLink: "https://formbricks.com/docs/integrations/salesforce",
+        docsLink: "https://cohbyforms.vercel.app/docs",
         connectButtonLabel: t("environments.integrations.salesforce.connect_with_salesforce"),
         notConfiguredText: t("environments.integrations.salesforce.salesforce_integration_is_not_configured"),
       };
     case "n8n":
       return {
         text: t("environments.integrations.n8n.n8n_integration_description"),
-        docsLink: "https://formbricks.com/docs/integrations/n8n",
+        docsLink: "https://cohbyforms.vercel.app/docs",
         connectButtonLabel: t("environments.integrations.n8n.connect_with_n8n"),
         notConfiguredText: t("environments.integrations.n8n.n8n_integration_is_not_configured"),
       };

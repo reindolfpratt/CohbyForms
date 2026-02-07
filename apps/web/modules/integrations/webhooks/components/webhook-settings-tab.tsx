@@ -220,7 +220,7 @@ export const WebhookSettingsTab = ({ webhook, surveys, setOpen, isReadOnly }: We
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 right-3 -translate-y-1/2 transform"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 transform"
                   onClick={() => setShowSecret(!showSecret)}>
                   {showSecret ? (
                     <EyeOff className="h-5 w-5 text-slate-400" />
@@ -251,7 +251,7 @@ export const WebhookSettingsTab = ({ webhook, surveys, setOpen, isReadOnly }: We
               {t("environments.integrations.webhooks.secret_description")}
             </p>
             <Link
-              href="https://formbricks.com/docs/xm-and-surveys/core-features/integrations/webhooks#webhook-security-with-standard-webhooks"
+              href="https://cohbyforms.vercel.app/docs"
               target="_blank"
               className="mt-1 inline-flex items-center gap-1 text-xs text-slate-600 underline hover:text-slate-800">
               {t("environments.integrations.webhooks.learn_to_verify")}
@@ -291,7 +291,7 @@ export const WebhookSettingsTab = ({ webhook, surveys, setOpen, isReadOnly }: We
             )}
 
             <Button variant="secondary" asChild>
-              <Link href="https://formbricks.com/docs/api/management/webhooks" target="_blank">
+              <Link href="https://cohbyforms.vercel.app/docs" target="_blank">
                 {t("common.read_docs")}
               </Link>
             </Button>
