@@ -1,4 +1,5 @@
 import { JotformHeader } from "@/app/(app)/environments/[environmentId]/components/JotformHeader";
+import { IS_FORMBRICKS_CLOUD } from "@/lib/constants";
 import { getPublicDomain } from "@/lib/getPublicUrl";
 import { getAccessFlags } from "@/lib/membership/utils";
 import { getTranslate } from "@/lingodotdev/server";
