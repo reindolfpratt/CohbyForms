@@ -37,8 +37,6 @@ interface NavigationProps {
   user: TUser;
   organization: TOrganization;
   project: { id: string; name: string };
-  isFormbricksCloud: boolean;
-  isDevelopment: boolean;
   membershipRole?: TOrganizationRole;
   publicDomain: string;
 }
@@ -49,10 +47,6 @@ export const MainNavigation = ({
   user,
   project,
   membershipRole,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  isFormbricksCloud: _isFormbricksCloud,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  isDevelopment: _isDevelopment,
   publicDomain,
 }: NavigationProps) => {
   const router = useRouter();

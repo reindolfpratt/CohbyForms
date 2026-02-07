@@ -35,8 +35,6 @@ interface JotformHeaderProps {
   organization: TOrganization;
   project: { id: string; name: string };
   environments: TEnvironment[];
-  isFormbricksCloud: boolean;
-  isDevelopment: boolean;
   membershipRole?: TOrganizationRole;
   publicDomain: string;
   isMultiOrgEnabled: boolean;
@@ -52,8 +50,6 @@ export const JotformHeader = ({
   project,
   environments,
   membershipRole,
-  isFormbricksCloud,
-  isDevelopment,
   publicDomain,
   isMultiOrgEnabled,
   organizationProjectsLimit,

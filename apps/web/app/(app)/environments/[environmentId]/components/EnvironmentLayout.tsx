@@ -1,5 +1,4 @@
 import { JotformHeader } from "@/app/(app)/environments/[environmentId]/components/JotformHeader";
-import { IS_DEVELOPMENT, IS_FORMBRICKS_CLOUD } from "@/lib/constants";
 import { getPublicDomain } from "@/lib/getPublicUrl";
 import { getAccessFlags } from "@/lib/membership/utils";
 import { getTranslate } from "@/lingodotdev/server";
@@ -69,8 +68,6 @@ export const EnvironmentLayout = async ({ layoutData, children }: EnvironmentLay
         user={user}
         project={{ id: project.id, name: project.name }}
         environments={environments}
-        isFormbricksCloud={IS_FORMBRICKS_CLOUD}
-        isDevelopment={IS_DEVELOPMENT}
         membershipRole={membership.role}
         publicDomain={publicDomain}
         isMultiOrgEnabled={isMultiOrgEnabled}
