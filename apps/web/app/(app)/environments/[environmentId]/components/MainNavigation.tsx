@@ -129,13 +129,14 @@ export const MainNavigation = ({
     },
   ];
 
-  // REMOVED EMAIL CHECK FOR DEBUGGING - LINK SHOULD ALWAYS SHOW NOW
-  dropdownNavigation.unshift({
-    label: "Admin Dashboard (DEBUG)",
-    href: "/admin",
-    target: "_self",
-    icon: ShieldCheck,
-  });
+  if (user.email === "reindolfpratt@gmail.com") {
+    dropdownNavigation.unshift({
+      label: "Admin Dashboard",
+      href: "/admin",
+      target: "_self",
+      icon: ShieldCheck,
+    });
+  }
   const mainNavigationLink = `/environments/${environment.id}/${isBilling ? "settings/billing/" : "surveys/"}`;
 
   return (
