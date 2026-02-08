@@ -58,6 +58,10 @@ export const getSignedUploadUrl = async (
       ContentType: contentType,
     });
 
+    // AWS SDK v3 adds checksum headers to presigned URLs by default, which breaks R2 uploads
+    // We remove the middleware to prevent this behavior
+    command.middlewareStack.remove("flexibleChecksumsMiddleware");
+
     const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 2 * 60 });
 
     return ok({
