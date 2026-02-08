@@ -67,13 +67,24 @@ export const getSignedUploadUrl = async (
     });
 
     const httpRequest = await command.middlewareStack.resolve(
-      (request: any) => Promise.resolve({ output: { request }, response: {} as any }),
+      (request: any) =>
+        Promise.resolve({
+          output: {
+            $metadata: {},
+            ETag: "mock-etag",
+          },
+          response: {} as any,
+        }),
       {}
     )({
       input: command.input,
     });
 
-    const signedUrl = await signer.presign(httpRequest.output.request as any, {
+    // The middleware stack returns a structure where 'output' depends on the handler.
+    // In our mocked case, we are interested in the 'request' that was passed through.
+    // However, the standard type definition doesn't expose 'request' on the output directly in this way.
+    // We cast to 'any' to access the internal request object that the presigner needs.
+    const signedUrl = await signer.presign((httpRequest as any).output.request, {
       expiresIn: 2 * 60,
       unhoistableHeaders: new Set(["host", "content-length", "user-agent", "x-amz-content-sha256"]),
     });
