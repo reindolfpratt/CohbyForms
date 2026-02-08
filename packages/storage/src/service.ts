@@ -8,7 +8,6 @@ import {
   paginateListObjectsV2,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { formatUrl } from "@aws-sdk/util-format-url";
 import { logger } from "@formbricks/logger";
 import { type Result, type StorageError, StorageErrorCode, err, ok } from "../types/error";
 import { createS3Client } from "./client";
@@ -126,9 +125,7 @@ export const getSignedUploadUrl = async (
     });
 
     return ok({
-      signedUrl: formatUrl(
-        typeof signedUrl === "string" ? { hostname: "", path: signedUrl, protocol: "" } : (signedUrl as any)
-      ),
+      signedUrl,
       presignedFields: {},
     });
   } catch (error) {
