@@ -78,9 +78,10 @@ export default async function AdminOverviewPage() {
                     </td>
                     <td className="px-4 py-3">
                       <Badge
-                        variant={planId === "pro" ? "default" : planId === "enterprise" ? "warning" : "gray"}>
-                        {planId}
-                      </Badge>
+                        text={planId}
+                        type={planId === "pro" ? "success" : planId === "enterprise" ? "warning" : "gray"}
+                        size="normal"
+                      />
                     </td>
                     <td className="px-4 py-3">{org._count.memberships}</td>
                     <td className="px-4 py-3">{new Date(org.createdAt).toLocaleDateString()}</td>
