@@ -55,7 +55,6 @@ export const getSignedUploadUrl = async (
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
-      ContentType: contentType,
     });
 
     const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 2 * 60 });
