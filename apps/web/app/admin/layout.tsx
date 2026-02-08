@@ -21,12 +21,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   // 2. Database role check
   let isSuperAdminRole = false;
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      select: { role: true },
-    });
-    // @ts-ignore - Prisma client types might not be fully picked up by IDE yet despite generation
-    isSuperAdminRole = user?.role === "super_admin";
+    if (session?.user?.id) {
+      const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        select: { role: true },
+      });
+      // @ts-ignore - Prisma client types might not be fully picked up by IDE yet despite generation
+      isSuperAdminRole = user?.role === "super_admin";
+    }
   } catch (e) {
     console.error("Failed to check user role", e);
   }
@@ -54,7 +56,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-slate-500">{session.user.email}</span>
+          <span className="text-sm text-slate-500">{(session?.user as any)?.email}</span>
           <Button variant="outline" size="sm" asChild>
             <Link href="/">Exit Admin</Link>
           </Button>
