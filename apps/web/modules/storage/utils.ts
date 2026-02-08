@@ -46,8 +46,8 @@ export const sanitizeFileName = (rawFileName: string): string => {
   // Disallow: # <> : " | ? * ` ' and control whitespace
   name = name.replace(/[#<>:"|?*`']/g, "");
 
-  // Collapse and trim whitespace
-  name = name.replace(/\s+/g, " ").trim();
+  // Replace whitespace with dashes
+  name = name.replace(/\s+/g, "-");
 
   // Split into base and extension; keep only the last extension
   const parts = name.split(".");
