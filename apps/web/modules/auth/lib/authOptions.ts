@@ -322,7 +322,12 @@ export const authOptions: NextAuthOptions = {
 
       return {
         ...token,
-        profile: { id: existingUser.id },
+        profile: {
+          id: existingUser.id,
+          name: existingUser.name,
+          email: existingUser.email,
+          role: existingUser.role,
+        },
         isActive: existingUser.isActive,
       };
     },
