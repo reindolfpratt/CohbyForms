@@ -64,9 +64,11 @@ export default async function AdminIntegrationsPage() {
                       {type.replace(/([A-Z])/g, " $1").trim()}
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant={isEnabled ? "success" : "gray"}>
-                        {isEnabled ? "Visible to All" : "Hidden (Admin Only)"}
-                      </Badge>
+                      <Badge
+                        text={isEnabled ? "Visible to All" : "Hidden (Admin Only)"}
+                        type={isEnabled ? "success" : "gray"}
+                        size="normal"
+                      />
                     </td>
                     <td className="px-4 py-3">
                       <WrapperSwitch type={type} initialValue={isEnabled} />
