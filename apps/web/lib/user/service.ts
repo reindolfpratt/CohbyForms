@@ -24,6 +24,7 @@ const responseSelection = {
   locale: true,
   lastLoginAt: true,
   isActive: true,
+  role: true,
 };
 
 // function to retrive basic information about a user's user
