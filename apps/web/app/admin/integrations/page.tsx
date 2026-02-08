@@ -1,7 +1,5 @@
 import { prisma } from "@formbricks/database";
 import { Badge } from "@/modules/ui/components/badge";
-import { Switch } from "@/modules/ui/components/switch";
-import { toggleIntegrationAction } from "./actions";
 // Client component wrapper for the switch to handle interactivity
 import { WrapperSwitch } from "./components/wrapper-switch";
 
