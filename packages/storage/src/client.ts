@@ -31,6 +31,8 @@ export const createS3ClientFromEnv = (): Result<S3Client, StorageError> => {
     const s3Config: S3ClientConfig = {
       endpoint: S3_ENDPOINT_URL,
       forcePathStyle: S3_FORCE_PATH_STYLE,
+      requestChecksumCalculation: "WHEN_REQUIRED",
+      responseChecksumValidation: "WHEN_REQUIRED",
     };
 
     // Only set region if it's provided, otherwise let AWS SDK use its defaults
