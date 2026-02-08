@@ -5,31 +5,45 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/modules/ui/component
 export const dynamic = "force-dynamic";
 
 export default async function AdminOverviewPage() {
-  // Fetch all organizations with counts
-  const organizations = await prisma.organization.findMany({
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-      billing: true,
-      _count: {
-        select: {
-          projects: true,
-          memberships: true,
-        },
-      },
-      memberships: {
-        where: { role: "owner" },
-        select: {
-          user: {
-            select: { email: true, name: true, lastLoginAt: true },
+  try {
+    // Fetch all organizations with counts
+    const organizations = await prisma.organization.findMany({
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+        billing: true,
+        _count: {
+          select: {
+            projects: true,
+            memberships: true,
           },
         },
-        take: 1,
+        memberships: {
+          where: { role: "owner" },
+          select: {
+            user: {
+              select: { email: true, name: true, lastLoginAt: true },
+            },
+          },
+          take: 1,
+        },
       },
-    },
-  });
+    });
+  } catch (error: any) {
+    console.error("ADMIN PAGE ERROR:", error);
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold text-red-600">Admin Dashboard Error</h1>
+        <p className="mt-4 text-slate-700">Something went wrong fetching data:</p>
+        <pre className="mt-4 overflow-auto rounded bg-slate-100 p-4 text-sm text-red-800">
+          {error.message || JSON.stringify(error, null, 2)}
+        </pre>
+        <p className="mt-4 text-sm text-slate-500">Stack: {error.stack}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
