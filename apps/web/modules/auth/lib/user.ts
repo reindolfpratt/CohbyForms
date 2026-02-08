@@ -70,6 +70,7 @@ export const getUserByEmail = reactCache(async (email: string) => {
       },
       select: {
         id: true,
+        name: true,
         locale: true,
         email: true,
         emailVerified: true,
