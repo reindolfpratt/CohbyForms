@@ -133,6 +133,7 @@ export const mockUser: TUser = {
   locale: "en-US",
   lastLoginAt: new Date(),
   isActive: true,
+  role: "user",
 };
 
 export const mockPrismaPerson: Prisma.ContactGetPayload<{
