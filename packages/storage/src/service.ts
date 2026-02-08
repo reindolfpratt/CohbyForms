@@ -7,7 +7,8 @@ import {
   PutObjectCommand,
   paginateListObjectsV2,
 } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { S3RequestPresigner } from "@aws-sdk/s3-request-presigner";
+import { formatUrl } from "@aws-sdk/util-format-url";
 import { logger } from "@formbricks/logger";
 import { type Result, type StorageError, StorageErrorCode, err, ok } from "../types/error";
 import { createS3Client } from "./client";
@@ -55,12 +56,31 @@ export const getSignedUploadUrl = async (
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
+      ContentType: contentType,
     });
 
-    const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 2 * 60 });
+    // Use S3RequestPresigner directly to control signed headers
+    // R2 and some S3-compatible stores are strict about headers.
+    // By marking 'host' and others as unhoistable, we prevent them from being part of the signature,
+    // which avoids 403s if the client sends slightly different headers (e.g. via proxy or browser).
+    const signer = new S3RequestPresigner({
+      ...s3Client.config,
+    });
+
+    const httpRequest = await command.middlewareStack.resolve(
+      (request: any) => Promise.resolve({ output: { request }, response: {} as any }),
+      {}
+    )({
+      input: command.input,
+    });
+
+    const signedUrl = await signer.presign(httpRequest.output.request as any, {
+      expiresIn: 2 * 60,
+      unhoistableHeaders: new Set(["host", "content-length", "user-agent", "x-amz-content-sha256"]),
+    });
 
     return ok({
-      signedUrl,
+      signedUrl: formatUrl(signedUrl),
       presignedFields: {}, // Empty fields for PUT
     });
   } catch (error) {
