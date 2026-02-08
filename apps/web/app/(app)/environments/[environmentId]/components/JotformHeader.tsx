@@ -6,6 +6,7 @@ import {
   Cog,
   LogOutIcon,
   MessageCircle,
+  ShieldCheck,
   UserCircleIcon,
   UserIcon,
 } from "lucide-react";
@@ -91,12 +92,33 @@ export const JotformHeader = ({
     [t, environment.id, pathname]
   );
 
+  const isSuperAdmin = user.email === "reindolfpratt@gmail.com" || user.role === "super_admin";
+
+  if (isSuperAdmin) {
+    mainNavigation.push({
+      name: "Super Admin",
+      href: "/admin",
+      icon: ShieldCheck,
+      isActive: pathname?.includes("/admin"),
+      isHidden: false,
+    });
+  }
+
   const dropdownNavigation = [
     {
       label: t("common.account"),
       href: `/environments/${environment.id}/settings/profile`,
       icon: UserCircleIcon,
     },
+    ...(isSuperAdmin
+      ? [
+          {
+            label: "Super Admin",
+            href: "/admin",
+            icon: ShieldCheck,
+          },
+        ]
+      : []),
     {
       label: t("common.documentation"),
       href: "https://formbricks.com/docs",
