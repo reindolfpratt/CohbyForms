@@ -36,8 +36,9 @@ export const createS3ClientFromEnv = (): Result<S3Client, StorageError> => {
     };
 
     // Only set region if it's provided, otherwise let AWS SDK use its defaults
+    // R2 requires 'us-east-1' in the signature even if the region is technically 'auto'
     if (S3_REGION) {
-      s3Config.region = S3_REGION;
+      s3Config.region = S3_REGION === "auto" ? "us-east-1" : S3_REGION;
     }
 
     // Only add credentials if both access key and secret key are provided
