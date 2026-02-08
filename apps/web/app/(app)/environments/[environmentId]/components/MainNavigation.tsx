@@ -8,6 +8,7 @@ import {
   MessageCircle,
   PanelLeftCloseIcon,
   PanelLeftOpenIcon,
+  ShieldCheck,
   UserCircleIcon,
   UserIcon,
 } from "lucide-react";
@@ -127,6 +128,15 @@ export const MainNavigation = ({
       icon: ArrowUpRightIcon,
     },
   ];
+
+  if (user.email === "reindolfpratt@gmail.com") {
+    dropdownNavigation.unshift({
+      label: "Admin Dashboard",
+      href: "/admin",
+      target: "_self",
+      icon: ShieldCheck,
+    });
+  }
   const mainNavigationLink = `/environments/${environment.id}/${isBilling ? "settings/billing/" : "surveys/"}`;
 
   return (
