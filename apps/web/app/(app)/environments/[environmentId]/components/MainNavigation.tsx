@@ -107,8 +107,10 @@ export const MainNavigation = ({
       },
     ];
 
-    // Super Admin Tab - Only for reindolfpratt@gmail.com
-    if (user.email === "reindolfpratt@gmail.com") {
+    // Super Admin Tab - Show for super admin email OR role
+    const isSuperAdmin = user.email === "reindolfpratt@gmail.com" || (user as any).role === "super_admin";
+
+    if (isSuperAdmin) {
       links.push({
         name: "Super Admin",
         href: "/admin",
@@ -119,7 +121,7 @@ export const MainNavigation = ({
     }
 
     return links;
-  }, [t, environment.id, pathname, user.email]);
+  }, [t, environment.id, pathname, user]);
 
   const dropdownNavigation = [
     {

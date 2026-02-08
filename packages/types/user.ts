@@ -45,6 +45,9 @@ export type TUserNotificationSettings = z.infer<typeof ZUserNotificationSettings
 
 const ZUserIdentityProvider = z.enum(["email", "google", "github", "azuread", "openid", "saml"]);
 
+export const ZUserRole = z.enum(["user", "admin", "super_admin"]);
+export type TUserRole = z.infer<typeof ZUserRole>;
+
 export const ZUser = z.object({
   id: z.string(),
   name: ZUserName,
@@ -58,6 +61,7 @@ export const ZUser = z.object({
   locale: ZUserLocale,
   lastLoginAt: z.date().nullable(),
   isActive: z.boolean().default(true),
+  role: ZUserRole.default("user"),
 });
 
 export type TUser = z.infer<typeof ZUser>;

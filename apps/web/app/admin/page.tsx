@@ -1,8 +1,25 @@
 import { prisma } from "@formbricks/database";
 import { Badge } from "@/modules/ui/components/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/modules/ui/components/card";
+import { TierDropdown } from "./components/tier-dropdown";
 
 export const dynamic = "force-dynamic";
+
+// Helper to format relative time
+const formatLastLogin = (date: Date | null | undefined): string => {
+  if (!date) return "Never";
+  const now = new Date();
+  const diff = now.getTime() - new Date(date).getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor(diff / (1000 * 60));
+
+  if (days > 30) return new Date(date).toLocaleDateString();
+  if (days > 0) return `${days}d ago`;
+  if (hours > 0) return `${hours}h ago`;
+  if (minutes > 0) return `${minutes}m ago`;
+  return "Just now";
+};
 
 export default async function AdminOverviewPage() {
   try {
@@ -32,6 +49,9 @@ export default async function AdminOverviewPage() {
       },
     });
 
+    // Fetch additional stats
+    const [totalUsers, totalProjects] = await Promise.all([prisma.user.count(), prisma.project.count()]);
+
     return (
       <div className="space-y-6">
         <div>
@@ -48,20 +68,37 @@ export default async function AdminOverviewPage() {
               <div className="text-2xl font-bold">{organizations.length}</div>
             </CardContent>
           </Card>
-          {/* Add more stats cards here later */}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalUsers}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Projects</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{totalProjects}</div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="rounded-md border bg-white shadow-sm">
-          <div className="p-4">
+          <div className="overflow-x-auto p-4">
             <table className="w-full text-left text-sm text-slate-600">
               <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                 <tr>
                   <th className="px-4 py-3 font-medium">Organization</th>
                   <th className="px-4 py-3 font-medium">Owner</th>
-                  <th className="px-4 py-3 font-medium">Plan</th>
+                  <th className="px-4 py-3 font-medium">Current Plan</th>
                   <th className="px-4 py-3 font-medium">Members</th>
+                  <th className="px-4 py-3 font-medium">Projects</th>
+                  <th className="px-4 py-3 font-medium">Last Login</th>
                   <th className="px-4 py-3 font-medium">Created</th>
-                  <th className="px-4 py-3 font-medium">Actions</th>
+                  <th className="px-4 py-3 font-medium">Change Tier</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -80,15 +117,16 @@ export default async function AdminOverviewPage() {
                       <td className="px-4 py-3">
                         <Badge
                           text={planId}
-                          type={planId === "pro" ? "success" : planId === "enterprise" ? "warning" : "gray"}
+                          type={planId === "startup" ? "success" : planId === "custom" ? "warning" : "gray"}
                           size="normal"
                         />
                       </td>
                       <td className="px-4 py-3">{org._count.memberships}</td>
+                      <td className="px-4 py-3">{org._count.projects}</td>
+                      <td className="px-4 py-3 text-slate-500">{formatLastLogin(owner?.lastLoginAt)}</td>
                       <td className="px-4 py-3">{new Date(org.createdAt).toLocaleDateString()}</td>
                       <td className="px-4 py-3">
-                        {/* Placeholder for Edit Plan Action */}
-                        <button className="font-medium text-blue-600 hover:text-blue-800">Edit Tier</button>
+                        <TierDropdown organizationId={org.id} currentPlan={planId} />
                       </td>
                     </tr>
                   );
