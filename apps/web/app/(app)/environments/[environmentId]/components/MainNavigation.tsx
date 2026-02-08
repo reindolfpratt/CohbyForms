@@ -84,8 +84,8 @@ export const MainNavigation = ({
     }
   }, [pathname]);
 
-  const mainNavigation = useMemo(
-    () => [
+  const mainNavigation = useMemo(() => {
+    const links = [
       {
         name: t("common.surveys"),
         href: `/environments/${environment.id}/surveys`,
@@ -105,9 +105,21 @@ export const MainNavigation = ({
         icon: Cog,
         isActive: pathname?.includes("/project"),
       },
-    ],
-    [t, environment.id, pathname]
-  );
+    ];
+
+    // Super Admin Tab - Only for reindolfpratt@gmail.com
+    if (user.email === "reindolfpratt@gmail.com") {
+      links.push({
+        name: "Super Admin",
+        href: "/admin",
+        icon: ShieldCheck,
+        isActive: pathname?.includes("/admin"),
+        isHidden: false,
+      });
+    }
+
+    return links;
+  }, [t, environment.id, pathname, user.email]);
 
   const dropdownNavigation = [
     {
@@ -129,14 +141,6 @@ export const MainNavigation = ({
     },
   ];
 
-  if (user.email === "reindolfpratt@gmail.com") {
-    dropdownNavigation.unshift({
-      label: "Admin Dashboard",
-      href: "/admin",
-      target: "_self",
-      icon: ShieldCheck,
-    });
-  }
   const mainNavigationLink = `/environments/${environment.id}/${isBilling ? "settings/billing/" : "surveys/"}`;
 
   return (
