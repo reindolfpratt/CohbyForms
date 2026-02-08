@@ -1,6 +1,8 @@
 import { TFunction } from "i18next";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { prisma } from "@formbricks/database";
 import { TIntegrationType } from "@formbricks/types/integration";
 import { getWebhookCountBySource } from "@/app/(app)/environments/[environmentId]/workspace/integrations/lib/webhook";
 import ActivePiecesLogo from "@/images/activepieces.webp";
@@ -16,6 +18,7 @@ import WebhookLogo from "@/images/webhook.png";
 import ZapierLogo from "@/images/zapier-small.png";
 import { getIntegrations } from "@/lib/integration/service";
 import { getTranslate } from "@/lingodotdev/server";
+import { authOptions } from "@/modules/auth/lib/authOptions";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
 import { ProjectConfigNavigation } from "@/modules/projects/settings/components/project-config-navigation";
 import { Card } from "@/modules/ui/components/integration-card";
@@ -56,6 +59,34 @@ const Page = async (props) => {
   if (isBilling) {
     return redirect(`/environments/${params.environmentId}/settings/billing`);
   }
+
+  // --- SUPER ADMIN VISIBILITY LOGIC ---
+  const session = await getServerSession(authOptions);
+  const isSuperAdminEmail = session?.user?.email === "reindolfpratt@gmail.com";
+  let isSuperAdmin = isSuperAdminEmail;
+
+  if (!isSuperAdmin && session?.user?.id) {
+    try {
+      const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { role: true } });
+      // @ts-ignore
+      if (user?.role === "super_admin") isSuperAdmin = true;
+    } catch (e) {}
+  }
+
+  const globalSettings = await prisma.globalIntegrationSettings.findMany();
+  const settingsMap = globalSettings.reduce(
+    (acc, curr) => {
+      acc[curr.type] = curr.isEnabled;
+      return acc;
+    },
+    {} as Record<string, boolean>
+  );
+
+  const isIntegrationVisible = (key: string) => {
+    if (isSuperAdmin) return true; // Super admin sees everything
+    return settingsMap[key] === true; // Users only see enabled
+  };
+  // ------------------------------------
 
   const isGoogleSheetsIntegrationConnected = isIntegrationConnected("googleSheets");
   const isNotionIntegrationConnected = isIntegrationConnected("notion");
@@ -222,13 +253,31 @@ const Page = async (props) => {
     disabled: false,
   });
 
+  const visibleCards = integrationCards.filter((card) => {
+    // Map labels to keys used in admin panel
+    let key = "";
+    if (card.label === "Zapier") key = "zapier";
+    else if (card.label === "Webhooks") key = "webhooks";
+    else if (card.label === "Google Sheets") key = "googleSheets";
+    else if (card.label === "Airtable") key = "airtable";
+    else if (card.label === "Slack") key = "slack";
+    else if (card.label === "n8n") key = "n8n";
+    else if (card.label === "Make.com") key = "make";
+    else if (card.label === "Notion") key = "notion";
+    else if (card.label === "Activepieces") key = "activepieces";
+    else if (card.label === "Salesforce") key = "salesforce";
+    else if (card.label === "Javascript SDK") key = "js";
+
+    return isIntegrationVisible(key);
+  });
+
   return (
     <PageContentWrapper>
       <PageHeader pageTitle={t("common.workspace_configuration")}>
         <ProjectConfigNavigation environmentId={params.environmentId} activeId="integrations" />
       </PageHeader>
       <div className="grid grid-cols-3 place-content-stretch gap-4 lg:grid-cols-3">
-        {integrationCards.map((card) => (
+        {visibleCards.map((card) => (
           <Card
             key={card.label}
             docsHref={card.docsHref}

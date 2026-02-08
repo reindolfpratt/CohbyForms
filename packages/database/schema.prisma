@@ -851,6 +851,19 @@ model User {
   teamUsers                 TeamUser[]
   lastLoginAt               DateTime?
   isActive                  Boolean          @default(true)
+  role                      UserRole         @default(user)
+}
+
+enum UserRole {
+  user
+  admin
+  super_admin
+}
+
+model GlobalIntegrationSettings {
+  id        String  @id @default(cuid())
+  type      String  @unique
+  isEnabled Boolean @default(false)
 }
 
 /// Defines a segment of contacts based on attributes.
