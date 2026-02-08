@@ -21,6 +21,7 @@ export const updateUser = async (id: string, data: TUserUpdateInput) => {
         email: true,
         locale: true,
         emailVerified: true,
+        role: true,
       },
     });
 
@@ -74,6 +75,7 @@ export const getUserByEmail = reactCache(async (email: string) => {
         emailVerified: true,
         isActive: true,
         identityProvider: true,
+        role: true,
       },
     });
 
@@ -124,6 +126,7 @@ export const createUser = async (data: TUserCreateInput) => {
         id: true,
         email: true,
         locale: true,
+        role: true,
       },
     });
 
