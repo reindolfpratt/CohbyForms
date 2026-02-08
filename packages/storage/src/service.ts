@@ -7,7 +7,7 @@ import {
   PutObjectCommand,
   paginateListObjectsV2,
 } from "@aws-sdk/client-s3";
-import { S3RequestPresigner } from "@aws-sdk/s3-request-presigner";
+import { S3RequestPresigner, getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { formatUrl } from "@aws-sdk/util-format-url";
 import { logger } from "@formbricks/logger";
 import { type Result, type StorageError, StorageErrorCode, err, ok } from "../types/error";
@@ -17,7 +17,6 @@ import { S3_BUCKET_NAME } from "./constants";
 /**
  * Get a signed URL for uploading a file to S3
  * @param fileName - The name of the file to upload
- * @param contentType - The content type of the file
  * @param filePath - The path to the file in S3
  * @param maxSize - The maximum size of the file to upload or undefined if no limit is desired
  * @returns A Result containing the signed URL and presigned fields or an error: StorageError
