@@ -20,6 +20,7 @@ export const mockUser: TUser = {
   updatedAt: new Date(),
   lastLoginAt: new Date(),
   isActive: true,
+  role: "user",
 };
 
 // Mock account data
