@@ -67,7 +67,7 @@ export const getSignedUploadUrl = async (
     });
 
     const httpRequest = await command.middlewareStack.resolve(
-      (request: any) =>
+      (_request: any) =>
         Promise.resolve({
           output: {
             $metadata: {},
