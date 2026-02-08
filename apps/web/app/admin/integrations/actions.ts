@@ -12,7 +12,7 @@ export async function toggleIntegrationAction(type: string, isEnabled: boolean) 
   const session = await getServerSession(authOptions);
 
   // Security Check (duplicate of layout but good for safety)
-  if (session?.user?.email !== "reindolfpratt@gmail.com") {
+  if ((session?.user as any)?.email !== "reindolfpratt@gmail.com") {
     // Fallback DB check if needed, but for now email is primary super admin
     const user = await prisma.user.findUnique({ where: { id: session?.user?.id } });
     // @ts-ignore

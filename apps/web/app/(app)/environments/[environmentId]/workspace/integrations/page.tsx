@@ -62,7 +62,7 @@ const Page = async (props) => {
 
   // --- SUPER ADMIN VISIBILITY LOGIC ---
   const session = await getServerSession(authOptions);
-  const isSuperAdminEmail = session?.user?.email === "reindolfpratt@gmail.com";
+  const isSuperAdminEmail = (session?.user as any)?.email === "reindolfpratt@gmail.com";
   let isSuperAdmin = isSuperAdminEmail;
 
   if (!isSuperAdmin && session?.user?.id) {

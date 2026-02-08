@@ -9,13 +9,14 @@ import { ToasterClient } from "@/modules/ui/components/toaster-client";
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.email) {
+  if (!(session?.user as any)?.email) {
     return redirect("/auth/login");
   }
 
   // Super Admin Check
   // 1. Hardcoded email for immediate access
-  const isSuperAdminEmail = session.user.email === "reindolfpratt@gmail.com";
+  const user = session?.user as any;
+  const isSuperAdminEmail = user?.email === "reindolfpratt@gmail.com";
 
   // 2. Database role check
   let isSuperAdminRole = false;
