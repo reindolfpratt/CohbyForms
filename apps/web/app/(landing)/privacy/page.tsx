@@ -163,7 +163,20 @@ export default function PrivacyPolicy() {
               for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
             </p>
 
-            <h2 className="mt-8 text-xl font-semibold text-slate-900">9. Contact Us</h2>
+            <h2 className="mt-8 text-xl font-semibold text-slate-900">9. Google User Data</h2>
+            <p>
+              Our use and transfer to any other app of information received from Google APIs will adhere to{" "}
+              <a
+                href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 hover:text-blue-800">
+                Google API Services User Data Policy
+              </a>
+              , including the Limited Use requirements.
+            </p>
+
+            <h2 className="mt-8 text-xl font-semibold text-slate-900">10. Contact Us</h2>
             <p>If you have any questions about this Privacy Policy, please contact us:</p>
             <ul className="list-disc space-y-1 pl-5">
               <li>By email: support@cohbyforms.com</li>
