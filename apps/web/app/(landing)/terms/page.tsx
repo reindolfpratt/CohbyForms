@@ -4,12 +4,6 @@ import { Footer } from "../components/Footer";
 import { LandingNavbar } from "../components/Navbar";
 
 export default function TermsOfService() {
-  const lastUpdated = new Date().toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
   return (
     <div className="min-h-screen bg-slate-50">
       <LandingNavbar />
@@ -19,8 +13,6 @@ export default function TermsOfService() {
           <h1 className="mb-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             Terms of Service
           </h1>
-          <p className="mb-10 text-slate-500">Last updated: {lastUpdated}</p>
-
           <div className="prose prose-slate max-w-none text-slate-600">
             <p>
               Please read these Terms of Service (&quot;Terms&quot;, &quot;Terms of Service&quot;) carefully
