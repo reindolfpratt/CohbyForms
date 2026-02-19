@@ -99,7 +99,13 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 md:flex-row">
-          <p className="text-sm">© {new Date().getFullYear()} CohbyForm. All rights reserved.</p>
+          <p className="text-sm">
+            © {new Date().getFullYear()}{" "}
+            <Link href="/" className="transition-colors hover:text-white">
+              CohbyForm
+            </Link>
+            . All rights reserved.
+          </p>
           <div className="flex items-center gap-6">
             {/* Social Links */}
             {/* X/Twitter */}
