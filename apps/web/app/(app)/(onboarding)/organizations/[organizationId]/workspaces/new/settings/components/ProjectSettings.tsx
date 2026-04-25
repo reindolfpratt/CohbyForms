@@ -103,9 +103,7 @@ export const ProjectSettings = ({
     },
     resolver: zodResolver(ZProjectUpdateInput),
   });
-  const projectName = form.watch("name");
-  const logoUrl = form.watch("logo.url");
-  const brandColor = form.watch("styling.brandColor.light") ?? defaultBrandColor;
+
   const { isSubmitting } = form.formState;
 
   const organizationTeamsOptions = organizationTeams.map((team) => ({
