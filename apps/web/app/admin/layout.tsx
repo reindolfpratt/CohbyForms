@@ -53,6 +53,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               className="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">
               Integrations
             </Link>
+            <Link
+              href="/admin/users"
+              className="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100">
+              Users
+            </Link>
           </div>
         </div>
         <div className="flex items-center gap-4">

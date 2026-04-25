@@ -32,7 +32,7 @@ const PLAN_LIMITS = {
 
 type PlanType = keyof typeof PLAN_LIMITS;
 
-async function verifySuperAdmin() {
+export async function verifySuperAdmin() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.id) {
