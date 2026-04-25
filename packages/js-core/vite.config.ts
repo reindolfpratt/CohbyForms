@@ -21,7 +21,7 @@ export default defineConfig({
     minify: "terser",
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "formbricks",
+      name: "cohbyforms",
       formats: ["umd"],
       fileName: "index",
     },
@@ -31,7 +31,7 @@ export default defineConfig({
       rollupTypes: true,
     }),
     copyCompiledAssetsPlugin({
-      filename: "formbricks",
+      filename: "cohbyforms",
       distDir: resolve(__dirname, "dist"),
       skipDirectoryCheck: true, // Skip checking for subdirectories that might not exist
     }),

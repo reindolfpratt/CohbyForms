@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,13 +14,11 @@ import {
   ZProjectUpdateInput,
 } from "@formbricks/types/project";
 import { createProjectAction } from "@/app/(app)/environments/[environmentId]/actions";
-import { previewSurvey } from "@/app/lib/templates";
 import { FORMBRICKS_SURVEYS_FILTERS_KEY_LS } from "@/lib/localStorage";
 import { getFormattedErrorMessage } from "@/lib/utils/helper";
 import { TOrganizationTeam } from "@/modules/ee/teams/project-teams/types/team";
 import { CreateTeamModal } from "@/modules/ee/teams/team-list/components/create-team-modal";
 import { Button } from "@/modules/ui/components/button";
-import { ColorPicker } from "@/modules/ui/components/color-picker";
 import {
   FormControl,
   FormDescription,
@@ -33,7 +30,6 @@ import {
 } from "@/modules/ui/components/form";
 import { Input } from "@/modules/ui/components/input";
 import { MultiSelect } from "@/modules/ui/components/multi-select";
-import { SurveyInline } from "@/modules/ui/components/survey";
 
 interface ProjectSettingsProps {
   organizationId: string;
@@ -120,34 +116,10 @@ export const ProjectSettings = ({
   }));
 
   return (
-    <div className="mt-6 flex w-5/6 space-x-10 lg:w-2/3 2xl:w-1/2">
-      <div className="flex w-1/2 flex-col space-y-4">
+    <div className="mt-6 flex w-full max-w-md flex-col space-y-4">
+      <div className="flex w-full flex-col space-y-4">
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(addProject)} className="w-full space-y-4">
-            <FormField
-              control={form.control}
-              name="styling.brandColor.light"
-              render={({ field, fieldState: { error } }) => (
-                <FormItem className="w-full space-y-4">
-                  <div>
-                    <FormLabel>{t("organizations.workspaces.new.settings.brand_color")}</FormLabel>
-                    <FormDescription>
-                      {t("organizations.workspaces.new.settings.brand_color_description")}
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <div>
-                      <ColorPicker
-                        color={field.value || defaultBrandColor}
-                        onChange={(color) => field.onChange(color)}
-                      />
-                      {error?.message && <FormError className="text-left">{error.message}</FormError>}
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="name"
@@ -219,30 +191,6 @@ export const ProjectSettings = ({
         </FormProvider>
       </div>
 
-      <div className="relative flex h-[30rem] w-1/2 flex-col items-center justify-center space-y-2 rounded-lg border bg-slate-200 shadow">
-        {logoUrl && (
-          <Image
-            src={logoUrl}
-            alt="Logo"
-            width={256}
-            height={56}
-            className="absolute left-2 top-2 -mb-6 h-20 w-auto max-w-64 rounded-lg border object-contain p-1"
-          />
-        )}
-        <p className="text-sm text-slate-400">{t("common.preview")}</p>
-        <div className="z-0 h-3/4 w-3/4">
-          <SurveyInline
-            appUrl={publicDomain}
-            isPreviewMode={true}
-            survey={previewSurvey(projectName || "my Product", t)}
-            styling={{ brandColor: { light: brandColor } }}
-            isBrandingEnabled={false}
-            languageCode="default"
-            onFileUpload={async (file) => file.name}
-            autoFocus={false}
-          />
-        </div>
-      </div>
       <CreateTeamModal
         open={createTeamModalOpen}
         setOpen={setCreateTeamModalOpen}

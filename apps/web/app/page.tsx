@@ -69,7 +69,9 @@ const Page = async () => {
 
   if (!firstProductionEnvironmentId) {
     if (isOwner || isManager) {
-      return redirect(`/organizations/${userOrganizations[0].id}/workspaces/new/mode`);
+      return redirect(
+        `/organizations/${userOrganizations[0].id}/workspaces/new/settings?channel=link&mode=surveys`
+      );
     } else {
       return redirect(`/organizations/${userOrganizations[0].id}/landing`);
     }

@@ -385,15 +385,15 @@ const nextConfig = {
     return [
       {
         source: "/api/packages/website",
-        destination: "/js/formbricks.umd.cjs",
+        destination: "/js/cohbyforms.umd.cjs",
       },
       {
         source: "/api/packages/app",
-        destination: "/js/formbricks.umd.cjs",
+        destination: "/js/cohbyforms.umd.cjs",
       },
       {
         source: "/api/packages/js",
-        destination: "/js/formbricks.umd.cjs",
+        destination: "/js/cohbyforms.umd.cjs",
       },
       {
         source: "/api/packages/surveys",

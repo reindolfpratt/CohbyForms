@@ -18,7 +18,6 @@ import { applyIPRateLimit } from "@/modules/core/rate-limit/helpers";
 import { rateLimitConfigs } from "@/modules/core/rate-limit/rate-limit-configs";
 import { withAuditLogging } from "@/modules/ee/audit-logs/lib/handler";
 import { getIsMultiOrgEnabled } from "@/modules/ee/license-check/lib/utils";
-import { subscribeUserToMailingList } from "@/modules/ee/mailing/lib/mailing-subscription";
 import { sendInviteAcceptedEmail, sendVerificationEmail } from "@/modules/email";
 
 const ZCreatedUser = ZUser.pick({
@@ -46,8 +45,6 @@ const ZCreateUserAction = z.object({
       "CAPTCHA verification required"
     ),
   isFormbricksCloud: z.boolean(),
-  subscribeToSecurityUpdates: z.boolean().optional(),
-  subscribeToProductUpdates: z.boolean().optional(),
 });
 
 async function verifyTurnstileIfConfigured(turnstileToken: string | undefined): Promise<void> {
@@ -203,13 +200,6 @@ export const createUserAction = actionClient.schema(ZCreateUserAction).action(
           parsedInput.inviteToken,
           parsedInput.emailVerificationDisabled
         );
-
-        await subscribeUserToMailingList({
-          email: user.email,
-          isFormbricksCloud: parsedInput.isFormbricksCloud,
-          subscribeToSecurityUpdates: parsedInput.subscribeToSecurityUpdates,
-          subscribeToProductUpdates: parsedInput.subscribeToProductUpdates,
-        });
       }
 
       if (user) {

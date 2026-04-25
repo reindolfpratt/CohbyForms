@@ -96,7 +96,7 @@ const setNonce = (nonce: string | undefined): void => {
   globalThis.window.formbricksSurveys?.setNonce?.(nonce);
 };
 
-const formbricks = {
+const cohbyforms = {
   /** @deprecated Use setup() instead. This method will be removed in a future version */
   init: (initConfig: TLegacyConfigInput) => setup(initConfig as unknown as TConfigInput),
   setup,
@@ -111,6 +111,6 @@ const formbricks = {
   setNonce,
 };
 
-type TFormbricks = typeof formbricks;
-export type { TFormbricks };
-export default formbricks;
+type TCohbyforms = typeof cohbyforms;
+export type { TCohbyforms as TFormbricks, TCohbyforms };
+export default cohbyforms;

@@ -79,8 +79,6 @@ export const SignupForm = ({
   const inviteToken = searchParams?.get("inviteToken");
   const router = useRouter();
   const [turnstileToken, setTurnstileToken] = useState<string>();
-  const [subscribeToSecurityUpdates, setSubscribeToSecurityUpdates] = useState(false);
-  const [subscribeToProductUpdates, setSubscribeToProductUpdates] = useState(false);
 
   const turnstile = useTurnstile();
 
@@ -116,8 +114,6 @@ export const SignupForm = ({
         emailVerificationDisabled,
         turnstileToken,
         isFormbricksCloud,
-        subscribeToSecurityUpdates,
-        subscribeToProductUpdates,
       });
 
       const emailTokenActionResponse = await createEmailTokenAction({ email: data.email });
@@ -246,43 +242,6 @@ export const SignupForm = ({
                 }}
               />
             )}
-
-            {showLogin &&
-              (isFormbricksCloud ? (
-                <label
-                  htmlFor="product-updates"
-                  className="my-4 flex cursor-pointer space-x-2 rounded-md border border-slate-200 bg-slate-100 p-2 text-left">
-                  <Checkbox
-                    id="product-updates"
-                    checked={subscribeToProductUpdates}
-                    onCheckedChange={(checked) => setSubscribeToProductUpdates(checked === true)}
-                    className="mt-0.5 h-4 w-4"
-                  />
-                  <div>
-                    <span className="text-sm font-medium text-slate-700">
-                      {t("auth.signup.product_updates_title")}
-                    </span>
-                    <p className="text-xs text-slate-500">{t("auth.signup.product_updates_description")}</p>
-                  </div>
-                </label>
-              ) : (
-                <label
-                  htmlFor="security-updates"
-                  className="my-4 flex cursor-pointer space-x-2 rounded-md border border-slate-200 bg-slate-100 p-2 text-left">
-                  <Checkbox
-                    id="security-updates"
-                    checked={subscribeToSecurityUpdates}
-                    onCheckedChange={(checked) => setSubscribeToSecurityUpdates(checked === true)}
-                    className="mt-0.5 h-4 w-4"
-                  />
-                  <div>
-                    <span className="text-sm font-medium text-slate-700">
-                      {t("auth.signup.security_updates_title")}
-                    </span>
-                    <p className="text-xs text-slate-500">{t("auth.signup.security_updates_description")}</p>
-                  </div>
-                </label>
-              ))}
 
             {showLogin && (
               <Button
