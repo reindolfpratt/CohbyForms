@@ -40,7 +40,6 @@ interface ProjectSettingsProps {
   organizationTeams: TOrganizationTeam[];
   isAccessControlAllowed: boolean;
   userProjectsCount: number;
-  publicDomain: string;
 }
 
 export const ProjectSettings = ({
@@ -52,7 +51,6 @@ export const ProjectSettings = ({
   organizationTeams,
   isAccessControlAllowed = false,
   userProjectsCount,
-  publicDomain,
 }: ProjectSettingsProps) => {
   const [createTeamModalOpen, setCreateTeamModalOpen] = useState(false);
 
