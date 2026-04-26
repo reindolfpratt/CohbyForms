@@ -51,10 +51,10 @@ export const getSignedUploadUrl = async (
       });
     }
 
-    // Use UNSIGNED-PAYLOAD so the AWS SDK does NOT include x-amz-content-sha256 in SignedHeaders.
-    // When x-amz-content-sha256 is in SignedHeaders, browsers cannot satisfy it during a direct PUT,
-    // causing Cloudflare R2 to return a 403 which manifests as a CORS error.
-    // With unsignedPayload, security is still enforced by the HMAC signature on the URL itself.
+    // Use signableHeaders to ONLY sign the 'host' header.
+    // By default, the SDK tries to sign 'x-amz-content-sha256', but browsers won't send it.
+    // Cloudflare R2 will reject the request with a 403 (Forbidden) if a signed header is missing.
+    // We also don't sign 'content-type' to give the frontend more flexibility.
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
@@ -63,7 +63,7 @@ export const getSignedUploadUrl = async (
 
     const signedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 2 * 60,
-      unhoistableHeaders: new Set(["x-amz-content-sha256"]),
+      signableHeaders: new Set(["host"]),
     });
 
     return ok({
