@@ -711,7 +711,7 @@ export const getResponsesJson = (
       Timestamp: getFormattedDateTimeString(response.createdAt),
       Finished: response.finished ? "Yes" : "No",
       "Survey ID": response.surveyId,
-      "Formbricks ID (internal)": response.contact?.id || "",
+      "CohbyForm ID (internal)": response.contact?.id || "",
       "User ID": response.contact?.userId || "",
       Tags: response.tags.map((tag) => tag.name).join(", "),
     });

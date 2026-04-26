@@ -127,39 +127,28 @@ export class ApiClient {
 
     const { data } = json;
 
-    const { signedUrl, fileUrl, presignedFields } = data as {
+    const { signedUrl, fileUrl } = data as {
       signedUrl: string;
-      presignedFields: Record<string, string>;
       fileUrl: string;
     };
 
-    if (!signedUrl || !presignedFields || !fileUrl) {
+    if (!signedUrl || !fileUrl) {
       throw new Error("Invalid response");
     }
 
-    const formData = new FormData();
-
-    Object.entries(presignedFields).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
+    let uploadResponse: Response;
 
     try {
       const binaryString = atob(file.base64.split(",")[1]);
       const uint8Array = Uint8Array.from([...binaryString].map((char) => char.charCodeAt(0)));
       const blob = new Blob([uint8Array], { type: file.type });
 
-      formData.append("file", blob);
-    } catch (err) {
-      console.error(err);
-      throw new Error("Error uploading file");
-    }
-
-    let uploadResponse: Response;
-
-    try {
       uploadResponse = await fetch(signedUrl, {
-        method: "POST",
-        body: formData,
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+        },
+        body: blob,
       });
     } catch (err) {
       console.error("Error uploading file", err);
@@ -169,7 +158,7 @@ export class ApiClient {
     if (!uploadResponse.ok) {
       const errorText = await uploadResponse.text();
 
-      if (presignedFields && errorText.includes("EntityTooLarge")) {
+      if (errorText.includes("EntityTooLarge")) {
         const error = new Error("File size exceeds the size limit for your plan");
         error.name = "FileTooLargeError";
         throw error;

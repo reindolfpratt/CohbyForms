@@ -394,7 +394,7 @@ export const getResponseDownloadFile = async (
       "Finished",
       ...(isQuotasAllowed ? ["Quotas"] : []),
       "Survey ID",
-      "Formbricks ID (internal)",
+      "CohbyForm ID (internal)",
       "User ID",
       "Notes",
       "Tags",
