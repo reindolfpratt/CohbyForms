@@ -28,9 +28,15 @@ export const createS3ClientFromEnv = (): Result<S3Client, StorageError> => {
     }
 
     // Build S3 client configuration
+    // requestChecksumCalculation and responseChecksumValidation must be "WHEN_REQUIRED".
+    // Without this, the AWS SDK v3 defaults to "WHEN_SUPPORTED" and automatically appends
+    // x-amz-checksum-crc32 and x-amz-sdk-checksum-algorithm to presigned URLs.
+    // Cloudflare R2 does not support these checksum parameters and returns a 403.
     const s3Config: S3ClientConfig = {
       endpoint: S3_ENDPOINT_URL,
       forcePathStyle: S3_FORCE_PATH_STYLE,
+      requestChecksumCalculation: "WHEN_REQUIRED",
+      responseChecksumValidation: "WHEN_REQUIRED",
     };
 
     // Only set region if it's provided, otherwise let AWS SDK use its defaults
