@@ -51,10 +51,10 @@ export const getSignedUploadUrl = async (
       });
     }
 
-    // Use signableHeaders to ONLY sign the 'host' header.
-    // By default, the SDK tries to sign 'x-amz-content-sha256', but browsers won't send it.
-    // Cloudflare R2 will reject the request with a 403 (Forbidden) if a signed header is missing.
-    // We also don't sign 'content-type' to give the frontend more flexibility.
+    // TOTAL FIX: Use signableHeaders to strictly control what is signed.
+    // We only sign 'host' and 'content-type'. This is the most compatible way
+    // to handle browser-side PUT uploads to Cloudflare R2.
+    // It prevents 'x-amz-content-sha256' and checksums from being required in the headers.
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
@@ -63,7 +63,7 @@ export const getSignedUploadUrl = async (
 
     const signedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 2 * 60,
-      signableHeaders: new Set(["host"]),
+      signableHeaders: new Set(["host", "content-type"]),
     });
 
     return ok({
