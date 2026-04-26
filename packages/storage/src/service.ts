@@ -51,77 +51,19 @@ export const getSignedUploadUrl = async (
       });
     }
 
+    // Use UNSIGNED-PAYLOAD so the AWS SDK does NOT include x-amz-content-sha256 in SignedHeaders.
+    // When x-amz-content-sha256 is in SignedHeaders, browsers cannot satisfy it during a direct PUT,
+    // causing Cloudflare R2 to return a 403 which manifests as a CORS error.
+    // With unsignedPayload, security is still enforced by the HMAC signature on the URL itself.
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
       ContentType: contentType,
     });
 
-    // Create a client with a custom middleware to set unhoistableHeaders
-    // We reuse the existing client, but add middleware specifically for this request context if needed.
-    // However, adding middleware to the global client instance might affect other requests if not careful.
-    // A safer way is to clone the client or just use the middleware stack of the command if possible?
-    // Actually, AWS SDK v3 clients are immutable-ish. Let's just add it to the client we created.
-    // Since createS3Client returns a singleton, we should verify if adding middleware stacks up.
-    // CAUTION: modifying the singleton client's middleware stack is bad if it persists.
-    // BUT, createS3Client() in client.ts seems to create a NEW client instance or return a cached one?
-    // Let's check client.ts. It returns a singleton `s3Client`.
-    // Modifying the singleton is risky.
-    // Instead of modifying the client, let's use the middleware on the command?
-    // getSignedUrl takes client and command.
-
-    // Better approach:
-    // We can't easily add middleware to just one call of getSignedUrl without cloning the client.
-    // However, the S3RequestPresigner class WAS the right way to go for isolation, but the manual resolve was buggy.
-    // Let's try to use S3RequestPresigner again BUT use it correctly without manual resolution.
-    // S3RequestPresigner.sign(command) should work? No, it's .presign(request).
-
-    // Let's stick to the custom middleware but CLONE the client config to valid unwanted side effects?
-    // Or just construct a new client? No, that's expensive.
-
-    // Actually, getSignedUrl DOES NOT run the client's middleware stack in the same way for signing.
-    // It mostly uses the endpoint and credentials.
-    // The previous error was likely due to `httpRequest` being undefined or malformed.
-
-    // Let's try to strictly fix the linter errors for the CURRENT approach (middleware on client) first,
-    // assuming we can live with the singleton modification or that I'll fix the singleton issue next.
-    // WAIT, if I modify the singleton, every future request will have this middleware.
-    // That's bad.
-
-    // Alternative: Use S3RequestPresigner with `unhoistableHeaders` in the config?
-    // The `presign` method options explicitly support `unhoistableHeaders`.
-    // The issue before was getting the `request` object.
-    // We can use `createRequest` from the client?
-
-    // Let's go back to S3RequestPresigner but simpler.
-    // const signer = new S3RequestPresigner({ ...s3Client.config });
-    // const signedUrl = await signer.presign(command, { ... }); --> Wait, presign takes a Request, not a Command.
-
-    // AWS SDK v3 `getSignedUrl` actually calls `presigner.presign(command)`.
-    // Wait, checking docs... `getSignedUrl(client, command, options)`
-    // logic of getSignedUrl:
-    // 1. converts command to request
-    // 2. signs request
-
-    // If I use `getSignedUrl`, I can't easily pass `unhoistableHeaders`.
-    // Unless I pass it in `options`? The types for `getSignedUrl` options are `SignerOptions`?
-    // No, it's `S3RequestPresignerOptions`.
-    // Let's check if `unhoistableHeaders` is allowed in `getSignedUrl` options.
-    // If so, that's the easiest fix!
-
-    // Checking @aws-sdk/s3-request-presigner source/types...
-    // export interface S3RequestPresignerOptions { expiresIn?: number; unhoistableHeaders?: Set<string>; ... }
-
-    // IF `getSignedUrl` accepts `unhoistableHeaders`, we are golden.
-    // The signature is `getSignedUrl(client, command, options)`.
-    // `options` includes `expiresIn`. Does it include `unhoistableHeaders`?
-    // Usually `getSignedUrl` implementation creates a presigner with `options`.
-
-    // Let's try passing `unhoistableHeaders` directly to `getSignedUrl`.
-
     const signedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 2 * 60,
-      unhoistableHeaders: new Set(["host", "content-length", "user-agent", "x-amz-content-sha256"]),
+      unhoistableHeaders: new Set(["x-amz-content-sha256"]),
     });
 
     return ok({
