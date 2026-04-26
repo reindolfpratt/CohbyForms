@@ -36,6 +36,8 @@ export const getSignedUploadUrl = async (
 > => {
   try {
     const s3Client = createS3Client();
+    // Ensure TypeScript does not flag `contentType` as unused.
+    void contentType;
 
     if (!s3Client) {
       logger.error("Failed to get signed upload URL: S3 client is not set");
