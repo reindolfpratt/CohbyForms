@@ -56,32 +56,41 @@ export const createS3ClientFromEnv = (): Result<S3Client, StorageError> => {
 
     const s3ClientInstance = new S3Client(s3Config);
 
-    // TOTAL FIX: Middleware to remove all checksum-related headers and parameters.
-    // This prevents the SDK from automatically adding CRC32 or SHA256 parameters
-    // that Cloudflare R2 often rejects with a 403 Forbidden.
+    // R2 FIX: Strip all checksum-related params AFTER the presigner has run.
+    // The presigner operates at 'finalizeRequest', so middleware must be at
+    // 'finalizeRequest' priority 'low' to run after it and catch everything.
     s3ClientInstance.middlewareStack.add(
       (next) => (args) => {
         const request = args.request as any;
+
+        // Strip from headers
         if (request.headers) {
-          delete request.headers["x-amz-checksum-crc32"];
-          delete request.headers["x-amz-checksum-crc32c"];
-          delete request.headers["x-amz-checksum-sha1"];
-          delete request.headers["x-amz-checksum-sha256"];
-          delete request.headers["x-amz-sdk-checksum-algorithm"];
-          delete request.headers["x-amz-content-sha256"];
+          for (const key of Object.keys(request.headers)) {
+            if (
+              key.startsWith("x-amz-checksum") ||
+              key === "x-amz-sdk-checksum-algorithm" ||
+              key === "x-amz-content-sha256"
+            ) {
+              delete request.headers[key];
+            }
+          }
         }
+
+        // Strip from query string (presigned URL params)
         if (request.query) {
-          delete request.query["x-amz-checksum-crc32"];
-          delete request.query["x-amz-checksum-crc32c"];
-          delete request.query["x-amz-checksum-sha1"];
-          delete request.query["x-amz-checksum-sha256"];
-          delete request.query["x-amz-sdk-checksum-algorithm"];
-          delete request.query["x-amz-content-sha256"];
+          for (const key of Object.keys(request.query)) {
+            const lower = key.toLowerCase();
+            if (lower.startsWith("x-amz-checksum") || lower === "x-amz-sdk-checksum-algorithm") {
+              delete request.query[key];
+            }
+          }
         }
+
         return next(args);
       },
       {
-        step: "build",
+        step: "finalizeRequest",
+        priority: "low",
         name: "removeChecksumsMiddleware",
         tags: ["CHECKSUM", "R2_FIX"],
       }

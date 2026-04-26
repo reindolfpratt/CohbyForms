@@ -51,19 +51,17 @@ export const getSignedUploadUrl = async (
       });
     }
 
-    // TOTAL FIX: Use signableHeaders to strictly control what is signed.
-    // We only sign 'host' and 'content-type'. This is the most compatible way
-    // to handle browser-side PUT uploads to Cloudflare R2.
-    // It prevents 'x-amz-content-sha256' and checksums from being required in the headers.
+    // Only sign 'host'. Do NOT sign 'content-type' — browsers often append
+    // charset suffixes (e.g. 'image/png; charset=utf-8') which breaks the signature.
+    // The bucket stays private; security is enforced by the HMAC on the URL itself.
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
       Key: `${filePath}/${fileName}`,
-      ContentType: contentType,
     });
 
     const signedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 2 * 60,
-      signableHeaders: new Set(["host", "content-type"]),
+      signableHeaders: new Set(["host"]),
     });
 
     return ok({
