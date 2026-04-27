@@ -27,6 +27,7 @@ export const select: Prisma.OrganizationSelect = {
   billing: true,
   isAIEnabled: true,
   whitelabel: true,
+  aiConfig: true,
 };
 
 export const getOrganizationsTag = (organizationId: string) => `organizations-${organizationId}`;
@@ -54,7 +55,7 @@ export const getOrganizationsByUserId = reactCache(
       if (!organizations) {
         throw new ResourceNotFoundError("Organizations by UserId", userId);
       }
-      return organizations;
+      return organizations as TOrganization[];
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new DatabaseError(error.message);
@@ -85,7 +86,7 @@ export const getOrganizationByEnvironmentId = reactCache(
         select: { ...select, memberships: true }, // include memberships
       });
 
-      return organization;
+      return organization as TOrganization | null;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         logger.error(error, "Error getting organization by environment id");
@@ -107,7 +108,7 @@ export const getOrganization = reactCache(async (organizationId: string): Promis
       },
       select,
     });
-    return organization;
+    return organization as TOrganization | null;
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new DatabaseError(error.message);
@@ -143,7 +144,7 @@ export const createOrganization = async (
       select,
     });
 
-    return organization;
+    return organization as TOrganization;
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new DatabaseError(error.message);
@@ -172,7 +173,7 @@ export const updateOrganization = async (
       projects: undefined,
     };
 
-    return organization;
+    return organization as TOrganization;
   } catch (error) {
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -335,7 +336,7 @@ export const getOrganizationsWhereUserIsSingleOwner = reactCache(
           memberships: undefined, // Remove memberships from the return object to match TOrganization type
         }));
 
-      return filteredOrgs;
+      return filteredOrgs as TOrganization[];
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new DatabaseError(error.message);

@@ -3,7 +3,11 @@
 import { type TActionClassNoCodeConfig } from "../types/action-classes";
 import type { TOrganizationAccess } from "../types/api-key";
 import { type TIntegrationConfig } from "../types/integration";
-import { type TOrganizationBilling } from "../types/organizations";
+import {
+  type TOrganizationAIConfig,
+  type TOrganizationBilling,
+  type TOrganizationWhitelabel,
+} from "../types/organizations";
 import { type TProjectConfig, type TProjectStyling } from "../types/project";
 import type { TSurveyQuotaLogic } from "../types/quota";
 import { type TResponseContactAttributes, type TResponseData, type TResponseMeta } from "../types/responses";
@@ -55,5 +59,7 @@ declare global {
     export type OrganizationAccess = TOrganizationAccess;
     export type SurveyMetadata = TSurveyMetadata;
     export type SurveyQuotaLogic = TSurveyQuotaLogic;
+    export type OrganizationAIConfig = TOrganizationAIConfig;
+    export type OrganizationWhitelabel = TOrganizationWhitelabel;
   }
 }
