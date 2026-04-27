@@ -11,6 +11,7 @@ import { TTemplate, TTemplateFilter, ZTemplateRole } from "@formbricks/types/tem
 import { templates } from "@/app/lib/templates";
 import { getFormattedErrorMessage } from "@/lib/utils/helper";
 import { createSurveyAction } from "./actions";
+import { AIBuilderTemplate } from "./components/ai-builder-template";
 import { StartFromScratchTemplate } from "./components/start-from-scratch-template";
 import { Template } from "./components/template";
 import { TemplateFilters } from "./components/template-filters";
@@ -23,6 +24,7 @@ interface TemplateListProps {
   showFilters?: boolean;
   onTemplateClick?: (template: TTemplate) => void;
   noPreview?: boolean; // single click to create survey
+  isAIEnabled: boolean;
 }
 
 export const TemplateList = ({
@@ -33,6 +35,7 @@ export const TemplateList = ({
   templateSearch,
   onTemplateClick = () => {},
   noPreview,
+  isAIEnabled,
 }: TemplateListProps) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -121,6 +124,13 @@ export const TemplateList = ({
           loading={loading}
           noPreview={noPreview}
         />
+        {isAIEnabled && !templateSearch && (
+          <AIBuilderTemplate
+            environmentId={environmentId}
+            onTemplateClick={onTemplateClick}
+            setActiveTemplate={setActiveTemplate}
+          />
+        )}
         {(process.env.NODE_ENV === "development" ? [...filteredTemplates()] : filteredTemplates()).map(
           (template: TTemplate) => {
             return (

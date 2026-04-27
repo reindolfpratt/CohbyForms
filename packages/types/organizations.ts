@@ -40,6 +40,20 @@ export const ZOrganizationWhitelabel = z.object({
 
 export type TOrganizationWhitelabel = z.infer<typeof ZOrganizationWhitelabel>;
 
+export const ZOrganizationAIConfigProvider = z.object({
+  id: z.enum(["openai", "anthropic", "google"]),
+  apiKey: z.string(),
+  baseUrl: z.string().url().optional(),
+});
+
+export type TOrganizationAIConfigProvider = z.infer<typeof ZOrganizationAIConfigProvider>;
+
+export const ZOrganizationAIConfig = z.object({
+  providers: z.array(ZOrganizationAIConfigProvider).default([]),
+});
+
+export type TOrganizationAIConfig = z.infer<typeof ZOrganizationAIConfig>;
+
 export const ZOrganization = z.object({
   id: z.string().cuid2(),
   createdAt: z.date(),
@@ -50,6 +64,7 @@ export const ZOrganization = z.object({
   whitelabel: ZOrganizationWhitelabel.optional(),
   billing: ZOrganizationBilling,
   isAIEnabled: z.boolean().default(false),
+  aiConfig: ZOrganizationAIConfig.optional(),
 });
 
 export const ZOrganizationCreateInput = z.object({
@@ -64,6 +79,7 @@ export const ZOrganizationUpdateInput = z.object({
   whitelabel: ZOrganizationWhitelabel.optional(),
   billing: ZOrganizationBilling.optional(),
   isAIEnabled: z.boolean().optional(),
+  aiConfig: ZOrganizationAIConfig.optional(),
 });
 
 export type TOrganizationUpdateInput = z.infer<typeof ZOrganizationUpdateInput>;

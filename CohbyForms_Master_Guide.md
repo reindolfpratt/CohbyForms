@@ -97,6 +97,3 @@ CohbyForms is built for teams. The database enforces strict **Multi-Tenant Isola
 This codebase is a **Modern Monorepo**. It is highly modular, meaning you can pull out the `packages/surveys` logic and use it in a mobile app, or swap the `apps/web` dashboard without touching the core data logic. It is built for 99.9% uptime and zero-cost scaling.
 
 **Ready to Scale. Ready to Sell.**
-
-
-

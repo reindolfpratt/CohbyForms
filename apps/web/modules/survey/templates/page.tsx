@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getPublicDomain } from "@/lib/getPublicUrl";
 import { getTranslate } from "@/lingodotdev/server";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
+import { getOrganizationAIKeys } from "@/modules/survey/lib/organization";
 import { getProjectWithTeamIdsByEnvironmentId } from "@/modules/survey/lib/project";
 import { TemplateContainerWithPreview } from "./components/template-container";
 
@@ -29,6 +30,8 @@ export const SurveyTemplatesPage = async (props: SurveyTemplateProps) => {
   }
 
   const publicDomain = getPublicDomain();
+  const organizationAIKeys = await getOrganizationAIKeys(project.organizationId);
+  const isAIEnabled = organizationAIKeys?.isAIEnabled ?? false;
 
   return (
     <TemplateContainerWithPreview
@@ -36,6 +39,7 @@ export const SurveyTemplatesPage = async (props: SurveyTemplateProps) => {
       environment={environment}
       project={project}
       publicDomain={publicDomain}
+      isAIEnabled={isAIEnabled}
     />
   );
 };

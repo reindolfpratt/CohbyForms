@@ -656,6 +656,7 @@ model Organization {
   whitelabel  Json         @default("{}")
   invites     Invite[]
   isAIEnabled Boolean      @default(false)
+  aiConfig    Json         @default("{}")
   teams       Team[]
   apiKeys     ApiKey[]
 }
