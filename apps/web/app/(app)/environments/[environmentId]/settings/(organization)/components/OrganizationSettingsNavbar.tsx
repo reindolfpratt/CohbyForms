@@ -41,6 +41,12 @@ export const OrganizationSettingsNavbar = ({
       current: pathname?.includes("/teams"),
     },
     {
+      id: "ai",
+      label: "AI",
+      href: `/environments/${environmentId}/settings/ai`,
+      current: pathname?.includes("/ai"),
+    },
+    {
       id: "api-keys",
       label: t("common.api_keys"),
       href: `/environments/${environmentId}/settings/api-keys`,
