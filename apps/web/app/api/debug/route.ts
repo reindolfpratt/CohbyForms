@@ -4,6 +4,7 @@ import { prisma } from "@formbricks/database";
 import { authOptions } from "@/modules/auth/lib/authOptions";
 
 export async function GET() {
+  const version = "2026-04-28T14:48:00Z";
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user) {
@@ -35,6 +36,7 @@ export async function GET() {
     });
 
     return NextResponse.json({
+      version,
       session: {
         user: session.user,
       },
