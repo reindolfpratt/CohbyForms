@@ -267,6 +267,7 @@
     },
     "db:migrate:deploy": {
       "cache": false,
+      "dependsOn": ["@formbricks/database#build"],
       "outputs": []
     },
     "db:migrate:dev": {
