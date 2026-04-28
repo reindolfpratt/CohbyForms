@@ -12,7 +12,7 @@
   "scripts": {
     "clean:all": "turbo run clean && rimraf node_modules pnpm-lock.yaml .turbo coverage out",
     "clean": "turbo run clean && rimraf node_modules .turbo coverage out",
-    "build": "turbo run build",
+    "build": "pnpm db:migrate:deploy && turbo run build",
     "build:dev": "turbo run build:dev",
     "db:migrate:dev": "turbo run db:migrate:dev",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
@@ -41,8 +41,7 @@
     "generate-translations": "pnpm i18n:web:generate && pnpm i18n:surveys:generate",
     "scan-translations": "pnpm --filter @formbricks/i18n-utils scan-translations",
     "i18n": "pnpm generate-translations && pnpm scan-translations",
-    "i18n:validate": "pnpm scan-translations",
-    "postinstall": "pnpm db:migrate:deploy"
+    "i18n:validate": "pnpm scan-translations"
   },
   "dependencies": {
     "react": "19.2.3",
