@@ -152,6 +152,7 @@ describe("Survey Editor Library Tests", () => {
         periodStart: new Date(),
       },
       isAIEnabled: false,
+      aiConfig: { providers: [] },
     };
 
     beforeEach(() => {

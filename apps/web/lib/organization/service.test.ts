@@ -56,6 +56,7 @@ describe("Organization Service", () => {
           period: "monthly" as const,
         },
         isAIEnabled: false,
+        aiConfig: { providers: [] },
         whitelabel: false,
       };
 
@@ -111,6 +112,7 @@ describe("Organization Service", () => {
             period: "monthly" as const,
           },
           isAIEnabled: false,
+          aiConfig: { providers: [] },
           whitelabel: false,
         },
       ];
@@ -164,6 +166,7 @@ describe("Organization Service", () => {
           period: "monthly" as const,
         },
         isAIEnabled: false,
+        aiConfig: { providers: [] },
         whitelabel: false,
       };
 
@@ -225,6 +228,7 @@ describe("Organization Service", () => {
           period: "monthly" as const,
         },
         isAIEnabled: false,
+        aiConfig: { providers: [] },
         whitelabel: false,
         memberships: [{ userId: "user1" }, { userId: "user2" }],
         projects: [
@@ -257,6 +261,7 @@ describe("Organization Service", () => {
           period: "monthly",
         },
         isAIEnabled: false,
+        aiConfig: { providers: [] },
         whitelabel: false,
       });
       expect(prisma.organization.update).toHaveBeenCalledWith({

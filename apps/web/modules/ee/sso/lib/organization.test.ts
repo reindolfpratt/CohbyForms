@@ -41,6 +41,7 @@ describe("getFirstOrganization", () => {
         },
       },
       isAIEnabled: false,
+      aiConfig: { providers: [] },
     };
     vi.mocked(prisma.organization.findFirst).mockResolvedValue(org);
     const result = await getFirstOrganization();

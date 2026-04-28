@@ -44,6 +44,7 @@ const mockOrganization: TOrganization = {
     periodStart: new Date(),
   },
   isAIEnabled: false,
+  aiConfig: { providers: [] },
 };
 
 const mockFollowUp: TSurveyCreateInputWithEnvironmentId["followUps"][number] = {

@@ -455,6 +455,7 @@ describe("data", () => {
       billing: mockBilling,
       whitelabel: null,
       isAIEnabled: true,
+      aiConfig: { providers: [] },
     };
 
     test("should fetch organization billing successfully", async () => {

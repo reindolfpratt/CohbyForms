@@ -41,6 +41,7 @@ describe("auth", () => {
             periodStart: new Date(),
           },
           isAIEnabled: false,
+          aiConfig: { providers: [] },
         },
       ];
       vi.mocked(getOrganizationsByUserId).mockResolvedValue(mockOrganizations);

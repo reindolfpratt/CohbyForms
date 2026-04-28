@@ -74,6 +74,7 @@ describe("User Service", () => {
         periodStart: new Date(),
       },
       isAIEnabled: false,
+      aiConfig: { providers: [] },
     },
     {
       id: "org2",
@@ -94,6 +95,7 @@ describe("User Service", () => {
         periodStart: new Date(),
       },
       isAIEnabled: false,
+      aiConfig: { providers: [] },
     },
   ];
 

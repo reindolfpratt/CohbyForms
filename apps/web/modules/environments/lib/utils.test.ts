@@ -269,6 +269,7 @@ describe("utils.ts", () => {
           name: "Test Organization",
           billing: { plan: "free" },
           isAIEnabled: false,
+          aiConfig: { providers: [] },
           whitelabel: false,
           memberships: [
             {
@@ -409,6 +410,7 @@ describe("utils.ts", () => {
             name: "Test Organization",
             billing: { plan: "free", limits: {} },
             isAIEnabled: false,
+            aiConfig: { providers: [] },
             whitelabel: false,
             memberships: [
               {
@@ -513,6 +515,7 @@ describe("utils.ts", () => {
             updatedAt: new Date(),
             billing: { plan: "free", limits: {} },
             isAIEnabled: false,
+            aiConfig: { providers: [] },
             whitelabel: false,
             memberships: [], // No membership
           },
@@ -599,6 +602,7 @@ describe("utils.ts", () => {
             updatedAt: new Date(),
             billing: { plan: "free", limits: {} },
             isAIEnabled: false,
+            aiConfig: { providers: [] },
             whitelabel: false,
             memberships: [{ userId: "user123", organizationId: "org123", role: "owner", accepted: true }],
           },
@@ -638,6 +642,7 @@ describe("utils.ts", () => {
             updatedAt: new Date(),
             billing: { plan: "pro", limits: {} },
             isAIEnabled: true,
+            aiConfig: { providers: [] },
             whitelabel: true,
             memberships: [{ userId: "user123", organizationId: "org456", role: "member", accepted: true }],
           },

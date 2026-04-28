@@ -47,6 +47,7 @@ export const mockOrganization: Organization = {
   id: "org-123",
   name: "Test Organization",
   isAIEnabled: false,
+  aiConfig: { providers: [] },
   whitelabel: {
     enabled: false,
   },
