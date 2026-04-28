@@ -19,15 +19,25 @@ export async function GET() {
       select: { id: true, email: true, name: true },
     });
 
-    // Get memberships
+    // Get memberships with safe selection
     const memberships = await prisma.membership.findMany({
       where: { userId },
-      include: {
+      select: {
+        role: true,
+        accepted: true,
         organization: {
-          include: {
+          select: {
+            id: true,
+            name: true,
             projects: {
-              include: {
-                environments: true,
+              select: {
+                name: true,
+                environments: {
+                  select: {
+                    id: true,
+                    type: true,
+                  },
+                },
               },
             },
           },
