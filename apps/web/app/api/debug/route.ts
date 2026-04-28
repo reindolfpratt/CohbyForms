@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@formbricks/database";
-import { authOptions } from "@formbricks/lib/authOptions";
+import { authOptions } from "@/modules/auth/lib/authOptions";
 
 export async function GET() {
   try {
