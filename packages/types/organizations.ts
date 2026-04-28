@@ -63,7 +63,7 @@ export const ZOrganization = z.object({
   }),
   whitelabel: ZOrganizationWhitelabel.optional(),
   billing: ZOrganizationBilling,
-  isAIEnabled: z.boolean().default(false),
+  isAIEnabled: z.boolean().optional().default(false),
   aiConfig: ZOrganizationAIConfig.optional(),
 });
 

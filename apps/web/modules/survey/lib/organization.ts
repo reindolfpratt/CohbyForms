@@ -43,9 +43,22 @@ export const getOrganizationAIKeys = reactCache(
           aiConfig: true,
         },
       });
-      return organization;
+      return organization as Pick<Organization, "isAIEnabled" | "billing" | "aiConfig"> | null;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        // If the columns are missing, we return a default object with isAIEnabled: false
+        if (error.code === "P2011" || error.code === "P2025" || error.message.includes("isAIEnabled")) {
+          const org = await prisma.organization.findUnique({
+            where: { id: organizationId },
+            select: { billing: true },
+          });
+          if (!org) return null;
+          return {
+            isAIEnabled: false,
+            billing: org.billing,
+            aiConfig: { providers: [] },
+          } as any;
+        }
         throw new DatabaseError(error.message);
       }
 
