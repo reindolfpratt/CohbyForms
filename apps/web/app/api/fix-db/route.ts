@@ -9,36 +9,32 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Only allow owner/admin to run this? No, let's just make it available for now to fix the issue.
+  const results: any[] = [];
 
   try {
-    const results: string[] = [];
+    // Try adding the columns using raw SQL.
+    // Use multiple approaches to ensure it works across different environments.
 
-    // Try adding the columns using raw SQL. Use IF NOT EXISTS to prevent errors if they already exist.
-    // Note: We don't use the "public" schema prefix to be more flexible with search paths.
-    try {
-      await prisma.$executeRawUnsafe(
-        `ALTER TABLE "Organization" ADD COLUMN IF NOT EXISTS "aiConfig" JSONB DEFAULT '{}'`
-      );
-      results.push("Added aiConfig column (or it already existed)");
-    } catch (e: any) {
-      results.push(`Error adding aiConfig: ${e.message}`);
-    }
+    const queries = [
+      `ALTER TABLE "Organization" ADD COLUMN IF NOT EXISTS "aiConfig" JSONB DEFAULT '{}'`,
+      `ALTER TABLE "Organization" ADD COLUMN IF NOT EXISTS "isAIEnabled" BOOLEAN DEFAULT false`,
+    ];
 
-    try {
-      await prisma.$executeRawUnsafe(
-        `ALTER TABLE "Organization" ADD COLUMN IF NOT EXISTS "isAIEnabled" BOOLEAN DEFAULT false`
-      );
-      results.push("Added isAIEnabled column (or it already existed)");
-    } catch (e: any) {
-      results.push(`Error adding isAIEnabled: ${e.message}`);
+    for (const query of queries) {
+      try {
+        await prisma.$executeRawUnsafe(query);
+        results.push({ query, status: "Success (or already existed)" });
+      } catch (e: any) {
+        results.push({ query, status: "Error", message: e.message });
+      }
     }
 
     return NextResponse.json({
       success: true,
       details: results,
+      message: "Database fix attempted. If errors persist, please contact support.",
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error.message, details: results }, { status: 500 });
   }
 }

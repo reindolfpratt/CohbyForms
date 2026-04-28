@@ -9,7 +9,7 @@ import { Button } from "@/modules/ui/components/button";
 import { Input } from "@/modules/ui/components/input";
 import { Label } from "@/modules/ui/components/label";
 import { Switch } from "@/modules/ui/components/switch";
-import { SettingsCard } from "../../components/SettingsCard";
+import { SettingsCard } from "../../../components/SettingsCard";
 
 interface AISettingsFormProps {
   organizationId: string;
