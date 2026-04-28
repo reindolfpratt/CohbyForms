@@ -306,18 +306,32 @@ export const getEnvironmentLayoutData = reactCache(
     // Authorization check before expensive data fetching
     const hasAccess = await hasUserEnvironmentAccess(userId, environmentId);
     if (!hasAccess) {
+      console.error(`[DEBUG] Authorization failed for user ${userId} on environment ${environmentId}`);
       throw new AuthorizationError(t("common.not_authorized"));
     }
 
     const relationData = await getEnvironmentWithRelations(environmentId, userId);
     if (!relationData) {
+      console.error(`[DEBUG] getEnvironmentWithRelations returned null for ${environmentId}`);
+      const envCheck = await prisma.environment.findUnique({
+        where: { id: environmentId },
+        select: { id: true, projectId: true },
+      });
+      console.log(`[DEBUG] Environment check in DB: ${JSON.stringify(envCheck)}`);
+      if (envCheck) {
+        console.log(
+          `[DEBUG] Environment exists but user ${userId} may not have access or relations are broken.`
+        );
+      }
       throw new Error(t("common.environment_not_found"));
     }
 
     const { environment, project, organization, environments, membership } = relationData;
+    console.log(`[DEBUG] Layout data found. Org: ${organization.id}, Project: ${project.id}`);
 
     // Validate user's membership was found
     if (!membership) {
+      console.error(`[DEBUG] No membership found for user ${userId} in organization ${organization.id}`);
       throw new Error(t("common.membership_not_found"));
     }
 

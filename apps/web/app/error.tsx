@@ -40,11 +40,19 @@ const ErrorBoundary = ({ error, reset }: { error: Error; reset: () => void }) =>
     <div className="flex h-full w-full flex-col items-center justify-center">
       <ErrorComponent title={title} description={description} />
       {errorData.showButtons && (
-        <div className="mt-2">
-          <Button variant="secondary" onClick={() => reset()} className="mr-2">
-            {t("common.try_again")}
-          </Button>
-          <Button onClick={() => (window.location.href = "/")}>{t("common.go_to_dashboard")}</Button>
+        <div className="mt-2 flex flex-col items-center">
+          <div className="flex">
+            <Button variant="secondary" onClick={() => reset()} className="mr-2">
+              {t("common.try_again")}
+            </Button>
+            <Button onClick={() => (window.location.href = "/")}>{t("common.go_to_dashboard")}</Button>
+          </div>
+          <div className="mt-8 text-xs text-slate-400">
+            Troubleshooting?{" "}
+            <a href="/api/debug" className="underline hover:text-slate-600" target="_blank">
+              View Debug Data (JSON)
+            </a>
+          </div>
         </div>
       )}
     </div>
