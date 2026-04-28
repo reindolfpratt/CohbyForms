@@ -7,6 +7,7 @@ import { getPublicDomain } from "@/lib/getPublicUrl";
 import { getUserLocale } from "@/lib/user/service";
 import { getTranslate } from "@/lingodotdev/server";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
+import { getOrganizationAIKeys } from "@/modules/survey/lib/organization";
 import { getProjectWithTeamIdsByEnvironmentId } from "@/modules/survey/lib/project";
 import { SurveysList } from "@/modules/survey/list/components/survey-list";
 import { getSurveyCount } from "@/modules/survey/list/lib/survey";
@@ -46,6 +47,9 @@ export const SurveysPage = async ({ params: paramsProps }: SurveyTemplateProps) 
 
   const currentProjectChannel = project.config.channel ?? null;
   const locale = (await getUserLocale(session.user.id)) ?? DEFAULT_LOCALE;
+  const organizationAIKeys = await getOrganizationAIKeys(project.organizationId);
+  const isAIEnabled = organizationAIKeys?.isAIEnabled ?? false;
+
   const CreateSurveyButton = () => {
     return (
       <Button size="sm" asChild>
@@ -71,6 +75,7 @@ export const SurveysPage = async ({ params: paramsProps }: SurveyTemplateProps) 
         project={projectWithRequiredProps}
         isTemplatePage={false}
         publicDomain={publicDomain}
+        isAIEnabled={isAIEnabled}
       />
     );
 
