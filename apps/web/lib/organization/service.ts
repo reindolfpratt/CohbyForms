@@ -40,18 +40,48 @@ export const getOrganizationsByUserId = reactCache(
     validateInputs([userId, ZString], [page, ZOptionalNumber]);
 
     try {
-      const organizations = await prisma.organization.findMany({
-        where: {
-          memberships: {
-            some: {
-              userId,
+      let organizations;
+      try {
+        // Try with all fields including AI
+        organizations = await prisma.organization.findMany({
+          where: {
+            memberships: {
+              some: {
+                userId,
+              },
             },
           },
-        },
-        select,
-        take: page ? ITEMS_PER_PAGE : undefined,
-        skip: page ? ITEMS_PER_PAGE * (page - 1) : undefined,
-      });
+          select,
+          take: page ? ITEMS_PER_PAGE : undefined,
+          skip: page ? ITEMS_PER_PAGE * (page - 1) : undefined,
+        });
+      } catch (innerError) {
+        // Fallback: Try without AI fields
+        const selectWithoutAI: any = { ...select };
+        delete selectWithoutAI.isAIEnabled;
+        delete selectWithoutAI.aiConfig;
+
+        logger.warn("Primary organization fetch failed, attempting fallback without AI fields");
+        const rawOrgs = await prisma.organization.findMany({
+          where: {
+            memberships: {
+              some: {
+                userId,
+              },
+            },
+          },
+          select: selectWithoutAI,
+          take: page ? ITEMS_PER_PAGE : undefined,
+          skip: page ? ITEMS_PER_PAGE * (page - 1) : undefined,
+        });
+
+        organizations = rawOrgs.map((org) => ({
+          ...org,
+          isAIEnabled: false,
+          aiConfig: {},
+        }));
+      }
+
       if (!organizations) {
         throw new ResourceNotFoundError("Organizations by UserId", userId);
       }

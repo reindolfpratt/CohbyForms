@@ -124,77 +124,100 @@ export const environmentIdLayoutChecks = async (environmentId: string) => {
  * Note: Validation is handled by parent function (getEnvironmentLayoutData)
  */
 export const getEnvironmentWithRelations = reactCache(async (environmentId: string, userId: string) => {
-  try {
-    const data = await prisma.environment.findUnique({
-      where: { id: environmentId },
+  const selectWithAI = {
+    // Environment fields
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    type: true,
+    projectId: true,
+    appSetupCompleted: true,
+    // Project via relation (nested select)
+    project: {
       select: {
-        // Environment fields
         id: true,
         createdAt: true,
         updatedAt: true,
-        type: true,
-        projectId: true,
-        appSetupCompleted: true,
-        // Project via relation (nested select)
-        project: {
+        name: true,
+        organizationId: true,
+        languages: true,
+        recontactDays: true,
+        linkSurveyBranding: true,
+        inAppSurveyBranding: true,
+        config: true,
+        placement: true,
+        clickOutsideClose: true,
+        darkOverlay: true,
+        styling: true,
+        logo: true,
+        customHeadScripts: true,
+        // All project environments
+        environments: {
+          select: {
+            id: true,
+            type: true,
+            createdAt: true,
+            updatedAt: true,
+            projectId: true,
+            appSetupCompleted: true,
+          },
+        },
+        // Organization via relation
+        organization: {
           select: {
             id: true,
             createdAt: true,
             updatedAt: true,
             name: true,
-            organizationId: true,
-            languages: true,
-            recontactDays: true,
-            linkSurveyBranding: true,
-            inAppSurveyBranding: true,
-            config: true,
-            placement: true,
-            clickOutsideClose: true,
-            darkOverlay: true,
-            styling: true,
-            logo: true,
-            customHeadScripts: true,
-            // All project environments
-            environments: {
-              select: {
-                id: true,
-                type: true,
-                createdAt: true,
-                updatedAt: true,
-                projectId: true,
-                appSetupCompleted: true,
+            billing: true,
+            whitelabel: true,
+            isAIEnabled: true,
+            aiConfig: true,
+            // Current user's membership only (filtered at DB level)
+            memberships: {
+              where: {
+                userId: userId,
               },
-            },
-            // Organization via relation
-            organization: {
               select: {
-                id: true,
-                createdAt: true,
-                updatedAt: true,
-                name: true,
-                billing: true,
-                whitelabel: true,
-                isAIEnabled: true,
-                aiConfig: true,
-                // Current user's membership only (filtered at DB level)
-                memberships: {
-                  where: {
-                    userId: userId,
-                  },
-                  select: {
-                    userId: true,
-                    organizationId: true,
-                    accepted: true,
-                    role: true,
-                  },
-                  take: 1, // Only need one result
-                },
+                userId: true,
+                organizationId: true,
+                accepted: true,
+                role: true,
               },
+              take: 1, // Only need one result
             },
           },
         },
       },
-    });
+    },
+  };
+
+  const selectWithoutAI = JSON.parse(JSON.stringify(selectWithAI));
+  delete selectWithoutAI.project.select.organization.select.isAIEnabled;
+  delete selectWithoutAI.project.select.organization.select.aiConfig;
+
+  try {
+    let data;
+    try {
+      // Primary attempt with all fields
+      data = await prisma.environment.findUnique({
+        where: { id: environmentId },
+        select: selectWithAI as any,
+      });
+    } catch (innerError) {
+      // Fallback: If the primary query fails (likely due to missing columns in DB), try without AI fields
+      logger.warn("Primary environment fetch failed, attempting fallback without AI fields");
+      data = await prisma.environment.findUnique({
+        where: { id: environmentId },
+        select: selectWithoutAI as any,
+      });
+
+      if (data) {
+        // Inject default values for missing fields to maintain type safety
+        data.project.organization.isAIEnabled = false;
+        data.project.organization.aiConfig = {};
+      }
+    }
 
     if (!data) return null;
 
@@ -242,7 +265,7 @@ export const getEnvironmentWithRelations = reactCache(async (environmentId: stri
     };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      logger.error(error, "Error getting environment with relations");
+      logger.error(error, "Error getting environment with relations after fallback attempt");
       throw new DatabaseError(error.message);
     }
     throw error;
