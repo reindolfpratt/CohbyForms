@@ -12,7 +12,7 @@ export async function GET() {
   // Only allow owner/admin to run this? No, let's just make it available for now to fix the issue.
 
   try {
-    const results = [];
+    const results: string[] = [];
 
     // Try adding the columns using raw SQL. Use IF NOT EXISTS to prevent errors if they already exist.
     // Note: We don't use the "public" schema prefix to be more flexible with search paths.
