@@ -3,7 +3,6 @@
 import { SparklesIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
 import { TTemplate } from "@formbricks/types/templates";
 import { generateSurveyAction } from "@/modules/ai/actions";
 import { Button } from "@/modules/ui/components/button";
@@ -24,7 +23,6 @@ interface AIBuilderModalProps {
 }
 
 export const AIBuilderModal = ({ open, setOpen, environmentId, onGenerated }: AIBuilderModalProps) => {
-  const { t } = useTranslation();
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
 
