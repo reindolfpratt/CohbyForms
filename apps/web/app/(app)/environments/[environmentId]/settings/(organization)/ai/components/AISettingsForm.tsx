@@ -13,14 +13,12 @@ import { SettingsCard } from "../../../components/SettingsCard";
 
 interface AISettingsFormProps {
   organizationId: string;
-  environmentId: string;
   initialIsAIEnabled: boolean;
   initialAIConfig: TOrganizationAIConfig;
 }
 
 export const AISettingsForm = ({
   organizationId,
-  environmentId,
   initialIsAIEnabled,
   initialAIConfig,
 }: AISettingsFormProps) => {

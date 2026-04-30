@@ -28,7 +28,6 @@ const Page = async (props: { params: Promise<{ environmentId: string }> }) => {
       </PageHeader>
       <AISettingsForm
         organizationId={organization.id}
-        environmentId={params.environmentId}
         initialIsAIEnabled={organization.isAIEnabled || false}
         initialAIConfig={aiConfig}
       />
