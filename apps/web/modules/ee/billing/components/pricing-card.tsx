@@ -36,9 +36,6 @@ export const PricingCard = ({
   const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const displayPrice = (() => {
-    if (plan.id === projectFeatureKeys.ENTERPRISE) {
-      return plan.price.monthly;
-    }
     return planPeriod === "monthly" ? plan.price.monthly : plan.price.yearly;
   })();
 
@@ -92,7 +89,7 @@ export const PricingCard = ({
     }
 
     if (plan.id === projectFeatureKeys.STARTUP) {
-      if (organization.billing.plan === projectFeatureKeys.FREE) {
+      if (organization.billing.plan !== projectFeatureKeys.STARTUP) {
         return (
           <Button
             loading={loading}
