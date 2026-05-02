@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { OrganizationSettingsNavbar } from "@/app/(app)/environments/[environmentId]/settings/(organization)/components/OrganizationSettingsNavbar";
 import { IS_FORMBRICKS_CLOUD } from "@/lib/constants";
 import { getTranslate } from "@/lingodotdev/server";
@@ -17,7 +18,7 @@ const Page = async (props: { params: Promise<{ environmentId: string }> }) => {
   // Decrypt aiConfig if it exists
   const aiConfig = organization.aiConfig ? decryptAIConfig(organization.aiConfig as any) : { providers: [] };
 
-  const isAIAllowed = organization.billing.plan === "custom";
+  const isAIAllowed = (organization.billing as any)?.plan === "custom";
 
   return (
     <PageContentWrapper>
@@ -47,13 +48,8 @@ const Page = async (props: { params: Promise<{ environmentId: string }> }) => {
               our Custom plan to unlock these features.
             </p>
           </div>
-          <Button
-            size="lg"
-            className="px-8"
-            onClick={() => {
-              window.location.href = `/environments/${params.environmentId}/settings/billing`;
-            }}>
-            Upgrade to Custom
+          <Button size="lg" className="px-8" asChild>
+            <Link href={`/environments/${params.environmentId}/settings/billing`}>Upgrade to Custom</Link>
           </Button>
         </div>
       )}

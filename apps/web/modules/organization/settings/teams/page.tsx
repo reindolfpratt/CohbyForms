@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { OrganizationSettingsNavbar } from "@/app/(app)/environments/[environmentId]/settings/(organization)/components/OrganizationSettingsNavbar";
 import { IS_FORMBRICKS_CLOUD, USER_MANAGEMENT_MINIMUM_ROLE } from "@/lib/constants";
 import { getUserManagementAccess } from "@/lib/membership/utils";
@@ -17,7 +18,7 @@ export const TeamsPage = async (props: { params: Promise<{ environmentId: string
 
   const { session, currentUserMembership, organization } = await getEnvironmentAuth(params.environmentId);
 
-  const isAccessControlAllowed = await getAccessControlPermission(organization.billing.plan);
+  const isAccessControlAllowed = await getAccessControlPermission((organization.billing as any)?.plan);
 
   // Check if user has standard user management access (owner/manager)
   const hasStandardUserManagementAccess = getUserManagementAccess(
@@ -72,13 +73,8 @@ export const TeamsPage = async (props: { params: Promise<{ environmentId: string
               to unlock collaboration features.
             </p>
           </div>
-          <Button
-            size="lg"
-            className="px-8"
-            onClick={() => {
-              window.location.href = `/environments/${params.environmentId}/settings/billing`;
-            }}>
-            Upgrade to Startup
+          <Button size="lg" className="px-8" asChild>
+            <Link href={`/environments/${params.environmentId}/settings/billing`}>Upgrade to Startup</Link>
           </Button>
         </div>
       )}

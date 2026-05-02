@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { OrganizationSettingsNavbar } from "@/app/(app)/environments/[environmentId]/settings/(organization)/components/OrganizationSettingsNavbar";
 import { SettingsCard } from "@/app/(app)/environments/[environmentId]/settings/components/SettingsCard";
 import { IS_FORMBRICKS_CLOUD } from "@/lib/constants";
@@ -23,7 +24,7 @@ export const APIKeysPage = async (props) => {
 
   if (!canAccessApiKeys) throw new Error(t("common.not_authorized"));
 
-  const isPaidPlan = organization.billing.plan !== "free";
+  const isPaidPlan = (organization.billing as any)?.plan !== "free";
 
   return (
     <PageContentWrapper>
@@ -58,13 +59,8 @@ export const APIKeysPage = async (props) => {
               Startup plan to unlock API keys.
             </p>
           </div>
-          <Button
-            size="lg"
-            className="px-8"
-            onClick={() => {
-              window.location.href = `/environments/${params.environmentId}/settings/billing`;
-            }}>
-            Upgrade to Startup
+          <Button size="lg" className="px-8" asChild>
+            <Link href={`/environments/${params.environmentId}/settings/billing`}>Upgrade to Startup</Link>
           </Button>
         </div>
       )}
