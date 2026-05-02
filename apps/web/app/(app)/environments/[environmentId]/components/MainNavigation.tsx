@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowUpRightIcon,
   ChevronRightIcon,
   Cog,
   LogOutIcon,
@@ -128,18 +127,6 @@ export const MainNavigation = ({
       label: t("common.account"),
       href: `/environments/${environment.id}/settings/profile`,
       icon: UserCircleIcon,
-    },
-    {
-      label: t("common.documentation"),
-      href: "https://formbricks.com/docs",
-      target: "_blank",
-      icon: ArrowUpRightIcon,
-    },
-    {
-      label: t("common.share_feedback"),
-      href: "https://github.com/formbricks/formbricks/issues",
-      target: "_blank",
-      icon: ArrowUpRightIcon,
     },
   ];
 

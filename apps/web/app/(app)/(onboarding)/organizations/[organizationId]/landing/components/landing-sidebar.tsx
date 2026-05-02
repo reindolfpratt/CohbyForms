@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRightIcon, ChevronRightIcon, LogOutIcon } from "lucide-react";
+import { ChevronRightIcon, LogOutIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -30,14 +30,7 @@ export const LandingSidebar = ({ user, organization }: LandingSidebarProps) => {
   const { t } = useTranslation();
   const { signOut: signOutWithAudit } = useSignOut({ id: user.id, email: user.email });
 
-  const dropdownNavigation = [
-    {
-      label: t("common.documentation"),
-      href: "https://formbricks.com/docs",
-      target: "_blank",
-      icon: ArrowUpRightIcon,
-    },
-  ];
+  const dropdownNavigation: { label: string; href: string; target: string; icon: any }[] = [];
 
   return (
     <aside

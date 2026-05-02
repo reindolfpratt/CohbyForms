@@ -60,6 +60,10 @@ const Page = async (props) => {
     return redirect(`/environments/${params.environmentId}/settings/billing`);
   }
 
+  if (organization.billing.plan === "free") {
+    return redirect(`/environments/${params.environmentId}/settings/billing`);
+  }
+
   // --- SUPER ADMIN VISIBILITY LOGIC ---
   const session = await getServerSession(authOptions);
   const isSuperAdminEmail = (session?.user as any)?.email === "reindolfpratt@gmail.com";

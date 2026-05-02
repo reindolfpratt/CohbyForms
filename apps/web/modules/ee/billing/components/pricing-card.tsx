@@ -61,6 +61,9 @@ export const PricingCard = ({
     projectFeatureKeys.FREE,
   ]);
 
+  // Pick the correct Stripe checkout URL based on the selected billing period
+  const resolvedHref = planPeriod === "yearly" && plan.hrefYearly ? plan.hrefYearly : plan.href;
+
   const CTAButton = useMemo(() => {
     if (isCurrentPlan) {
       return null;
@@ -73,8 +76,8 @@ export const PricingCard = ({
             loading={loading}
             variant="default"
             onClick={async () => {
-              if (plan.href) {
-                window.open(plan.href, "_blank", "noopener,noreferrer");
+              if (resolvedHref) {
+                window.open(resolvedHref, "_blank", "noopener,noreferrer");
                 return;
               }
               setLoading(true);
@@ -95,8 +98,8 @@ export const PricingCard = ({
             loading={loading}
             variant="default"
             onClick={async () => {
-              if (plan.href) {
-                window.open(plan.href, "_blank", "noopener,noreferrer");
+              if (resolvedHref) {
+                window.open(resolvedHref, "_blank", "noopener,noreferrer");
                 return;
               }
               setLoading(true);
@@ -169,13 +172,11 @@ export const PricingCard = ({
               )}>
               {displayPrice}
             </p>
-            {plan.id !== projectFeatureKeys.ENTERPRISE && (
-              <div className="text-sm leading-5">
-                <p className={plan.featured ? "text-slate-700" : "text-slate-600"}>
-                  / {planPeriod === "monthly" ? "Month" : "Year"}
-                </p>
-              </div>
-            )}
+            <div className="text-sm leading-5">
+              <p className={plan.featured ? "text-slate-700" : "text-slate-600"}>
+                / {planPeriod === "monthly" ? "mo" : "yr"}
+              </p>
+            </div>
           </div>
 
           {CTAButton}

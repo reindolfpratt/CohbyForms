@@ -29,6 +29,7 @@ export const ProjectLookSettingsPage = async (props: { params: Promise<{ environ
 
   const canRemoveBranding = await getRemoveBrandingPermission(organization.billing.plan);
   const publicDomain = getPublicDomain();
+  const isFreePlan = organization.billing.plan === "free";
 
   return (
     <PageContentWrapper>
@@ -57,12 +58,25 @@ export const ProjectLookSettingsPage = async (props: { params: Promise<{ environ
       <SettingsCard
         title={t("common.logo")}
         description={t("environments.workspace.look.logo_settings_description")}>
-        <EditLogo
-          project={project}
-          environmentId={params.environmentId}
-          isReadOnly={isReadOnly}
-          isStorageConfigured={IS_STORAGE_CONFIGURED}
-        />
+        {isFreePlan ? (
+          <div className="flex flex-col items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
+            <p className="text-sm font-medium text-amber-800">
+              Logo upload is available on the <strong>Startup</strong> and <strong>Enterprise</strong> plans.
+            </p>
+            <a
+              href={`/environments/${params.environmentId}/settings/billing`}
+              className="inline-flex items-center rounded-md bg-amber-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700">
+              Upgrade to unlock
+            </a>
+          </div>
+        ) : (
+          <EditLogo
+            project={project}
+            environmentId={params.environmentId}
+            isReadOnly={isReadOnly}
+            isStorageConfigured={IS_STORAGE_CONFIGURED}
+          />
+        )}
       </SettingsCard>
       <SettingsCard
         title={t("environments.workspace.look.app_survey_placement")}

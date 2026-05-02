@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowUpRightIcon,
   ChevronRightIcon,
   Cog,
   LogOutIcon,
@@ -119,18 +118,6 @@ export const JotformHeader = ({
           },
         ]
       : []),
-    {
-      label: t("common.documentation"),
-      href: "https://formbricks.com/docs",
-      target: "_blank",
-      icon: ArrowUpRightIcon,
-    },
-    {
-      label: t("common.share_feedback"),
-      href: "https://github.com/formbricks/formbricks/issues",
-      target: "_blank",
-      icon: ArrowUpRightIcon,
-    },
   ];
 
   const mainNavigationLink = `/environments/${environment.id}/${isBilling ? "settings/billing/" : "surveys/"}`;
