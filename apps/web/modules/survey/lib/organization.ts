@@ -46,8 +46,15 @@ export const getOrganizationAIKeys = reactCache(
       return organization as Pick<Organization, "isAIEnabled" | "billing" | "aiConfig"> | null;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        // If the columns are missing, we return a default object with isAIEnabled: false
-        if (error.code === "P2011" || error.code === "P2025" || error.message.includes("isAIEnabled")) {
+        // If the AI columns are missing (migration not yet run), return safe defaults
+        if (
+          error.code === "P2011" ||
+          error.code === "P2025" ||
+          error.code === "P2022" ||
+          error.code === "P1009" ||
+          error.message.includes("isAIEnabled") ||
+          error.message.includes("aiConfig")
+        ) {
           const org = await prisma.organization.findUnique({
             where: { id: organizationId },
             select: { billing: true },
@@ -60,6 +67,25 @@ export const getOrganizationAIKeys = reactCache(
           } as any;
         }
         throw new DatabaseError(error.message);
+      }
+
+      // Catch any other error that might occur if the column doesn't exist in DB yet.
+      if (
+        error instanceof Error &&
+        (error.message.includes("isAIEnabled") ||
+          error.message.includes("aiConfig") ||
+          error.message.includes("Unknown column"))
+      ) {
+        const org = await prisma.organization.findUnique({
+          where: { id: organizationId },
+          select: { billing: true },
+        });
+        if (!org) return null;
+        return {
+          isAIEnabled: false,
+          billing: org.billing,
+          aiConfig: { providers: [] },
+        } as any;
       }
 
       throw error;
