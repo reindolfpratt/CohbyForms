@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ZOrganizationBillingPlan = z.enum(["free", "startup", "custom"]);
+export const ZOrganizationBillingPlan = z.enum(["free", "startup", "enterprise"]);
 export type TOrganizationBillingPlan = z.infer<typeof ZOrganizationBillingPlan>;
 
 export const ZOrganizationBillingPeriod = z.enum(["monthly", "yearly"]);
