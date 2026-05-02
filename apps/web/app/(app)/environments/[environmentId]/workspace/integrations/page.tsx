@@ -35,7 +35,7 @@ const Page = async (props) => {
   const params = await props.params;
   const t = await getTranslate();
 
-  const { isReadOnly, environment, isBilling } = await getEnvironmentAuth(params.environmentId);
+  const { isReadOnly, environment, isBilling, organization } = await getEnvironmentAuth(params.environmentId);
 
   const [
     integrations,
@@ -277,23 +277,32 @@ const Page = async (props) => {
         <ProjectConfigNavigation environmentId={params.environmentId} activeId="integrations" />
       </PageHeader>
       <div className="grid grid-cols-3 place-content-stretch gap-4 lg:grid-cols-3">
-        {visibleCards.map((card) => (
-          <Card
-            key={card.label}
-            docsHref={card.docsHref}
-            docsText={card.docsText}
-            docsNewTab={card.docsNewTab}
-            connectHref={card.connectHref}
-            connectText={card.connectText}
-            connectNewTab={card.connectNewTab}
-            label={card.label}
-            description={card.description}
-            icon={card.icon}
-            connected={card.connected}
-            statusText={card.statusText}
-            disabled={card.disabled}
-          />
-        ))}
+        {visibleCards.map((card) => {
+          const isFreePlan = organization.billing.plan === "free";
+          const isEssential = card.label === "Javascript SDK";
+          const isLocked = isFreePlan && !isEssential;
+
+          return (
+            <Card
+              key={card.label}
+              docsHref={card.docsHref}
+              docsText={card.docsText}
+              docsNewTab={card.docsNewTab}
+              connectHref={
+                isLocked ? `/environments/${params.environmentId}/settings/billing` : card.connectHref
+              }
+              connectText={card.connectText}
+              connectNewTab={isLocked ? false : card.connectNewTab}
+              label={card.label}
+              description={card.description}
+              icon={card.icon}
+              connected={card.connected}
+              statusText={card.statusText}
+              disabled={card.disabled}
+              isLocked={isLocked}
+            />
+          );
+        })}
       </div>
     </PageContentWrapper>
   );

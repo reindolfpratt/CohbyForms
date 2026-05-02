@@ -43,7 +43,18 @@ export const getOrganizationAIKeys = reactCache(
           aiConfig: true,
         },
       });
-      return organization as Pick<Organization, "isAIEnabled" | "billing" | "aiConfig"> | null;
+
+      if (organization) {
+        const org = organization as any;
+        const isCustomPlan = org.billing?.plan === "custom";
+
+        return {
+          ...org,
+          isAIEnabled: isCustomPlan ? org.isAIEnabled : false,
+        };
+      }
+
+      return null;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         // If the AI columns are missing (migration not yet run), return safe defaults

@@ -1,5 +1,4 @@
-"use client";
-
+import { LockIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/modules/ui/components/button";
 
@@ -16,6 +15,7 @@ interface CardProps {
   connected?: boolean;
   statusText?: string;
   disabled?: boolean;
+  isLocked?: boolean;
 }
 
 export type { CardProps };
@@ -33,6 +33,7 @@ export const Card: React.FC<CardProps> = ({
   connected,
   statusText,
   disabled,
+  isLocked,
 }) => (
   <div className="relative rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm">
     {connected != undefined && statusText != undefined && (
@@ -58,7 +59,10 @@ export const Card: React.FC<CardProps> = ({
       {connectHref && (
         <Button disabled={disabled} size="sm">
           <Link href={connectHref} target={connectNewTab ? "_blank" : "_self"}>
-            {connectText}
+            <div className="flex items-center gap-2">
+              {isLocked && <LockIcon className="h-4 w-4" />}
+              {connectText}
+            </div>
           </Link>
         </Button>
       )}
