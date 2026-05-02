@@ -491,35 +491,41 @@ export const updateSurveyInternal = async (
       );
       const newFollowUps = nonDeletedFollowUps.filter((followUp) => !existingFollowUpIds.has(followUp.id));
 
+      // Update existing follow-ups individually — Prisma nested updateMany does not accept an
+      // array of { where, data } objects; individual updates are the correct approach.
+      if (existingFollowUps.length > 0) {
+        await Promise.all(
+          existingFollowUps.map((followUp) =>
+            prisma.surveyFollowUp.update({
+              where: { id: followUp.id },
+              data: {
+                name: followUp.name,
+                trigger: followUp.trigger as Prisma.InputJsonValue,
+                action: followUp.action as Prisma.InputJsonValue,
+              },
+            })
+          )
+        );
+      }
+
       data.followUps = {
-        // Update existing follow-ups
-        updateMany: existingFollowUps.map((followUp) => ({
-          where: {
-            id: followUp.id,
-          },
-          data: {
-            name: followUp.name,
-            trigger: followUp.trigger,
-            action: followUp.action,
-          },
-        })),
         // Create new follow-ups
         createMany:
           newFollowUps.length > 0
             ? {
                 data: newFollowUps.map((followUp) => ({
+                  id: followUp.id,
                   name: followUp.name,
-                  trigger: followUp.trigger,
-                  action: followUp.action,
+                  trigger: followUp.trigger as Prisma.InputJsonValue,
+                  action: followUp.action as Prisma.InputJsonValue,
                 })),
               }
             : undefined,
-        // Delete follow-ups marked as deleted, regardless of whether they exist in DB
+        // Delete follow-ups: use { id: { in: [...] } } filter — Prisma deleteMany expects
+        // a single filter object, not an array of individual { id } objects.
         deleteMany:
           deletedFollowUps.length > 0
-            ? deletedFollowUps.map((followUp) => ({
-                id: followUp.id,
-              }))
+            ? { id: { in: deletedFollowUps.map((followUp) => followUp.id) } }
             : undefined,
       };
     }
@@ -635,6 +641,7 @@ export const createSurvey = async (
     if (restSurveyBody.followUps?.length) {
       data.followUps = {
         create: restSurveyBody.followUps.map((followUp) => ({
+          id: followUp.id,
           name: followUp.name,
           trigger: followUp.trigger,
           action: followUp.action,
