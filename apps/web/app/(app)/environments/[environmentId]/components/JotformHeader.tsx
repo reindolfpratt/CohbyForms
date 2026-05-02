@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { TEnvironment } from "@formbricks/types/environment";
 import { TOrganizationRole } from "@formbricks/types/memberships";
@@ -103,7 +103,7 @@ export const JotformHeader = ({
     });
   }
 
-  const dropdownNavigation = [
+  const dropdownNavigation: { label: string; href: string; icon: React.ElementType; target?: string }[] = [
     {
       label: t("common.account"),
       href: `/environments/${environment.id}/settings/profile`,
@@ -194,7 +194,7 @@ export const JotformHeader = ({
               <Link
                 key={link.label}
                 href={link.href}
-                target={link.target}
+                target={link.target ?? undefined}
                 rel={link.target === "_blank" ? "noopener noreferrer" : undefined}>
                 <DropdownMenuItem>
                   <link.icon className="mr-2 h-4 w-4" />
