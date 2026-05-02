@@ -1,3 +1,4 @@
+import { UsersIcon } from "lucide-react";
 import Link from "next/link";
 import { OrganizationSettingsNavbar } from "@/app/(app)/environments/[environmentId]/settings/(organization)/components/OrganizationSettingsNavbar";
 import { IS_FORMBRICKS_CLOUD, USER_MANAGEMENT_MINIMUM_ROLE } from "@/lib/constants";
@@ -62,9 +63,9 @@ export const TeamsPage = async (props: { params: Promise<{ environmentId: string
           />
         </>
       ) : (
-        <div className="flex h-[50vh] flex-col items-center justify-center space-y-6 rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center shadow-sm">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
-            <span className="text-3xl">👥</span>
+        <div className="flex h-[50vh] flex-col items-center justify-center space-y-6 rounded-xl border border-slate-300 bg-white p-12 text-center shadow-sm">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-slate-50">
+            <UsersIcon className="h-8 w-8 text-slate-400" />
           </div>
           <div className="max-w-md space-y-2">
             <h2 className="text-2xl font-bold text-slate-800">Unlock Team Collaboration</h2>
