@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TEnvironment } from "@formbricks/types/environment";
 import { TOrganizationRole } from "@formbricks/types/memberships";
@@ -122,7 +122,7 @@ export const MainNavigation = ({
     return links;
   }, [t, environment.id, pathname, user]);
 
-  const dropdownNavigation = [
+  const dropdownNavigation: { label: string; href: string; icon: React.ElementType; target?: string }[] = [
     {
       label: t("common.account"),
       href: `/environments/${environment.id}/settings/profile`,
@@ -237,7 +237,7 @@ export const MainNavigation = ({
                   {dropdownNavigation.map((link) => (
                     <Link
                       href={link.href}
-                      target={link.target}
+                      target={link.target ?? undefined}
                       className="flex w-full items-center"
                       key={link.label}
                       rel={link.target === "_blank" ? "noopener noreferrer" : undefined}>
