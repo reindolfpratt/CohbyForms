@@ -25,9 +25,10 @@ export const AISettingsForm = ({
   const [isAIEnabled, setIsAIEnabled] = useState(initialIsAIEnabled);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const openaiProvider = initialAIConfig.providers.find((p) => p.id === "openai");
-  const anthropicProvider = initialAIConfig.providers.find((p) => p.id === "anthropic");
-  const googleProvider = initialAIConfig.providers.find((p) => p.id === "google");
+  const providers = initialAIConfig?.providers ?? [];
+  const openaiProvider = providers.find((p) => p.id === "openai");
+  const anthropicProvider = providers.find((p) => p.id === "anthropic");
+  const googleProvider = providers.find((p) => p.id === "google");
 
   const { register, handleSubmit } = useForm({
     defaultValues: {

@@ -46,8 +46,8 @@ export const generateSurveyFromPrompt = async (
   }
 
   const aiConfig = decryptAIConfig(organizationAIKeys.aiConfig as any);
-  const provider =
-    aiConfig.providers.find((p) => (providerId ? p.id === providerId : true)) || aiConfig.providers[0];
+  const providersList = aiConfig?.providers ?? [];
+  const provider = providersList.find((p) => (providerId ? p.id === providerId : true)) || providersList[0];
 
   if (!provider) {
     throw new Error("No AI provider configured. Please add an API key in settings.");

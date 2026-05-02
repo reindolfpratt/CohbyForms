@@ -12,7 +12,7 @@ export const encryptAIConfig = (config: TOrganizationAIConfig): TOrganizationAIC
     throw new Error("ENCRYPTION_KEY is not set");
   }
 
-  const encryptedProviders = config.providers.map((provider) => ({
+  const encryptedProviders = (config.providers ?? []).map((provider) => ({
     ...provider,
     apiKey: symmetricEncrypt(provider.apiKey, ENCRYPTION_KEY),
   }));
@@ -33,7 +33,7 @@ export const decryptAIConfig = (config: TOrganizationAIConfig): TOrganizationAIC
     throw new Error("ENCRYPTION_KEY is not set");
   }
 
-  const decryptedProviders = config.providers.map((provider) => {
+  const decryptedProviders = (config.providers ?? []).map((provider) => {
     try {
       return {
         ...provider,
