@@ -22,6 +22,8 @@ interface PricingTableProps {
   stripePriceLookupKeys: {
     STARTUP_MAY25_MONTHLY: string;
     STARTUP_MAY25_YEARLY: string;
+    ENTERPRISE_MAY25_MONTHLY: string;
+    ENTERPRISE_MAY25_YEARLY: string;
   };
   projectFeatureKeys: {
     FREE: string;
