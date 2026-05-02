@@ -5,6 +5,7 @@ import { findMatchingLocale } from "@/lib/utils/locale";
 import { getTranslate } from "@/lingodotdev/server";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
 import { getProjectsByOrganizationId } from "@/modules/organization/settings/api-keys/lib/projects";
+import { Button } from "@/modules/ui/components/button";
 import { PageContentWrapper } from "@/modules/ui/components/page-content-wrapper";
 import { PageHeader } from "@/modules/ui/components/page-header";
 import { ApiKeyList } from "./components/api-key-list";
@@ -22,6 +23,8 @@ export const APIKeysPage = async (props) => {
 
   if (!canAccessApiKeys) throw new Error(t("common.not_authorized"));
 
+  const isPaidPlan = organization.billing.plan !== "free";
+
   return (
     <PageContentWrapper>
       <PageHeader pageTitle={t("environments.settings.general.organization_settings")}>
@@ -32,16 +35,39 @@ export const APIKeysPage = async (props) => {
           activeId="api-keys"
         />
       </PageHeader>
-      <SettingsCard
-        title={t("common.api_keys")}
-        description={t("environments.settings.api_keys.api_keys_description")}>
-        <ApiKeyList
-          organizationId={organization.id}
-          locale={locale}
-          isReadOnly={!canAccessApiKeys}
-          projects={projects}
-        />
-      </SettingsCard>
+      {isPaidPlan ? (
+        <SettingsCard
+          title={t("common.api_keys")}
+          description={t("environments.settings.api_keys.api_keys_description")}>
+          <ApiKeyList
+            organizationId={organization.id}
+            locale={locale}
+            isReadOnly={!canAccessApiKeys}
+            projects={projects}
+          />
+        </SettingsCard>
+      ) : (
+        <div className="flex h-[50vh] flex-col items-center justify-center space-y-6 rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center shadow-sm">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            <span className="text-3xl">🔑</span>
+          </div>
+          <div className="max-w-md space-y-2">
+            <h2 className="text-2xl font-bold text-slate-800">Unlock API Access</h2>
+            <p className="text-slate-500">
+              Integrate CohbyForm with your own tools and automate your workflow with our API. Upgrade to our
+              Startup plan to unlock API keys.
+            </p>
+          </div>
+          <Button
+            size="lg"
+            className="px-8"
+            onClick={() => {
+              window.location.href = `/environments/${params.environmentId}/settings/billing`;
+            }}>
+            Upgrade to Startup
+          </Button>
+        </div>
+      )}
     </PageContentWrapper>
   );
 };

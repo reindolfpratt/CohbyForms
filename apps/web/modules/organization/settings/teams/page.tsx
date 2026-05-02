@@ -7,6 +7,7 @@ import { getTeamsWhereUserIsAdmin } from "@/modules/ee/teams/lib/roles";
 import { TeamsView } from "@/modules/ee/teams/team-list/components/teams-view";
 import { getEnvironmentAuth } from "@/modules/environments/lib/utils";
 import { MembersView } from "@/modules/organization/settings/teams/components/members-view";
+import { Button } from "@/modules/ui/components/button";
 import { PageContentWrapper } from "@/modules/ui/components/page-content-wrapper";
 import { PageHeader } from "@/modules/ui/components/page-header";
 
@@ -42,20 +43,45 @@ export const TeamsPage = async (props: { params: Promise<{ environmentId: string
           activeId="teams"
         />
       </PageHeader>
-      <MembersView
-        membershipRole={currentUserMembership?.role}
-        organization={organization}
-        currentUserId={session.user.id}
-        environmentId={params.environmentId}
-        isAccessControlAllowed={isAccessControlAllowed}
-        isUserManagementDisabledFromUi={!hasUserManagementAccess}
-      />
-      <TeamsView
-        organizationId={organization.id}
-        membershipRole={currentUserMembership?.role}
-        currentUserId={session.user.id}
-        isAccessControlAllowed={isAccessControlAllowed}
-      />
+      {isAccessControlAllowed ? (
+        <>
+          <MembersView
+            membershipRole={currentUserMembership?.role}
+            organization={organization}
+            currentUserId={session.user.id}
+            environmentId={params.environmentId}
+            isAccessControlAllowed={isAccessControlAllowed}
+            isUserManagementDisabledFromUi={!hasUserManagementAccess}
+          />
+          <TeamsView
+            organizationId={organization.id}
+            membershipRole={currentUserMembership?.role}
+            currentUserId={session.user.id}
+            isAccessControlAllowed={isAccessControlAllowed}
+          />
+        </>
+      ) : (
+        <div className="flex h-[50vh] flex-col items-center justify-center space-y-6 rounded-xl border border-dashed border-slate-300 bg-white p-12 text-center shadow-sm">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            <span className="text-3xl">👥</span>
+          </div>
+          <div className="max-w-md space-y-2">
+            <h2 className="text-2xl font-bold text-slate-800">Unlock Team Collaboration</h2>
+            <p className="text-slate-500">
+              Invite team members, assign roles, and organize projects into teams. Upgrade to our Startup plan
+              to unlock collaboration features.
+            </p>
+          </div>
+          <Button
+            size="lg"
+            className="px-8"
+            onClick={() => {
+              window.location.href = `/environments/${params.environmentId}/settings/billing`;
+            }}>
+            Upgrade to Startup
+          </Button>
+        </div>
+      )}
     </PageContentWrapper>
   );
 };

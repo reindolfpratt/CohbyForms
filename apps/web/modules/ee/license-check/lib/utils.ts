@@ -16,11 +16,10 @@ const getFeaturePermission = async (
   billingPlan: Organization["billing"]["plan"],
   featureKey: keyof Pick<TEnterpriseLicenseFeatures, "removeBranding" | "whitelabel">
 ): Promise<boolean> => {
-  const license = await getEnterpriseLicense();
-
   if (IS_FORMBRICKS_CLOUD) {
-    return license.active && billingPlan !== PROJECT_FEATURE_KEYS.FREE;
+    return billingPlan !== PROJECT_FEATURE_KEYS.FREE;
   } else {
+    const license = await getEnterpriseLicense();
     return license.active && !!license.features?.[featureKey];
   }
 };
@@ -32,16 +31,15 @@ const getCustomPlanFeaturePermission = async (
   billingPlan: Organization["billing"]["plan"],
   featureKey: keyof Pick<TEnterpriseLicenseFeatures, "accessControl" | "multiLanguageSurveys" | "quotas">
 ): Promise<boolean> => {
-  const license = await getEnterpriseLicense();
+  if (IS_FORMBRICKS_CLOUD) {
+    return billingPlan === PROJECT_FEATURE_KEYS.STARTUP || billingPlan === PROJECT_FEATURE_KEYS.CUSTOM;
+  }
 
+  const license = await getEnterpriseLicense();
   if (!license.active) return false;
 
   const isFeatureEnabled = license.features?.[featureKey] ?? false;
   if (!isFeatureEnabled) return false;
-
-  if (IS_FORMBRICKS_CLOUD) {
-    return billingPlan === PROJECT_FEATURE_KEYS.CUSTOM;
-  }
 
   return true;
 };
