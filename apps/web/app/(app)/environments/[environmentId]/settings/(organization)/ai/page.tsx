@@ -1,4 +1,4 @@
-import { BotIcon, SparklesIcon } from "lucide-react";
+import { SparklesIcon } from "lucide-react";
 import Link from "next/link";
 import { OrganizationSettingsNavbar } from "@/app/(app)/environments/[environmentId]/settings/(organization)/components/OrganizationSettingsNavbar";
 import { IS_FORMBRICKS_CLOUD } from "@/lib/constants";
