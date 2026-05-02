@@ -19,7 +19,7 @@ interface PricingCardProps {
   projectFeatureKeys: {
     FREE: string;
     STARTUP: string;
-    CUSTOM: string;
+    ENTERPRISE: string;
   };
 }
 
@@ -36,7 +36,7 @@ export const PricingCard = ({
   const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const displayPrice = (() => {
-    if (plan.id === projectFeatureKeys.CUSTOM) {
+    if (plan.id === projectFeatureKeys.ENTERPRISE) {
       return plan.price.monthly;
     }
     return planPeriod === "monthly" ? plan.price.monthly : plan.price.yearly;
@@ -47,7 +47,10 @@ export const PricingCard = ({
       return true;
     }
 
-    if (organization.billing.plan === projectFeatureKeys.CUSTOM && plan.id === projectFeatureKeys.CUSTOM) {
+    if (
+      organization.billing.plan === projectFeatureKeys.ENTERPRISE &&
+      plan.id === projectFeatureKeys.ENTERPRISE
+    ) {
       return true;
     }
 
@@ -57,7 +60,7 @@ export const PricingCard = ({
     organization.billing.plan,
     plan.id,
     planPeriod,
-    projectFeatureKeys.CUSTOM,
+    projectFeatureKeys.ENTERPRISE,
     projectFeatureKeys.FREE,
   ]);
 
@@ -66,18 +69,26 @@ export const PricingCard = ({
       return null;
     }
 
-    if (plan.id === projectFeatureKeys.CUSTOM) {
-      return (
-        <Button
-          variant="outline"
-          loading={loading}
-          onClick={() => {
-            window.open(plan.href, "_blank", "noopener,noreferrer");
-          }}
-          className="flex justify-center bg-white">
-          {plan.CTA ?? t("common.request_pricing")}
-        </Button>
-      );
+    if (plan.id === projectFeatureKeys.ENTERPRISE) {
+      if (organization.billing.plan !== projectFeatureKeys.ENTERPRISE) {
+        return (
+          <Button
+            loading={loading}
+            variant="default"
+            onClick={async () => {
+              if (plan.href) {
+                window.open(plan.href, "_blank", "noopener,noreferrer");
+                return;
+              }
+              setLoading(true);
+              await onUpgrade();
+              setLoading(false);
+            }}
+            className="flex justify-center">
+            {plan.CTA ?? t("common.start_free_trial")}
+          </Button>
+        );
+      }
     }
 
     if (plan.id === projectFeatureKeys.STARTUP) {
@@ -87,6 +98,10 @@ export const PricingCard = ({
             loading={loading}
             variant="default"
             onClick={async () => {
+              if (plan.href) {
+                window.open(plan.href, "_blank", "noopener,noreferrer");
+                return;
+              }
               setLoading(true);
               await onUpgrade();
               setLoading(false);
@@ -119,7 +134,7 @@ export const PricingCard = ({
     plan.featured,
     plan.href,
     plan.id,
-    projectFeatureKeys.CUSTOM,
+    projectFeatureKeys.ENTERPRISE,
     projectFeatureKeys.FREE,
     projectFeatureKeys.STARTUP,
     t,
@@ -157,7 +172,7 @@ export const PricingCard = ({
               )}>
               {displayPrice}
             </p>
-            {plan.id !== projectFeatureKeys.CUSTOM && (
+            {plan.id !== projectFeatureKeys.ENTERPRISE && (
               <div className="text-sm leading-5">
                 <p className={plan.featured ? "text-slate-700" : "text-slate-600"}>
                   / {planPeriod === "monthly" ? "Month" : "Year"}

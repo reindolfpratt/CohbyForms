@@ -117,7 +117,9 @@ export default async function AdminOverviewPage() {
                       <td className="px-4 py-3">
                         <Badge
                           text={planId}
-                          type={planId === "startup" ? "success" : planId === "custom" ? "warning" : "gray"}
+                          type={
+                            planId === "startup" ? "success" : planId === "enterprise" ? "warning" : "gray"
+                          }
                           size="normal"
                         />
                       </td>

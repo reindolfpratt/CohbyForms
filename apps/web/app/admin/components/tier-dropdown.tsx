@@ -12,7 +12,7 @@ interface TierDropdownProps {
 const PLAN_OPTIONS = [
   { value: "free", label: "Free", color: "text-slate-600" },
   { value: "startup", label: "Startup", color: "text-blue-600" },
-  { value: "custom", label: "Custom", color: "text-purple-600" },
+  { value: "enterprise", label: "Enterprise", color: "text-purple-600" },
 ] as const;
 
 export const TierDropdown = ({ organizationId, currentPlan }: TierDropdownProps) => {
@@ -20,7 +20,7 @@ export const TierDropdown = ({ organizationId, currentPlan }: TierDropdownProps)
   const [isPending, startTransition] = useTransition();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newPlan = e.target.value as "free" | "startup" | "custom";
+    const newPlan = e.target.value as "free" | "startup" | "enterprise";
     setSelectedPlan(newPlan);
 
     startTransition(async () => {

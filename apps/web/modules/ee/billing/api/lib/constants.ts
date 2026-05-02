@@ -42,6 +42,7 @@ export const getCloudPricingData = (t: TFunction): { plans: TPricingPlan[] } => 
     CTA: t("common.start_free_trial"),
     description: t("environments.settings.billing.startup_description"),
     price: { monthly: "£25", yearly: "£250" },
+    href: "https://buy.stripe.com/7sYcN565E6zd4tf3do8EM00",
     mainFeatures: [
       t("environments.settings.billing.everything_in_free"),
       "5,000 monthly responses",
@@ -54,24 +55,25 @@ export const getCloudPricingData = (t: TFunction): { plans: TPricingPlan[] } => 
     ],
   };
 
-  const customPlan: TPricingPlan = {
-    id: "custom",
-    name: t("environments.settings.billing.custom"),
+  const enterprisePlan: TPricingPlan = {
+    id: "enterprise",
+    name: "Enterprise",
     featured: false,
-    CTA: t("common.request_pricing"),
+    CTA: t("common.start_free_trial"),
     description: t("environments.settings.billing.enterprise_description"),
     price: {
-      monthly: "Custom",
-      yearly: "Custom",
+      monthly: "£89.99",
+      yearly: "£899.99",
     },
+    href: "https://buy.stripe.com/00wbJ12Ts8Hl1h315g8EM02",
     mainFeatures: [
       t("environments.settings.billing.everything_in_startup"),
       "AI Form Builder included",
       "AI Response Analysis",
       t("environments.settings.billing.email_follow_ups"),
-      t("environments.settings.billing.custom_response_limit"),
-      t("environments.settings.billing.custom_contacts_limit"),
-      t("environments.settings.billing.custom_workspace_limit"),
+      "Unlimited responses",
+      "Unlimited contacts",
+      "Unlimited workspaces",
       t("environments.settings.billing.team_access_roles"),
       t("environments.workspace.languages.multi_language_surveys"),
       t("environments.settings.billing.uptime_sla_99"),
@@ -80,6 +82,6 @@ export const getCloudPricingData = (t: TFunction): { plans: TPricingPlan[] } => 
   };
 
   return {
-    plans: [freePlan, startupPlan, customPlan],
+    plans: [freePlan, startupPlan, enterprisePlan],
   };
 };

@@ -24,15 +24,15 @@ const getFeaturePermission = async (
   }
 };
 
-// Helper function for enterprise features that require CUSTOM plan on Cloud
-// On Cloud: requires active license AND feature enabled in license AND CUSTOM billing plan
+// Helper function for enterprise features that require ENTERPRISE plan on Cloud
+// On Cloud: requires active license AND feature enabled in license AND ENTERPRISE billing plan
 // On Self-hosted: requires active license AND feature enabled in license
 const getCustomPlanFeaturePermission = async (
   billingPlan: Organization["billing"]["plan"],
   featureKey: keyof Pick<TEnterpriseLicenseFeatures, "accessControl" | "multiLanguageSurveys" | "quotas">
 ): Promise<boolean> => {
   if (IS_FORMBRICKS_CLOUD) {
-    return billingPlan === PROJECT_FEATURE_KEYS.STARTUP || billingPlan === PROJECT_FEATURE_KEYS.CUSTOM;
+    return billingPlan === PROJECT_FEATURE_KEYS.STARTUP || billingPlan === PROJECT_FEATURE_KEYS.ENTERPRISE;
   }
 
   const license = await getEnterpriseLicense();
@@ -123,7 +123,7 @@ export const getIsSpamProtectionEnabled = async (
 
   if (IS_FORMBRICKS_CLOUD) {
     return (
-      license.active && !!license.features?.spamProtection && billingPlan === PROJECT_FEATURE_KEYS.CUSTOM
+      license.active && !!license.features?.spamProtection && billingPlan === PROJECT_FEATURE_KEYS.ENTERPRISE
     );
   }
 

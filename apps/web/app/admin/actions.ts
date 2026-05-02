@@ -21,7 +21,7 @@ const PLAN_LIMITS = {
       miu: 10000,
     },
   },
-  custom: {
+  enterprise: {
     projects: null, // unlimited
     monthly: {
       responses: null, // unlimited
@@ -64,7 +64,7 @@ export async function updateOrganizationTierAction(organizationId: string, newPl
   await verifySuperAdmin();
 
   // Validate plan type
-  if (!["free", "startup", "custom"].includes(newPlan)) {
+  if (!["free", "startup", "enterprise"].includes(newPlan)) {
     throw new Error("Invalid plan type");
   }
 

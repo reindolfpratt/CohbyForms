@@ -191,17 +191,19 @@ export const AVAILABLE_LOCALES: TUserLocale[] = [
 export enum PROJECT_FEATURE_KEYS {
   FREE = "free",
   STARTUP = "startup",
-  CUSTOM = "custom",
+  ENTERPRISE = "enterprise",
 }
 
 export enum STRIPE_PROJECT_NAMES {
   STARTUP = "CohbyForm Startup",
-  CUSTOM = "CohbyForm Custom",
+  ENTERPRISE = "CohbyForm Enterprise",
 }
 
 export enum STRIPE_PRICE_LOOKUP_KEYS {
   STARTUP_MAY25_MONTHLY = "STARTUP_MAY25_MONTHLY",
   STARTUP_MAY25_YEARLY = "STARTUP_MAY25_YEARLY",
+  ENTERPRISE_MAY25_MONTHLY = "ENTERPRISE_MAY25_MONTHLY",
+  ENTERPRISE_MAY25_YEARLY = "ENTERPRISE_MAY25_YEARLY",
 }
 
 export const BILLING_LIMITS = {
@@ -215,7 +217,7 @@ export const BILLING_LIMITS = {
     RESPONSES: 5000,
     MIU: 7500,
   },
-  CUSTOM: {
+  ENTERPRISE: {
     PROJECTS: null,
     RESPONSES: null,
     MIU: null,

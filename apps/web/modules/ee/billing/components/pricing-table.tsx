@@ -26,7 +26,7 @@ interface PricingTableProps {
   projectFeatureKeys: {
     FREE: string;
     STARTUP: string;
-    CUSTOM: string;
+    ENTERPRISE: string;
   };
   hasBillingRights: boolean;
 }
@@ -116,8 +116,12 @@ export const PricingTable = ({
       return;
     }
 
-    if (planId === "custom") {
-      toast.success(t("common.contact_your_admin_for_custom_plans"));
+    if (planId === "enterprise") {
+      await upgradePlan(
+        planPeriod === "monthly"
+          ? stripePriceLookupKeys.ENTERPRISE_MAY25_MONTHLY
+          : stripePriceLookupKeys.ENTERPRISE_MAY25_YEARLY
+      );
       return;
     }
 
@@ -127,11 +131,11 @@ export const PricingTable = ({
   };
 
   const responsesUnlimitedCheck =
-    organization.billing.plan === "custom" && organization.billing.limits.monthly.responses === null;
+    organization.billing.plan === "enterprise" && organization.billing.limits.monthly.responses === null;
   const peopleUnlimitedCheck =
-    organization.billing.plan === "custom" && organization.billing.limits.monthly.miu === null;
+    organization.billing.plan === "enterprise" && organization.billing.limits.monthly.miu === null;
   const projectsUnlimitedCheck =
-    organization.billing.plan === "custom" && organization.billing.limits.projects === null;
+    organization.billing.plan === "enterprise" && organization.billing.limits.projects === null;
 
   return (
     <main>
