@@ -491,8 +491,7 @@ export const updateSurveyInternal = async (
       );
       const newFollowUps = nonDeletedFollowUps.filter((followUp) => !existingFollowUpIds.has(followUp.id));
 
-      // Update existing follow-ups individually — Prisma nested updateMany does not accept an
-      // array of { where, data } objects; individual updates are the correct approach.
+      // Update existing follow-ups individually
       if (existingFollowUps.length > 0) {
         await Promise.all(
           existingFollowUps.map((followUp) =>
@@ -508,26 +507,28 @@ export const updateSurveyInternal = async (
         );
       }
 
-      data.followUps = {
-        // Create new follow-ups
-        createMany:
-          newFollowUps.length > 0
-            ? {
-                data: newFollowUps.map((followUp) => ({
-                  id: followUp.id,
-                  name: followUp.name,
-                  trigger: followUp.trigger as Prisma.InputJsonValue,
-                  action: followUp.action as Prisma.InputJsonValue,
-                })),
-              }
-            : undefined,
-        // Delete follow-ups: use { id: { in: [...] } } filter — Prisma deleteMany expects
-        // a single filter object, not an array of individual { id } objects.
-        deleteMany:
-          deletedFollowUps.length > 0
-            ? { id: { in: deletedFollowUps.map((followUp) => followUp.id) } }
-            : undefined,
-      };
+      // Only set data.followUps when there are actual create/delete operations.
+      // Setting data.followUps = {} with all-undefined sub-keys can corrupt relations in Prisma.
+      const followUpsWrite: Record<string, unknown> = {};
+
+      if (newFollowUps.length > 0) {
+        followUpsWrite.createMany = {
+          data: newFollowUps.map((followUp) => ({
+            id: followUp.id,
+            name: followUp.name,
+            trigger: followUp.trigger as Prisma.InputJsonValue,
+            action: followUp.action as Prisma.InputJsonValue,
+          })),
+        };
+      }
+
+      if (deletedFollowUps.length > 0) {
+        followUpsWrite.deleteMany = { id: { in: deletedFollowUps.map((followUp) => followUp.id) } };
+      }
+
+      if (Object.keys(followUpsWrite).length > 0) {
+        data.followUps = followUpsWrite;
+      }
     }
 
     data.questions = questions.map((question) => {

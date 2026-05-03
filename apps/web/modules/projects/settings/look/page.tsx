@@ -59,13 +59,14 @@ export const ProjectLookSettingsPage = async (props: { params: Promise<{ environ
         title={t("common.logo")}
         description={t("environments.workspace.look.logo_settings_description")}>
         {isFreePlan ? (
-          <div className="flex flex-col items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
-            <p className="text-sm font-medium text-amber-800">
-              Logo upload is available on the <strong>Startup</strong> and <strong>Enterprise</strong> plans.
+          <div className="flex flex-col items-start gap-3">
+            <p className="text-sm text-slate-600">
+              Logo upload is available on the <strong className="text-slate-800">Startup</strong> and{" "}
+              <strong className="text-slate-800">Enterprise</strong> plans.
             </p>
             <a
               href={`/environments/${params.environmentId}/settings/billing`}
-              className="inline-flex items-center rounded-md bg-amber-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700">
+              className="inline-flex items-center rounded-md bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700">
               Upgrade to unlock
             </a>
           </div>
