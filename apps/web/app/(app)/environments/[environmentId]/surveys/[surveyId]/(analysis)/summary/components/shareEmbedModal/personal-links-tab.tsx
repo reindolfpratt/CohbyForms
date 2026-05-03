@@ -32,7 +32,6 @@ interface PersonalLinksTabProps {
   surveyId: string;
   segments: TSegment[];
   isContactsEnabled: boolean;
-  isFormbricksCloud: boolean;
 }
 
 interface PersonalLinksFormData {
@@ -72,7 +71,6 @@ export const PersonalLinksTab = ({
   segments,
   surveyId,
   isContactsEnabled,
-  isFormbricksCloud,
 }: PersonalLinksTabProps) => {
   const { t } = useTranslation();
 

@@ -117,7 +117,6 @@ export const ShareSurveyModal = ({
           surveyId: survey.id,
           segments,
           isContactsEnabled,
-          isFormbricksCloud,
         },
         disabled: survey.singleUse?.enabled,
       },
