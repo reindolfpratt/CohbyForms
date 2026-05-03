@@ -9,7 +9,6 @@ import { TSurvey } from "@formbricks/types/surveys/types";
 import { TUserLocale } from "@formbricks/types/user";
 import { updateSingleUseLinksAction } from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/(analysis)/summary/actions";
 import { DisableLinkModal } from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/(analysis)/summary/components/shareEmbedModal/disable-link-modal";
-import { DocumentationLinks } from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/(analysis)/summary/components/shareEmbedModal/documentation-links";
 import { ShareSurveyLink } from "@/modules/analysis/components/ShareSurveyLink";
 import { generateSingleUseIdsAction } from "@/modules/survey/list/actions";
 import { AdvancedOptionToggle } from "@/modules/ui/components/advanced-option-toggle";
