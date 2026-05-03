@@ -58,7 +58,7 @@ export const getCloudPricingData = (t: TFunction): { plans: TPricingPlan[] } => 
       "All integrations",
       "Follow-up emails",
       "Logo upload",
-      "No AI features",
+      "AI Form Builder",
     ],
   };
 

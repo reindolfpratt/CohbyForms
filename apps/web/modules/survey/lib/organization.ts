@@ -46,11 +46,11 @@ export const getOrganizationAIKeys = reactCache(
 
       if (organization) {
         const org = organization as any;
-        const isEnterprisePlan = org.billing?.plan === "enterprise";
+        const isFreePlan = org.billing?.plan === "free";
 
         return {
           ...org,
-          isAIEnabled: isEnterprisePlan ? org.isAIEnabled : false,
+          isAIEnabled: !isFreePlan,
         };
       }
 

@@ -69,39 +69,34 @@ export const PricingCard = ({
       return null;
     }
 
-    if (plan.id === projectFeatureKeys.ENTERPRISE) {
-      if (organization.billing.plan !== projectFeatureKeys.ENTERPRISE) {
+    // Check if the user is switching period on their current plan
+    const isSwitchingPeriodOnCurrentPlan = organization.billing.plan === plan.id;
+
+    if (plan.id === projectFeatureKeys.ENTERPRISE || plan.id === projectFeatureKeys.STARTUP) {
+      // If we have a direct Stripe link, always use it
+      if (resolvedHref) {
         return (
           <Button
             loading={loading}
             variant="default"
             onClick={async () => {
-              if (resolvedHref) {
-                window.open(resolvedHref, "_blank", "noopener,noreferrer");
-                return;
-              }
-              setLoading(true);
-              await onUpgrade();
-              setLoading(false);
+              window.open(resolvedHref, "_blank", "noopener,noreferrer");
             }}
             className="flex justify-center">
-            {plan.CTA ?? t("common.start_free_trial")}
+            {isSwitchingPeriodOnCurrentPlan
+              ? t("environments.settings.billing.switch_plan")
+              : (plan.CTA ?? t("common.start_free_trial"))}
           </Button>
         );
       }
-    }
 
-    if (plan.id === projectFeatureKeys.STARTUP) {
-      if (organization.billing.plan !== projectFeatureKeys.STARTUP) {
+      // If no Stripe link, fall back to the onUpgrade action (only for plan upgrades, not period switches usually)
+      if (!isSwitchingPeriodOnCurrentPlan) {
         return (
           <Button
             loading={loading}
             variant="default"
             onClick={async () => {
-              if (resolvedHref) {
-                window.open(resolvedHref, "_blank", "noopener,noreferrer");
-                return;
-              }
               setLoading(true);
               await onUpgrade();
               setLoading(false);
@@ -112,6 +107,7 @@ export const PricingCard = ({
         );
       }
 
+      // If switching period but no Stripe link, show the contact modal
       return (
         <Button
           loading={loading}
@@ -127,17 +123,15 @@ export const PricingCard = ({
     return null;
   }, [
     isCurrentPlan,
-    loading,
-    onUpgrade,
     organization.billing.plan,
-    plan.CTA,
-    plan.featured,
-    plan.href,
     plan.id,
+    plan.CTA,
     projectFeatureKeys.ENTERPRISE,
-    projectFeatureKeys.FREE,
     projectFeatureKeys.STARTUP,
+    resolvedHref,
+    loading,
     t,
+    onUpgrade,
   ]);
 
   return (
@@ -164,7 +158,7 @@ export const PricingCard = ({
           )}
         </div>
         <div className="flex flex-col items-end gap-6 sm:flex-row sm:justify-between lg:flex-col lg:items-stretch">
-          <div className="mt-2 flex items-end gap-x-1">
+          <div className="mt-2 flex items-center gap-x-1">
             <p
               className={cn(
                 plan.featured ? "text-slate-900" : "text-slate-800",
@@ -172,10 +166,18 @@ export const PricingCard = ({
               )}>
               {displayPrice}
             </p>
-            <div className="text-sm leading-5">
+            <div className="flex flex-col text-sm leading-5">
               <p className={plan.featured ? "text-slate-700" : "text-slate-600"}>
                 / {planPeriod === "monthly" ? "mo" : "yr"}
               </p>
+              {planPeriod === "yearly" && plan.id !== projectFeatureKeys.FREE && (
+                <Badge
+                  type="success"
+                  size="normal"
+                  text={t("environments.settings.billing.two_months_free")}
+                  className="mt-1 w-fit px-1.5 py-0 text-[10px]"
+                />
+              )}
             </div>
           </div>
 

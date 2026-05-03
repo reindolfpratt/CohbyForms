@@ -19,7 +19,7 @@ const Page = async (props: { params: Promise<{ environmentId: string }> }) => {
   // Decrypt aiConfig if it exists
   const aiConfig = organization.aiConfig ? decryptAIConfig(organization.aiConfig as any) : { providers: [] };
 
-  const isAIAllowed = (organization.billing as any)?.plan === "enterprise";
+  const isAIAllowed = (organization.billing as any)?.plan !== "free";
 
   return (
     <PageContentWrapper>
@@ -46,11 +46,11 @@ const Page = async (props: { params: Promise<{ environmentId: string }> }) => {
             <h2 className="text-2xl font-bold text-slate-800">Unlock AI Capabilities</h2>
             <p className="text-slate-500">
               Generate surveys from prompts and analyze responses automatically with CohbyForm AI. Upgrade to
-              our Enterprise plan to unlock these features.
+              our paid plans to unlock these features.
             </p>
           </div>
           <Button size="lg" className="px-8" asChild>
-            <Link href={`/environments/${params.environmentId}/settings/billing`}>Upgrade to Enterprise</Link>
+            <Link href={`/environments/${params.environmentId}/settings/billing`}>Upgrade Now</Link>
           </Button>
         </div>
       )}

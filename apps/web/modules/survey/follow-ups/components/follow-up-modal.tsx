@@ -268,7 +268,7 @@ export const FollowUpModal = ({
           type: "send-email" as TSurveyFollowUpAction["type"],
           properties: {
             to: data.emailTo,
-            from: mailFrom,
+            from: mailFrom?.trim() || "noreply@cohby.com",
             replyTo: data.replyTo,
             subject: data.subject,
             body: sanitizedBody,
@@ -317,7 +317,7 @@ export const FollowUpModal = ({
         type: "send-email" as TSurveyFollowUpAction["type"],
         properties: {
           to: data.emailTo,
-          from: mailFrom,
+          from: mailFrom?.trim() || "noreply@cohby.com",
           replyTo: data.replyTo,
           subject: data.subject,
           body: sanitizedBody,

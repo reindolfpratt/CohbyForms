@@ -512,14 +512,12 @@ export const updateSurveyInternal = async (
       const followUpsWrite: Record<string, unknown> = {};
 
       if (newFollowUps.length > 0) {
-        followUpsWrite.createMany = {
-          data: newFollowUps.map((followUp) => ({
-            id: followUp.id,
-            name: followUp.name,
-            trigger: followUp.trigger as Prisma.InputJsonValue,
-            action: followUp.action as Prisma.InputJsonValue,
-          })),
-        };
+        followUpsWrite.create = newFollowUps.map((followUp) => ({
+          id: followUp.id,
+          name: followUp.name,
+          trigger: followUp.trigger as Prisma.InputJsonValue,
+          action: followUp.action as Prisma.InputJsonValue,
+        }));
       }
 
       if (deletedFollowUps.length > 0) {

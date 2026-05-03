@@ -250,13 +250,6 @@ export const WebhookSettingsTab = ({ webhook, surveys, setOpen, isReadOnly }: We
             <p className="mt-1 text-xs text-slate-500">
               {t("environments.integrations.webhooks.secret_description")}
             </p>
-            <Link
-              href="https://cohbyforms.vercel.app/docs"
-              target="_blank"
-              className="mt-1 inline-flex items-center gap-1 text-xs text-slate-600 underline hover:text-slate-800">
-              {t("environments.integrations.webhooks.learn_to_verify")}
-              <ExternalLinkIcon className="h-3 w-3" />
-            </Link>
           </div>
         )}
 
@@ -289,12 +282,6 @@ export const WebhookSettingsTab = ({ webhook, surveys, setOpen, isReadOnly }: We
                 {t("common.delete")}
               </Button>
             )}
-
-            <Button variant="secondary" asChild>
-              <Link href="https://cohbyforms.vercel.app/docs" target="_blank">
-                {t("common.read_docs")}
-              </Link>
-            </Button>
           </div>
 
           {!isReadOnly && (

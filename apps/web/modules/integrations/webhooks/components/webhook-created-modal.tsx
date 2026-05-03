@@ -71,13 +71,6 @@ export const WebhookCreatedModal = ({ open, webhook, onClose }: WebhookCreatedMo
             <p className="mt-2 text-xs text-slate-500">
               {t("environments.integrations.webhooks.secret_copy_warning")}
             </p>
-            <Link
-              href="https://cohbyforms.vercel.app/docs"
-              target="_blank"
-              className="mt-2 inline-flex items-center gap-1 text-xs text-slate-600 underline hover:text-slate-800">
-              {t("environments.integrations.webhooks.learn_to_verify")}
-              <ExternalLinkIcon className="h-3 w-3" />
-            </Link>
           </div>
         </DialogBody>
 

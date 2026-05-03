@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { TSegment } from "@formbricks/types/segment";
-import { DocumentationLinks } from "@/app/(app)/environments/[environmentId]/surveys/[surveyId]/(analysis)/summary/components/shareEmbedModal/documentation-links";
 import { getFormattedErrorMessage } from "@/lib/utils/helper";
 import { Button } from "@/modules/ui/components/button";
 import { DatePicker } from "@/modules/ui/components/date-picker";
@@ -165,16 +164,12 @@ export const PersonalLinksTab = ({
         description={t("environments.surveys.share.personal_links.upgrade_prompt_description")}
         buttons={[
           {
-            text: isFormbricksCloud ? t("common.start_free_trial") : t("common.request_trial_license"),
-            href: isFormbricksCloud
-              ? `/environments/${environmentId}/settings/billing`
-              : "https://formbricks.com/upgrade-self-hosting-license",
+            text: t("common.start_free_trial"),
+            href: `/environments/${environmentId}/settings/billing`,
           },
           {
             text: t("common.learn_more"),
-            href: isFormbricksCloud
-              ? `/environments/${environmentId}/settings/billing`
-              : "https://formbricks.com/learn-more-self-hosting-license",
+            href: `/environments/${environmentId}/settings/billing`,
           },
         ]}
       />
@@ -250,14 +245,6 @@ export const PersonalLinksTab = ({
           </Button>
         </div>
       </FormProvider>
-      <DocumentationLinks
-        links={[
-          {
-            title: t("environments.surveys.share.personal_links.work_with_segments"),
-            href: "https://formbricks.com/docs/xm-and-surveys/surveys/website-app-surveys/advanced-targeting#segment-configuration",
-          },
-        ]}
-      />
     </div>
   );
 };

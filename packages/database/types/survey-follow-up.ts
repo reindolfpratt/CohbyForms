@@ -35,7 +35,7 @@ export const ZSurveyFollowUpAction = z.object({
   type: z.literal("send-email"),
   properties: z.object({
     to: z.string(),
-    from: z.string().email(),
+    from: z.string().min(1),
     replyTo: z.array(z.string().email()),
     subject: z.string(),
     body: z.string(),
@@ -48,13 +48,13 @@ export const ZSurveyFollowUpAction = z.object({
 export type TSurveyFollowUpAction = z.infer<typeof ZSurveyFollowUpAction>;
 
 export const ZSurveyFollowUp = z.object({
-  id: z.string().cuid2(),
+  id: z.string(),
   createdAt: z.date(),
   updatedAt: z.date(),
   name: z.string(),
   trigger: ZSurveyFollowUpTrigger,
   action: ZSurveyFollowUpAction,
-  surveyId: z.string().cuid2(),
+  surveyId: z.string(),
 });
 
 export type TSurveyFollowUp = z.infer<typeof ZSurveyFollowUp>;

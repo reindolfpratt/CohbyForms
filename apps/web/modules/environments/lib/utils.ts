@@ -258,9 +258,7 @@ export const getEnvironmentWithRelations = reactCache(async (environmentId: stri
         billing: data.project.organization.billing,
         whitelabel: data.project.organization.whitelabel,
         isAIEnabled:
-          data.project.organization.billing?.plan === "enterprise"
-            ? data.project.organization.isAIEnabled
-            : false,
+          data.project.organization.billing?.plan !== "free" ? data.project.organization.isAIEnabled : false,
         aiConfig: data.project.organization.aiConfig,
       },
       environments: data.project.environments,
