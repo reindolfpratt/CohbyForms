@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { prisma } from "@formbricks/database";
-import { logger } from "@formbricks/logger";
 import { TContactAttributes } from "@formbricks/types/contact-attribute";
 import { DatabaseError, ResourceNotFoundError } from "@formbricks/types/errors";
 import { TResponseWithQuotaFull, TSurveyQuota } from "@formbricks/types/quota";

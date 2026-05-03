@@ -63,7 +63,7 @@ export const ConnectIntegration = ({
             {integrationDetails?.notConfiguredText}
             <br />
             {t("common.follow_these")}{" "}
-            <Link href={integrationDetails?.docsLink ?? ""} className="underline">
+            <Link href={(integrationDetails as any)?.docsLink ?? ""} className="underline">
               {t("common.docs")}
             </Link>{" "}
             {t("environments.integrations.to_configure_it")}.

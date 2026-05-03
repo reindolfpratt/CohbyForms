@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, test, vi } from "vitest";
-import { TProject } from "@formbricks/types/project";
 import type { TSurveyElement } from "@formbricks/types/surveys/elements";
 import { TTemplate } from "@formbricks/types/templates";
 import { structuredClone } from "@/lib/pollyfills/structuredClone";

@@ -1,8 +1,7 @@
 "use client";
 
 import { Webhook } from "@prisma/client";
-import { CheckIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
-import Link from "next/link";
+import { CheckIcon, CopyIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";

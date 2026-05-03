@@ -257,10 +257,6 @@ test.describe("API Tests for Responses", () => {
       expect(Array.isArray(responseBody.data)).toBe(true);
       expect(responseBody.data.length).toBeGreaterThan(0);
 
-      const createdResponse1 = responseBody.data.find((resp) => resp.id === createdResponseId1);
-
-      const createdResponse2 = responseBody.data.find((resp) => resp.id === createdResponseId2);
-
       // Check if the responses are sorted correctly
       expect(responseBody.data[0].id).toBe(createdResponseId1);
       expect(responseBody.data[1].id).toBe(createdResponseId2);
@@ -285,8 +281,6 @@ test.describe("API Tests for Responses", () => {
       const responseBody = await response.json();
       expect(Array.isArray(responseBody.data)).toBe(true);
       expect(responseBody.data.length).toBe(1);
-
-      const createdResponse1 = responseBody.data.find((resp) => resp.id === createdResponseId1);
 
       expect(responseBody.data[0].id).toBe(createdResponseId1);
     });

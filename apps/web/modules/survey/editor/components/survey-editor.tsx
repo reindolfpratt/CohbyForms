@@ -245,7 +245,6 @@ export const SurveyEditor = ({
               isUserTargetingAllowed={isUserTargetingAllowed}
               isSpamProtectionAllowed={isSpamProtectionAllowed}
               projectPermission={projectPermission}
-              isFormbricksCloud={isFormbricksCloud}
               isQuotasAllowed={isQuotasAllowed}
               quotas={quotas}
             />

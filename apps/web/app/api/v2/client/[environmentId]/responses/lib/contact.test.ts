@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { prisma } from "@formbricks/database";
 import { TContactAttributes } from "@formbricks/types/contact-attribute";
 import { getContact } from "./contact";

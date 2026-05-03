@@ -563,7 +563,6 @@ describe("License Core Logic", () => {
   describe("Error and Warning Logging", () => {
     test("should log warning when setPreviousResult cache.set fails (line 176-178)", async () => {
       const { getEnterpriseLicense } = await import("./license");
-      const fetch = (await import("node-fetch")).default as Mock;
 
       const mockFetchedLicenseDetails: TEnterpriseLicenseDetails = {
         status: "active",

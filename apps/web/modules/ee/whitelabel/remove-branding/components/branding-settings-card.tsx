@@ -1,6 +1,5 @@
 import { Project } from "@prisma/client";
 import { SettingsCard } from "@/app/(app)/environments/[environmentId]/settings/components/SettingsCard";
-import { IS_FORMBRICKS_CLOUD } from "@/lib/constants";
 import { getTranslate } from "@/lingodotdev/server";
 import { EditBranding } from "@/modules/ee/whitelabel/remove-branding/components/edit-branding";
 import { Alert, AlertDescription } from "@/modules/ui/components/alert";

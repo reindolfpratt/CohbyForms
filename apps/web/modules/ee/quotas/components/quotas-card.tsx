@@ -26,7 +26,6 @@ import { QuotaModal } from "./quota-modal";
 interface QuotasCardProps {
   localSurvey: TSurvey;
   isQuotasAllowed: boolean;
-  isFormbricksCloud?: boolean;
   quotas: TSurveyQuota[];
   hasResponses: boolean;
 }
@@ -61,13 +60,7 @@ const AddQuotaButton = ({
   );
 };
 
-export const QuotasCard = ({
-  localSurvey,
-  isQuotasAllowed,
-  isFormbricksCloud,
-  quotas,
-  hasResponses,
-}: QuotasCardProps) => {
+export const QuotasCard = ({ localSurvey, isQuotasAllowed, quotas, hasResponses }: QuotasCardProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [isQuotaModalOpen, setIsQuotaModalOpen] = useState(false);

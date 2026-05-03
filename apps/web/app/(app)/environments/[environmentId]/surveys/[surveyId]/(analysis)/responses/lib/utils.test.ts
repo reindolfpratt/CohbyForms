@@ -38,7 +38,7 @@ describe("utils", () => {
       "environments.surveys.responses.source": "Source",
     };
     return translations[key] || key;
-  });
+  }) as any;
 
   describe("getAddressFieldLabel", () => {
     test("returns correct label for addressLine1", () => {

@@ -32,7 +32,6 @@ interface EmailCustomizationSettingsProps {
   hasWhiteLabelPermission: boolean;
   environmentId: string;
   isReadOnly: boolean;
-  isFormbricksCloud: boolean;
   user: TUser | null;
   fbLogoUrl: string;
   isStorageConfigured: boolean;
@@ -43,7 +42,6 @@ export const EmailCustomizationSettings = ({
   hasWhiteLabelPermission,
   environmentId,
   isReadOnly,
-  isFormbricksCloud,
   user,
   fbLogoUrl,
   isStorageConfigured,

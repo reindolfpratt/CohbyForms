@@ -2,8 +2,7 @@
 
 import { PipelineTriggers, Webhook } from "@prisma/client";
 import clsx from "clsx";
-import { CheckIcon, CopyIcon, ExternalLinkIcon, EyeIcon, EyeOff, TrashIcon } from "lucide-react";
-import Link from "next/link";
+import { CheckIcon, CopyIcon, EyeIcon, EyeOff, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

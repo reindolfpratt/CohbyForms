@@ -25,7 +25,6 @@ interface SettingsViewProps {
   isUserTargetingAllowed?: boolean;
   isSpamProtectionAllowed: boolean;
   projectPermission: TTeamPermission | null;
-  isFormbricksCloud: boolean;
   isQuotasAllowed: boolean;
   quotas: TSurveyQuota[];
 }
@@ -43,7 +42,6 @@ export const SettingsView = ({
   isSpamProtectionAllowed,
   isQuotasAllowed,
   projectPermission,
-  isFormbricksCloud,
   quotas,
 }: SettingsViewProps) => {
   const isAppSurvey = localSurvey.type === "app";
@@ -85,7 +83,6 @@ export const SettingsView = ({
       <QuotasCard
         localSurvey={localSurvey}
         isQuotasAllowed={isQuotasAllowed}
-        isFormbricksCloud={isFormbricksCloud}
         quotas={quotas}
         hasResponses={responseCount > 0}
       />
